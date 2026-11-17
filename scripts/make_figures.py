@@ -110,8 +110,33 @@ def fig_transients():
     plt.close(fig)
 
 
+def fig_convergence():
+    """Grid-convergence sweep: miss of each grid against the finest grid run for that condition."""
+    d = json.loads((R / "convergence_sweep.json").read_text())
+    rows = [e for e in d["summary"]["grid"] if e["E_max"] == 4.0]
+    fig, axes = plt.subplots(1, 2, figsize=(9.6, 3.9), constrained_layout=True, sharey=True)
+    for ax, obs, title in ((axes[0], "eps_re", "Re ε transient"), (axes[1], "eps_im", "Im ε transient")):
+        for n, col, mk, lab in (("128", BLUE, "o", "128 points"), ("256", ORANGE, "s", "256 points")):
+            pts = [(e["Te_max"], 100 * e["miss"][n][obs]) for e in rows if n in e["miss"] and int(n) < e["N_ref"]]
+            if pts:
+                x, y = zip(*sorted(pts))
+                ax.plot(x, y, mk, color=col, label=lab, markeredgecolor=SURFACE, markeredgewidth=1.0)
+        ax.axhline(1.0, color=INK2, linewidth=1, linestyle=(0, (4, 3)))
+        ax.annotate("1 % criterion", (ax.get_xlim()[0], 1.0), xytext=(4, 4), textcoords="offset points", color=INK2, fontsize=9)
+        ax.set_xscale("log")
+        ax.set_yscale("log")
+        ax.set_xlabel("peak electron temperature of the run (K)")
+        ax.set_title(title)
+    axes[0].set_ylabel("largest deviation from the finest grid\n(% of the transient amplitude)")
+    axes[0].legend(loc="upper right")
+    fig.suptitle("Grid convergence of the exact collision integral over the condition matrix (4 eV band)",
+                 x=0.01, ha="left", fontsize=11, color=INK)
+    fig.savefig(R / "fig_convergence_sweep.png", dpi=200)
+    plt.close(fig)
+
+
 if __name__ == "__main__":
-    for fn in (fig_validation, fig_cost, fig_transients):
+    for fn in (fig_validation, fig_cost, fig_transients, fig_convergence):
         try:
             fn()
             print("wrote", fn.__name__)

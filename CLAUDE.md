@@ -1,6 +1,6 @@
 # FNO_ENZ: notes for working sessions
 
-Research project: what sets the speed and sign of the optical response of ENZ indium tin oxide under intense ultrashort pulses. Plan: `docs/PROJECT_PLAN.md` (five work packages, four gates). Start every session by reading the last entry and the open items of `docs/WORKLOG.md`.
+Research project: what sets the speed and sign of the optical response of ENZ indium tin oxide under intense ultrashort pulses. Plan: `docs/PROJECT_PLAN.md` (revision 2: kinetic solver, Maxwell-kinetic film model, mechanism inference, experiment; the neural-operator surrogate is deferred). Revision 1 is in `docs/archive/`. Start every session by reading the last entry and the open items of `docs/WORKLOG.md`.
 
 ## Standing rules
 
@@ -8,7 +8,8 @@ Research project: what sets the speed and sign of the optical response of ENZ in
 - **Literature.** `references/LITERATURE_SUMMARY.md` is the theory cornerstone; reference numbers `[n]` are the plan's. When a paper is (re)read, update its digest there and, if it changes a conclusion, Part I. Never commit PDFs, TeX sources or extracted text (public repository); they are rebuilt with `python references/fetch_references.py --sources --text`.
 - **Equations.** Any departure from a published formula goes in `docs/theory/` with the reason, and in the log.
 - **Results.** A number enters a gate report (`docs/gates/`) only if a script under `scripts/` regenerates it into `results/`. Progress reports (`docs/reports/`) are built by `scripts/make_progress_report.py` from the same files.
-- **Structure.** Solver code in `src/enzkin/`; later work packages add `src/enzkin/operator/` (WP2) and `src/enzkin/maxwell/` (WP3), `inference/` (WP4), `experiment/` (WP5). Large data go to `data/` (git-ignored).
+- **Structure.** Solver code in `src/enzkin/`; later work packages add `src/enzkin/maxwell/` (WP3), `inference/` (WP4), `experiment/` (WP5). Large data go to `data/` (git-ignored).
+- **No surrogate for now.** The film solver uses the exact collision integral (`ElectronElectronB1`, or `ElectronElectronB1Jax` on a GPU). The FFT integral B0 is a comparison model only. The conditions under which a learned operator returns are in the plan's deferred section.
 
 ## Commands
 
@@ -29,3 +30,4 @@ The full test suite takes about 35 s on 4 cores when nothing else is running; th
 - Default band width is 4 eV as printed in [14]; it saturates above about 30 GW/cm² in the geometry of [15]. Use `E_max=6.0` with N scaled to keep ΔE for high-intensity runs (log §1.5).
 - `ElectronElectronB0` gets stiff (rates of several per fs) at high excitation; always integrate with the adaptive `enzkin.integrate.run`.
 - Cloud sessions should use the `FNO_ENZ` environment (network allowlist for arXiv and the repositories).
+- JAX is an optional dependency (`pip install -e ".[jax]"`); its tests are skipped when it is absent. Importing `enzkin.collisions.ee_jax` switches JAX to 64-bit floats.

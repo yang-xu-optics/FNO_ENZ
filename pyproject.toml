@@ -12,6 +12,7 @@ dependencies = ["numpy>=2.0", "scipy>=1.13", "numba>=0.60", "h5py>=3.10"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0", "matplotlib>=3.8"]
+jax = ["jax>=0.4.30"]  # CPU build; on a GPU node install "jax[cuda12]" instead
 
 [tool.setuptools.packages.find]
 where = ["src"]

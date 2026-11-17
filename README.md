@@ -1,6 +1,6 @@
-# FNO_ENZ: learned kinetic closure for ENZ electron dynamics
+# FNO_ENZ: Maxwell-kinetic model of ENZ electron dynamics
 
-What sets the speed and sign of the optical response of epsilon-near-zero indium tin oxide under intense ultrashort pulses? This repository holds the project: the reference library and its ingested summary, the ground-truth Boltzmann solver (WP1), and, as the work proceeds, the neural-operator closure (WP2), the Maxwell–kinetic solver (WP3), mechanism inference (WP4) and the experimental comparison (WP5).
+What sets the speed and sign of the optical response of epsilon-near-zero indium tin oxide under intense ultrashort pulses? This repository holds the project: the reference library and its ingested summary, the ground-truth Boltzmann solver (WP1), and, as the work proceeds, the Maxwell–kinetic film solver (WP3), mechanism inference (WP4) and the experimental comparison (WP5). The neural-operator surrogate that gave the repository its name is deferred: the exact collision integral proved fast enough (plan revision 2).
 
 **Status (2026-11-17):** WP1 first pass complete: solver built and tested, validated against published transients, pilot dataset generated. **Gate 1 measured and not passed as written**: the exact collision integral turned out cheap enough to use directly at the resolution needed, and the FFT baseline too inaccurate to use; see [`docs/gates/G1_report.md`](docs/gates/G1_report.md). [`docs/WORKLOG.md`](docs/WORKLOG.md) records what was done and what is open.
 
@@ -8,7 +8,7 @@ What sets the speed and sign of the optical response of epsilon-near-zero indium
 
 | Path | Contents |
 | --- | --- |
-| [`docs/PROJECT_PLAN.md`](docs/PROJECT_PLAN.md) | The project plan (as written 2026-11-16). Source of the work packages, gates and reference numbers. |
+| [`docs/PROJECT_PLAN.md`](docs/PROJECT_PLAN.md) | The project plan, revision 2 (2026-11-17). Source of the work packages, gates and reference numbers. Revision 1 is in `docs/archive/`. |
 | [`docs/WORKLOG.md`](docs/WORKLOG.md) | **Working log**: chronological record of decisions, results, deviations from the plan and open items. Append to it every session. |
 | [`docs/theory/wp1_kinetic_model.md`](docs/theory/wp1_kinetic_model.md) | Equations exactly as implemented, with corrections to the printed formulas. |
 | [`docs/gates/G1_report.md`](docs/gates/G1_report.md) | Gate 1 measurement and decision. |
@@ -20,7 +20,7 @@ What sets the speed and sign of the optical response of epsilon-near-zero indium
 | `scripts/` | Reproducible runs: validation, Gate 1 benchmark, dataset generation, figures. |
 | `results/wp1/` | Small outputs of those scripts (JSON, figures). Large data go to `data/` (git-ignored). |
 
-Later work packages add `src/enzkin/operator/` (WP2), `src/enzkin/maxwell/` (WP3), `inference/` (WP4) and `experiment/` (WP5), each with its own gate report under `docs/gates/`.
+Later work packages add `src/enzkin/maxwell/` (WP3), `inference/` (WP4) and `experiment/` (WP5), each with its own gate report under `docs/gates/`.
 
 ## The solver in one paragraph
 

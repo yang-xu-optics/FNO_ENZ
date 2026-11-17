@@ -186,6 +186,27 @@ Conclusions: (i) the grid size sets everything, so the convergence sweep of open
 
 ---
 
+## Session 2 — 2026-11-17 — plan revision 2, JAX port of the exact integral, grid-convergence sweep
+
+**Scope requested.** The project lead decided to drop the machine-learning surrogate for now (decision D9), and asked for the plan to be revised and for the first step of the new sequence to start: confirm that the exact solver is fast enough (grid-convergence sweep including weak excitation and the 6 eV band; GPU port of the exact integral).
+
+### 2.1 Plan revision 2
+
+- `docs/PROJECT_PLAN.md` is now revision 2, "Maxwell-Kinetic Model of ENZ Electron Dynamics". Revision 1 is unchanged at `docs/archive/PROJECT_PLAN_v1_2026-11-16.md`. Reference numbers are the same.
+- Changes, each with its reason, are tabulated at the top of the plan. In short: the neural operator (old WP2) moves to a deferred section with the conditions under which it returns; WP3 runs on the exact integral and starts now; the FFT integral is a comparison model only; H2 is stated for Re ε; the two-photon model is tested on 800 nm data only; M0 is a two-temperature model with a damping law; the current equation becomes a derivation task; the intensity range is limited to what one band can hold; the observation and dataset tables carry the qualifiers found in the literature pass; the methods paper becomes a solver-and-benchmark paper.
+- Gates: G1 closed (not passed as written); new G1b (confirmation of grid convergence and of film-run cost on a cluster node or GPU); G2 suspended with WP2; G3 and G4 unchanged.
+- The reference list was regenerated from `references/manifest.json`, so all 61 citations carry the verified authors, venue, arXiv id and DOI.
+- `README.md` and `CLAUDE.md` updated to match. The repository name is unchanged.
+
+### 2.2 JAX port of the exact integral (`src/enzkin/collisions/ee_jax.py`)
+
+- Same discrete integral as the numba kernel, written as array operations: for a fixed index shift d the kernel factor is an N×N matrix built from two vectors, and the sums are two matrix–vector products; `jax.lax.map` runs over the 2N−1 shifts with `d_batch` of them in memory at a time. Batched over cells with `vmap`, differentiable, 64-bit.
+- Tests (`tests/test_ee_jax.py`, skipped when JAX is absent): agreement with numba to 10⁻¹¹ for the collision term and the rate, single-state and batched calls agree, number and energy conserved, Fermi–Dirac fixed point, and the gradient of the entropy production matches a finite difference.
+- Reference timing on **one CPU core** (`scripts/bench_b1_jax.py`, `results/wp1/bench_b1_jax_cpu.json`): 6.8 ms per cell at N = 128 and 47 ms at N = 256, against 3.1 and 30 ms for numba on the same core. JAX on a CPU is about twice as slow as numba; the port exists for the GPU and for gradients.
+- **Not done: the GPU benchmark.** This environment has no GPU. On a GPU node: `pip install -U "jax[cuda12]"`, then `python scripts/bench_b1_jax.py --N 128 256 --cells 1 16 100 400`; the script prints the time per call, per cell and per film run, and writes `results/wp1/bench_b1_jax_gpu.json`. This closes the GPU half of gate G1b.
+
+---
+
 ## Decision table
 
 | Id | Date | Decision | Why |
@@ -198,5 +219,7 @@ Conclusions: (i) the grid size sets everything, so the convergence sweep of open
 | D6 | 2026-11-17 | [15] validation geometry: 60° in air through the glass substrate | only geometry reproducing the published absorptivity trend |
 | D7 | 2026-11-17 | Interband models M2, M3 implemented as moment-level lifts with a declared free valence-band mass | published models are lumped; parameters not printed |
 | D8 | 2026-11-17 | Default band width stays at the printed E_max = 4 eV; E_max is exposed as a material parameter and 6 eV is recommended above ≈30 GW/cm² | 4 eV saturates and overshoots T_e by 16–32 % at 50–75 GW/cm²; 6 eV reproduces [15] within 5 % |
-| D9 | 2026-11-17 | **Pending (project lead):** Gate 1 did not pass as written. Proposed: run WP3 on exact B1 at N = 128–256; do not use B0; decide on the surrogate after a GPU B1 benchmark | B1 is only 6–46× costlier than B0 at the resolution needed, B0 misses the transient by 7–221 % |
+| D9 | 2026-11-17 | **Decided by the project lead: drop the machine-learning surrogate for now.** WP3 runs on the exact integral B1; B0 is a comparison model only; the surrogate returns only under the conditions listed in the plan's deferred section | Gate 1: B1 is only 6–46× costlier than B0 at the resolution needed, B0 misses the transient by 7–221 % |
+| D11 | 2026-11-17 | Plan revised to revision 2; revision 1 archived | D9 and the findings of the literature pass |
+| D12 | 2026-11-17 | The exact integral is ported to JAX (64-bit) for GPU use and gradients; numba stays the CPU reference | WP3 and WP4 need GPU batching over cells and gradients |
 | D10 | 2026-11-17 | Dataset generator rejects cases whose nominal deposit exceeds half the band's capacity | a third of the plan's sampling range saturates a single 4 eV band |
