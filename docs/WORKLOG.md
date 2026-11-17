@@ -148,7 +148,23 @@ Script: `scripts/make_dataset.py` → `data/pilot.h5` (git-ignored; regenerate w
 - **A third of the plan's sampling range does not fit in a single band.** Drawing from the plan's ranges (20–250 fs, 0.1 GW/cm²–10 TW/cm² in-film), 34 % of cases would nominally deposit more than half of what the 4 eV band can hold and 28 % more than all of it. The first attempt, without a screen, stalled on such a case (148 fs at 1 TW/cm²). The generator now rejects and resamples them and records the count. The plan's upper intensity range needs a model with higher bands, or an explicit validity limit of roughly 10¹¹ W/cm² × (100 fs / pulse duration) in-film.
 - Scaling to the plan's 2×10⁴ trajectories: about 220 hours on this machine at N = 128 (46× more at 512) and ≈80 GB at this sampling. A cluster or the GPU port is needed; runs are independent and seeded per index (`--start`, `--n`).
 
-### 1.8 Open items, in priority order
+### 1.8 Compute resource estimate (asked: would a GPU cluster help, and how much to request)
+
+Measured on this machine (Intel Xeon 2.1 GHz), one B1 evaluation: 4.0 / 37 / 231 ms on one thread and 1.2 / 9.5 / 86 ms on four threads at N = 128 / 256 / 512. Runs are independent, so cluster cost is counted in single-thread core-hours.
+
+| Workload | Evaluations | N = 128 | N = 256 | N = 512 |
+| --- | --- | --- | --- | --- |
+| One 2 ps trajectory (0D) | 1.8×10⁴ | 0.02 core-h | 0.19 | 1.2 |
+| WP1 dataset, 2×10⁴ trajectories | 3.6×10⁸ | 400 core-h | 3 700 | 23 000 |
+| One WP3 film run (100 cells, 4000 RK4 steps) | 1.6×10⁶ | 1.8 core-h | 16.5 | 103 |
+| WP3 development, ~300 film runs | | 530 core-h | 5 000 | 31 000 |
+| WP4, 10³–10⁴ film runs | | 1 800–18 000 core-h | 16 500–165 000 | 10⁵–10⁶ |
+
+Not measured: any GPU number (no GPU here). Working estimate, to be replaced by a benchmark: a batched GPU implementation of B1 is worth roughly one 32–64-core node. Memory of a batched B1 on GPU: 100 cells × N³ × 8 bytes per intermediate tensor, i.e. 1.7 GB at N = 128, 13 GB at 256, 107 GB at 512 (chunk over cells above 128).
+
+Conclusions: (i) the grid size sets everything, so the convergence sweep of open item 4 comes before any large request; (ii) WP1 and WP3 need CPU cores, not GPUs, and the code runs on a cluster unchanged; (iii) a GPU is needed for WP2 training and for gradient-based inference through a differentiable (JAX/PyTorch) port in WP4; (iv) sequential samplers in WP4 are limited by wall time per film run (about 2 minutes on a 64-core node at N = 128), which is where a surrogate or a GPU port earns its place. Suggested request: about 50 000 CPU core-hours, one GPU with at least 40 GB for 1 000–1 500 GPU-hours, 500 GB storage, preceded by a small pilot allocation for the GPU benchmark and the convergence sweep.
+
+### 1.9 Open items, in priority order
 
 1. **Write to the authors of [14–16]** (the plan already recommends it): ε∞, e–impurity rate, gold permittivity, grid and time step of [15]; whether κ was recomputed from f; the origin of the 8 % plasma-frequency gap; the 3/16 prefactor; e–ph treatment above 6000 K. This closes the remaining validation gaps.
 2. **Obtain the nine missing PDFs** and redo the seven reconstructed digests, [1] first (it is the WP4 calibration dataset and its two-temperature parameters were never read).
