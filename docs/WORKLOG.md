@@ -137,6 +137,8 @@ Consequences:
 - The surrogate's justification moves from WP3 to WP4 (10³–10⁴ film runs, i.e. 470–4700 h here). A GPU port of B1 has to be benchmarked before that case can be judged, and the WP2 criterion "≥100× over B1 at 512 points" restated against it. Any surrogate must also deliver the collision rate, not only Q[f].
 - Side result for H1: the thermal two-temperature model built from the same operators misses the B1 permittivity transient by 11–17 % for 20 fs pumps and 3–5 % for 220 fs pumps.
 
+(Wording note: an earlier version of the Gate 1 report said the surrogate is "not needed for the flagship physics". That was too broad. It is not needed to run the WP3 film simulations or the H3 test; the mechanism ranking of WP4 is also a flagship claim and is where the cost question remains.)
+
 This is the outcome the plan lists as its largest risk; the plan's response to it (Maxwell–kinetic physics carries the flagship paper, the operator goes to the methods paper and to inference speed) applies. The decision is recorded as pending in the decision table (D9).
 
 ### 1.7 Pilot dataset
