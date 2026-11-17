@@ -102,7 +102,13 @@ hat_s is the linear hat function centred on sΔE, so phonon energies between gri
 
 **Departure from [14].** The printed cut-off ε ≤ min(E_D, 2ħv_s k(E)) depends on one state only; with it the term does not conserve electron number and overestimates the coupling (G ≈ 8×10¹⁶ W m⁻³ K⁻¹). The symmetric triangle condition above differs at O(ε/E) and gives: exact number conservation; Fermi–Dirac at T_ph as an exact fixed point (detailed balance); the lattice power Σ T_ij ε_s known exactly; and G(T→0) = D²m₀²k_B k_F⁴(1+2CE_F)²/(π³ρ_mħ³) = 2.51×10¹⁶ W m⁻³ K⁻¹, which is [14] Eq. 27. The numerical G is 2.44, 3.33, 6.67 ×10¹⁶ at T_e = 500, 2000, 5000 K (N = 512) and changes by 0.7 % between N = 256 and 1024. Neglecting momentum conservation raises G 14-fold ([14] says "~30"; its own formula gives 16.7).
 
-The collision rate 1/τ_eph(E) is the functional derivative of the term ([14] Eq. 11) and is 0.062 fs⁻¹ at E_F, 300 K.
+**Collision rate for the damping.** 1/τ_eph(E) of [14] Eq. 11 counts every scattering event, including quasi-elastic ones whose phonon energy is below one grid cell. Those do not move population between cells, so the master equation omits them, but they relax momentum and dominate the rate (the integrand ε²n_B(ε) ≈ ε k_BT is weighted to small ε). `ElectronPhonon.rate` therefore adds the intra-cell (s = 0) term and integrates the Bose factor over each hat function instead of sampling it at the node:
+
+```
+1/τ_i = (1/ρ_i) Σ_{s≥0} [ B_s(i,i+s) + W_s(i,i+s) f_{i+s} + B_s(i−s,i) + W_s(i−s,i)(1 − f_{i−s}) ],   B_s = κ_ep m m′ ∫ε² n_B(ε,T_ph) hat_s dε
+```
+
+The rate is 0.0585 fs⁻¹ at E_F and 300 K, proportional to T_ph, and its optical average is the same to three digits from N = 64 to 1024. (The first implementation sampled n_B at the nodes and had no s = 0 term; it gave a rate three times too small at N = 128 and was the reason the damping was not grid-converged.)
 
 ## 6. Photo-excitation (`excitation.py`)
 
@@ -124,7 +130,7 @@ The collision rate 1/τ_eph(E) is the functional derivative of the term ([14] Eq
 η(E)    = 1/τ_ee(E) + 1/τ_eph(E) + γ_imp
 ```
 
-To first order in η/ω this is a Drude term with Γ = 2⟨η⟩ (`drude_equivalent`). ε_∞ and γ_imp are not printed in [14, 15]; matching [15]'s plotted ε(230 THz, 300 K) = 0.172 + 0.399i gives ε_∞ = 3.451 and γ_imp = 0.0631 fs⁻¹, with the zero crossing at 224 THz ([15]: ≈225 THz).
+To first order in η/ω this is a Drude term with Γ = 2⟨η⟩ (`drude_equivalent`). ε_∞ and γ_imp are not printed in [14, 15]; matching [15]'s plotted ε(230 THz, 300 K) = 0.172 + 0.399i gives ε_∞ = 3.451 and γ_imp = 0.0352 fs⁻¹ (`enzkin.calibrate`), with the zero crossing at 224 THz ([15]: ≈225 THz).
 
 ## 9. Interband channels (`interband.py`)
 
@@ -145,6 +151,7 @@ Fourth-order Runge–Kutta, with each step limited to h ≤ 1/λ, where λ is th
 
 ## 12. Known limitations
 
+- **Single band of finite width.** The grid ends at E_max (4 eV as stated in [14]). A band of that width holds at most about 2.7 eV per electron, i.e. ≈5×10⁸ J/m³ above the cold state for n = 1.5 nm⁻³. As the absorbed energy approaches that, the heat capacity collapses, the matched temperature runs away and the excitation term eventually has nothing to excite. In the [15] validation this shows as a 16–32 % overshoot of T_e,max at 50–75 GW/cm², removed (to 5 %) by E_max = 6 eV. Keep ΔE fixed when widening the band (N = 192 at 6 eV corresponds to N = 128 at 4 eV). Beyond that, real ITO has higher bands and photoemission, which this model does not.
 - Static Thomas–Fermi screening; no exchange; no dynamic screening.
 - e–e collisions enter the optical damping at full weight as in [15]; [16] argues only Umklapp e–e processes should.
 - Isotropic f only: the current-carrying (l = 1) part of the distribution is not evolved, so the choice between the two current equations of WP3 is not yet decided by the kinetics (see LITERATURE_SUMMARY Part I §6).

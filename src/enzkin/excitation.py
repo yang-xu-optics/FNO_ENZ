@@ -69,9 +69,18 @@ class Excitation:
 
     def rhs(self, f: np.ndarray, p_abs: float) -> np.ndarray:
         """df/dt in 1/fs for an absorbed power density p_abs in eV/(nm^3 fs)."""
+        return self.rhs_and_power(f, p_abs)[0]
+
+    def rhs_and_power(self, f: np.ndarray, p_abs: float):
+        """(df/dt, power actually deposited).
+
+        The second value equals ``p_abs`` unless the electrons cannot take the energy: when the population
+        is inverted on the photon scale (a band driven to saturation) no net upward transfer exists and
+        nothing is deposited.  Returning the deposited power keeps the model's energy audit exact.
+        """
         if p_abs == 0.0:
-            return np.zeros_like(f)
+            return np.zeros_like(f), 0.0
         g, e_rate = self.shape(f)
-        if e_rate <= 0.0:  # population inverted on the photon scale: no net absorption possible
-            return np.zeros_like(f)
-        return g * (p_abs / e_rate)
+        if e_rate <= 0.0:
+            return np.zeros_like(f), 0.0
+        return g * (p_abs / e_rate), p_abs

@@ -2,7 +2,7 @@
 
 What sets the speed and sign of the optical response of epsilon-near-zero indium tin oxide under intense ultrashort pulses? This repository holds the project: the reference library and its ingested summary, the ground-truth Boltzmann solver (WP1), and, as the work proceeds, the neural-operator closure (WP2), the Maxwell–kinetic solver (WP3), mechanism inference (WP4) and the experimental comparison (WP5).
 
-**Status (2026-11-17):** WP1 first pass complete: solver built and tested, first validation against published transients, Gate 1 measured. See [`docs/WORKLOG.md`](docs/WORKLOG.md) for what was done and what is open.
+**Status (2026-11-17):** WP1 first pass complete: solver built and tested, validated against published transients, pilot dataset generated. **Gate 1 measured and not passed as written**: the exact collision integral turned out cheap enough to use directly at the resolution needed, and the FFT baseline too inaccurate to use; see [`docs/gates/G1_report.md`](docs/gates/G1_report.md). [`docs/WORKLOG.md`](docs/WORKLOG.md) records what was done and what is open.
 
 ## Where things are
 

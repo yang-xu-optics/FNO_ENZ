@@ -81,7 +81,9 @@ def ito_sarkar2023(**overrides) -> Material:
     n_e        1.5 nm^-3         [14] Sec. II  (1.5e27 m^-3, giving E_F = 0.88 eV)
     m0_rel     0.3964            [14] Eq. (1) text, from Liu et al. 2014
     C          0.4191 eV^-1      [14] Eq. (1) text
-    E_max      4.0 eV            [14] Sec. II ("total size" of the conduction band)
+    E_max      4.0 eV            [14] Sec. II ("total size" of the conduction band).  A 4 eV band saturates
+                                 above ~30 GW/cm^2 in the geometry of [15]; E_max = 6 eV (with N scaled to keep
+                                 dE) reproduces that paper's peak temperatures to 5 %  (docs/WORKLOG.md 1.5)
     eps_b      4.0               [14] below Eq. (14)
     eps_inf    3.45              not printed in [14, 15]; set so that Re eps = 0 at 225 THz and 300 K,
                                  the ENZ point quoted in [15] Sec. III  (see docs/theory/wp1_kinetic_model.md)

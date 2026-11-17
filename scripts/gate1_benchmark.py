@@ -33,6 +33,7 @@ import numba
 import numpy as np
 
 from enzkin import thermo
+from enzkin.calibrate import calibrate_linear_optics
 from enzkin.collisions.ee import ElectronElectronB0, ElectronElectronB1, ElectronElectronRTA
 from enzkin.drive import FieldDrive, PowerDrive, Pulse
 from enzkin.grid import EnergyGrid
@@ -109,19 +110,22 @@ def main():
     ap.add_argument("--series", default="results/wp1/gate1_series.npz")
     args = ap.parse_args()
 
-    # linear optics calibrated to [15]: eps(230 THz, 300 K) = 0.172 + 0.399i  (scripts/validate_un2023.py)
-    mat = ito_sarkar2023(eps_inf=3.4509, gamma_imp=0.0631)
+    # linear optics calibrated to [15]: eps(230 THz, 300 K) = 0.172 + 0.399i, on the grid used for Part B
+    mat = calibrate_linear_optics(ito_sarkar2023(), args.N)
+    print(f"calibrated linear optics: eps_inf = {mat.eps_inf:.4f}, gamma_imp = {mat.gamma_imp:.4f} /fs")
     print("Part A - cost per collision-integral evaluation")
     cost = cost_table(mat, [128, 256] if args.quick else [64, 128, 256, 512])
 
-    # absorbed energy densities: 6e7 J/m^3 ~ T_e 3000 K, 3e8 ~ 6500 K, 1e9 ~ 12000 K
+    # Absorbed energy densities 3e7, 1e8, 3e8 J/m^3 heat the electrons to roughly 2300, 4500 and 10000 K
+    # (T_F = 10200 K).  The 4 eV band holds at most ~2.7 eV per electron, i.e. ~5e8 J/m^3 above the cold
+    # state, so larger deposits are outside what this band model can represent.
     cases = []
     for fwhm in ([30.0, 220.0] if args.quick else [20.0, 50.0, 100.0, 220.0]):
-        for u in ([3e8] if args.quick else [6e7, 3e8, 1e9]):
+        for u in ([1e8] if args.quick else [3e7, 1e8, 3e8]):
             cases.append(dict(mode="energy", wavelength=1300.0, fwhm=fwhm, level=u))
-    for fwhm in ([30.0] if args.quick else [20.0, 220.0]):
-        for inten in ([1e11] if args.quick else [2e10, 2e11]):
-            cases.append(dict(mode="field", wavelength=1300.0, fwhm=fwhm, level=inten))
+    field_cases = [(30.0, 1e11)] if args.quick else [(20.0, 1e11), (20.0, 5e11), (220.0, 1e10), (220.0, 4e10)]
+    for fwhm, inten in field_cases:
+        cases.append(dict(mode="field", wavelength=1300.0, fwhm=fwhm, level=inten))
 
     print(f"Part B - transients at N = {args.N}")
     rows, series = [], {}
@@ -145,8 +149,8 @@ def main():
               f"miss wp2: B0 {100 * m['B0']['wp2']:5.1f} %  thermal {100 * m['thermal']['wp2']:5.1f} % | "
               f"wall B1 {row['wall']['B1']:.0f} s  B0 {row['wall']['B0']:.0f} s", flush=True)
 
-    print("Part C - grid check (B1, 50 fs, 3e8 J/m^3)")
-    chk = dict(mode="energy", wavelength=1300.0, fwhm=50.0, level=3e8)
+    print("Part C - grid check (B1, 50 fs, 1e8 J/m^3)")
+    chk = dict(mode="energy", wavelength=1300.0, fwhm=50.0, level=1e8)
     a, _ = transient(mat, args.N, "B1", chk)
     b, wall_fine = transient(mat, 2 * args.N, "B1", chk)
     grid = dict(N=args.N, N_fine=2 * args.N, wall_fine=wall_fine,

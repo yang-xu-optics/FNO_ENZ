@@ -142,12 +142,35 @@ def test_eph_coupling_rises_with_electron_temperature_and_momentum_conservation_
     assert no_mc > 10 * g_lo  # [14]: an order-of-magnitude overestimate without momentum conservation
 
 
-def test_eph_rate_formula_is_minus_functional_derivative(grid, mat, f_noneq):
+def test_eph_rate_is_grid_independent_and_matches_continuum(mat):
+    """1/tau_e-ph at E_F and 300 K is 0.0585/fs in the continuum limit of [14] Eq. (11) (symmetric cut-off)."""
+    from enzkin.grid import EnergyGrid
+
+    vals = {}
+    for N in (64, 512):
+        g = EnergyGrid(mat.band, mat.E_max, N)
+        f = thermo.fd_of_density(g, mat.n_e, 300.0)
+        r = ElectronPhonon(g, mat).rate(f, 300.0)
+        w = g.rho * f * g.w_opt
+        vals[N] = (np.sum(w * r) / np.sum(w), r[int(np.argmin(np.abs(g.E - 0.879)))])
+    assert vals[512][1] == pytest.approx(0.0585, rel=0.02)
+    assert vals[64][0] == pytest.approx(vals[512][0], rel=0.01)  # the optical average does not depend on the grid
+
+
+def test_eph_rate_scales_with_lattice_temperature(grid, mat, f_cold):
+    op = ElectronPhonon(grid, mat)
+    i = int(np.argmin(np.abs(grid.E - 0.88)))
+    r300, r600 = op.rate(f_cold, 300.0)[i], op.rate(f_cold, 600.0)[i]
+    assert r600 / r300 == pytest.approx(2.0, rel=0.08)  # [14]: proportional to T_ph
+
+
+def test_eph_rate_exceeds_population_transfer_rate(grid, mat, f_noneq):
+    """The damping rate counts quasi-elastic events that the population dynamics does not."""
     op = ElectronPhonon(grid, mat)
     i = grid.N // 3
     h = 1e-7
     fp, fm = f_noneq.copy(), f_noneq.copy()
     fp[i] += h
     fm[i] -= h
-    num = -(op.rhs(fp, 300.0)[0][i] - op.rhs(fm, 300.0)[0][i]) / (2 * h)
-    assert op.rate(f_noneq, 300.0)[i] == pytest.approx(num, rel=1e-6)
+    transfer = -(op.rhs(fp, 300.0)[0][i] - op.rhs(fm, 300.0)[0][i]) / (2 * h)
+    assert op.rate(f_noneq, 300.0)[i] > transfer > 0

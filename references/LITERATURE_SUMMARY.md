@@ -66,9 +66,16 @@ with m(E) = 1+2CE. Correction **[verified in code, and independently by the read
 
 $$\varepsilon(\omega)=\varepsilon_\infty-\frac{e^2}{\varepsilon_0m_0}\int\frac{\rho f\,w_{opt}}{(\omega+i\eta(E))^2}dE,\quad w_{opt}=\frac{1+\tfrac83CE(1+CE)}{(1+2CE)^3},\quad \eta=\tau_{ee}^{-1}+\tau_{e\text{-}ph}^{-1}+\tau_{imp}^{-1}.$$
 
-To first order in η/ω this is a Drude term with damping Γ = 2⟨η⟩. Neither ε∞ nor τ_imp is printed in [15]; fitting its own 300 K curve (ε = 0.172 + 0.399i at 230 THz) with the printed band parameters gives ε∞ = 3.45 and τ_imp⁻¹ = 0.063 fs⁻¹ **[verified in code]**; reading ε∞ = 4 off the same curve instead implies ħω_p = 1.87 eV, 8 % above what the printed n, m₀, C give (1.73 eV). This gap is unexplained and needs the authors. [16] argues that only Umklapp e–e collisions should damp the polarisation, whereas [15] adds τ_ee⁻¹ at full weight.
+To first order in η/ω this is a Drude term with damping Γ = 2⟨η⟩. Neither ε∞ nor τ_imp is printed in [15]; fitting its own 300 K curve (ε = 0.172 + 0.399i at 230 THz) with the printed band parameters gives ε∞ = 3.45 and τ_imp⁻¹ = 0.035 fs⁻¹ **[verified in code]**; reading ε∞ = 4 off the same curve instead implies ħω_p = 1.87 eV, 8 % above what the printed n, m₀, C give (1.73 eV). This gap is unexplained and needs the authors. [16] argues that only Umklapp e–e collisions should damp the polarisation, whereas [15] adds τ_ee⁻¹ at full weight.
 
 **Two-temperature limit (model M0)** ([14] Eq. 20–21, [15] App. B): C_e(T_e)Ṫ_e = p_abs − G(T_e−T_ph), C_ph Ṫ_ph = G(T_e−T_ph), with C_e and μ(T_e) from the full Fermi integrals and C_ph = 2.54×10⁶ J m⁻³ K⁻¹. Terminology trap: in [38] "extended TTM" means adding non-thermal electrons; the thermal-only model is the plain TTM, so the plan's M0 label "extended two-temperature model [38]" should read "two-temperature model with full Fermi integrals".
+
+**What reproducing [15] showed** (`scripts/validate_un2023.py`, `docs/WORKLOG.md` §1.5) **[verified in code]**:
+
+- The modelled stack is air → glass → 40 nm ITO → 100 nm Au with the pump at 60° *in air* (35.3° in the glass). With it the self-consistent absorptivity matches [15] within 1–6 % from 2.5 to 75 GW/cm².
+- Peak electron temperature matches within 2–7 % up to 22 GW/cm². At 50–75 GW/cm² it matches (to 5 %) only if the conduction band is taken 6 eV wide; with the 4 eV stated in [14] the band saturates and T_e overshoots by 16–32 %. The band width is an unprinted, consequential parameter.
+- [15]'s ε″(t) is matched to 1–6 % with the Thomas–Fermi wavevector frozen at its 300 K value, and is 5–32 % too high if κ follows the hot distribution as [14] Eq. 15 literally prescribes.
+- Δε′ comes out 20–28 % smaller than in [15] at every intensity, in line with the unexplained 8 % plasma-frequency gap noted above.
 
 ## 3. ITO parameter sets in the library
 
@@ -194,7 +201,7 @@ Implications:
 
 ## 11. What must come from the authors or from papers not in the library
 
-- [15]: ε∞, the e–impurity rate, the gold permittivity and incidence medium, grid and time step; and why its plotted ω_p is 8 % above the value implied by its printed parameters. Its sample is that of Tirole et al., Phys. Rev. Applied 2022 (not in the library).
+- [15]: ε∞, the e–impurity rate, the gold permittivity and incidence medium, the conduction-band width actually used, whether the screening wavevector was recomputed from f, grid and time step; and why its plotted ω_p is 8 % above the value implied by its printed parameters. Its sample is that of Tirole et al., Phys. Rev. Applied 2022 (not in the library).
 - [22]: Supplementary Information (n₀(T) formula, Kane parameters, valence density of states, U_max vs fluence); raw r(t), t(t).
 - [23]: the MATLAB rate-equation code (units of β and σ are inconsistent as printed); which pulse duration the model used.
 - [24]: Supplementary Sections 1–13; the Figshare code is public.

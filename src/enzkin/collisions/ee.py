@@ -289,12 +289,14 @@ class ElectronElectronRTA:
     grid: EnergyGrid
     mat: Material
     conserving: bool = True
+    _guess: tuple | None = field(init=False, repr=False, default=None)
 
     def rhs(self, f: np.ndarray, with_rate: bool = False):
         from ..thermo import match_fermi_dirac
 
         g = self.grid
-        mu, T, f_fd = match_fermi_dirac(g, f)
+        mu, T, f_fd = match_fermi_dirac(g, f, guess=self._guess)
+        self._guess = (mu, T)
         K = fermi_liquid_K(self.mat)
         inv_tau = K * ((math.pi * c.KB * T) ** 2 + (g.E - mu) ** 2)
         d = -(f - f_fd) * inv_tau

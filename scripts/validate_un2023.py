@@ -29,9 +29,9 @@ import time
 from pathlib import Path
 
 import numpy as np
-from scipy.optimize import fsolve
 
 from enzkin import constants as c
+from enzkin.calibrate import calibrate_linear_optics
 from enzkin.collisions.ee import ElectronElectronB1
 from enzkin.drive import PowerDrive, Pulse, ThinFilmDrive
 from enzkin.integrate import run
@@ -63,17 +63,7 @@ GLASS_OVER_AIR = math.cos(math.radians(ANGLE)) / math.cos(math.radians(ANGLE_GLA
 
 def calibrated_material(N: int):
     """eps_inf and gamma_imp such that eps(230 THz, 300 K) equals the paper's plotted value."""
-    w = c.frequency_thz_to_omega(F_PUMP_THZ)
-
-    def resid(x):
-        m = ito_sarkar2023(eps_inf=x[0], gamma_imp=x[1])
-        mod = KineticModel(m, N=N)
-        f0, _ = mod.split(mod.initial_state(300.0))
-        e = complex(mod.permittivity(f0, 300.0, w))
-        return [e.real - EPS_300K.real, e.imag - EPS_300K.imag]
-
-    x = fsolve(resid, [3.5, 0.05])
-    return ito_sarkar2023(eps_inf=float(x[0]), gamma_imp=float(x[1]))
+    return calibrate_linear_optics(ito_sarkar2023(), N, F_PUMP_THZ, EPS_300K)
 
 
 def incident_fluence_on_film(i0_gw: float, fwhm: float) -> float:

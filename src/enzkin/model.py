@@ -110,8 +110,7 @@ class KineticModel:
         if self.drive is not None:
             if need_eps:
                 eps = complex(self.permittivity(f, T_ph, self.drive.pulse.omega, r_ee))
-            p_abs = self.drive.power(t, eps)
-            d_exc = self.exc.rhs(f, p_abs)
+            d_exc, p_abs = self.exc.rhs_and_power(f, self.drive.power(t, eps))
 
         d_int, p_lat_int, p_field_int, p_pair = 0.0, 0.0, 0.0, 0.0
         if self.interband:

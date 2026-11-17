@@ -18,7 +18,16 @@ Each trajectory stores, on a uniform time grid (default 2 fs):
     rate_ee(E, t)                   collision rate entering the optical damping
     T_ph, T_e, mu, wp2, gamma, eps  scalars
 
-plus the sampled parameters.  Along each trajectory ``--perturb`` extra off-trajectory states are stored:
+plus the sampled parameters.
+
+Validity screen.  A single band of width E_max holds a finite energy (about 5e8 J/m^3 above the cold state
+for the reference material).  Cases whose *nominal* deposit - cold-film eps'' times the pulse fluence -
+exceeds ``--capacity-fraction`` (default 0.5) of that capacity are rejected and resampled, and the count
+is stored in the file attributes.  With the plan's intensity range (up to 10 TW/cm^2 in-film) about a
+third of the draws are rejected: those conditions need a model with higher bands, not this one
+(docs/WORKLOG.md 1.5, 1.7).
+
+Along each trajectory ``--perturb`` extra off-trajectory states are stored:
 the trajectory state plus a smooth random perturbation with zero number and energy, with their collision
 terms, so the operator also sees states the solver would never visit (plan: "perturbed off-trajectory
 states").
@@ -45,7 +54,7 @@ from enzkin.integrate import run
 from enzkin.material import ito_sarkar2023
 from enzkin.model import KineticModel
 
-EPS_INF_REF, GAMMA_IMP_REF = 3.4509, 0.0631  # linear optics calibrated to [15] (scripts/validate_un2023.py)
+EPS_INF_REF, GAMMA_IMP_REF = 3.4509, 0.0352  # linear optics calibrated to [15] (enzkin.calibrate)
 
 
 class DoublePulse(Pulse):
@@ -79,6 +88,28 @@ def sample_case(rng: np.random.Generator) -> dict:
     return case
 
 
+def material_of(case: dict):
+    return ito_sarkar2023(**{k: case[k] for k in ("n_e", "m0_rel", "C", "c_ee", "D_def", "eps_inf", "gamma_imp")})
+
+
+def nominal_deposit_over_capacity(case: dict, N: int) -> float:
+    """(cold-film eps'' x in-film fluence) / (energy the band can still take), both in eV/nm^3."""
+    import math
+
+    from enzkin import constants as c
+
+    mat = material_of(case)
+    pulse = Pulse(case["wavelength"], case["fwhm"])
+    model = KineticModel(mat, N=N)
+    f0, T0 = model.split(model.initial_state(300.0))
+    eps2 = complex(model.permittivity(f0, T0, pulse.omega)).imag
+    area = case["fwhm"] * math.sqrt(math.pi / (4.0 * math.log(2.0))) * (1.0 + case["ratio"])  # fs
+    deposit = 0.5 * pulse.omega * c.EPS0 * eps2 * c.intensity_to_field(case["intensity"]) ** 2 * area
+    g = model.grid
+    u_full = g.density(f0) * float(np.sum(g.E * g.rho) / np.sum(g.rho))  # uniform occupation, same density
+    return deposit / (u_full - g.energy(f0))
+
+
 def perturbed_states(model, f, T_ph, rng, k: int, amplitude: float = 0.05):
     """k states f + delta with delta smooth, confined to where f(1-f) > 0, carrying zero number and energy."""
     g = model.grid
@@ -97,7 +128,7 @@ def perturbed_states(model, f, T_ph, rng, k: int, amplitude: float = 0.05):
 
 
 def one_trajectory(case: dict, N: int, t_span: float, dt_sample: float, n_perturb: int, rng):
-    mat = ito_sarkar2023(**{k: case[k] for k in ("n_e", "m0_rel", "C", "c_ee", "D_def", "eps_inf", "gamma_imp")})
+    mat = material_of(case)
     pulse = (DoublePulse(case["wavelength"], case["fwhm"], case["delay"], case["ratio"]) if case["double"]
              else Pulse(case["wavelength"], case["fwhm"]))
     model = KineticModel(mat, N=N, drive=FieldDrive(pulse, case["intensity"]))
@@ -128,6 +159,8 @@ def main():
     ap.add_argument("--span", type=float, default=2000.0, help="trajectory length, fs")
     ap.add_argument("--dt-sample", type=float, default=2.0, help="sampling interval, fs")
     ap.add_argument("--perturb", type=int, default=32, help="off-trajectory states per trajectory")
+    ap.add_argument("--capacity-fraction", type=float, default=0.5,
+                    help="reject cases whose nominal deposit exceeds this fraction of the band's capacity")
     ap.add_argument("--seed", type=int, default=20261117)
     ap.add_argument("--out", default="data/pilot.h5")
     args = ap.parse_args()
@@ -136,6 +169,7 @@ def main():
     out.parent.mkdir(parents=True, exist_ok=True)
     with h5py.File(out, "a") as h5:
         h5.attrs.update(N=args.N, span_fs=args.span, dt_sample_fs=args.dt_sample, seed=args.seed,
+                        capacity_fraction=args.capacity_fraction,
                         e_max_ev=4.0, units="eV, fs, nm, K; f dimensionless; Q in 1/fs",
                         ee_level="B1 (screened Coulomb, kappa recomputed from f)")
         for i in range(args.start, args.start + args.n):
@@ -143,12 +177,28 @@ def main():
             if name in h5:
                 continue
             rng = np.random.default_rng([args.seed, i])
-            case = sample_case(rng)
+            n_rejected = 0
+            while True:  # resample until the case fits in the band (deterministic for a given seed and index)
+                case = sample_case(rng)
+                load = nominal_deposit_over_capacity(case, args.N)
+                if load <= args.capacity_fraction:
+                    break
+                n_rejected += 1
+            h5.attrs["rejected_saturating"] = int(h5.attrs.get("rejected_saturating", 0)) + n_rejected
+            h5.attrs["accepted"] = int(h5.attrs.get("accepted", 0)) + 1
             t0 = time.perf_counter()
-            model, tr, q, pert = one_trajectory(case, args.N, args.span, args.dt_sample, args.perturb, rng)
+            try:
+                model, tr, q, pert = one_trajectory(case, args.N, args.span, args.dt_sample, args.perturb, rng)
+            except RuntimeError as exc:  # step limit: record and move on rather than lose the whole run
+                print(f"{name}: skipped ({exc})", flush=True)
+                continue
             g = h5.create_group(name)
             g.attrs.update({k: v for k, v in case.items()})
-            g.attrs.update(wall_s=time.perf_counter() - t0, n_steps=tr.meta["n_steps"], h_min_fs=tr.meta["h_min"])
+            g.attrs.update(nominal_load=load, n_rejected_before=n_rejected)
+            g.attrs.update(wall_s=time.perf_counter() - t0, n_steps=tr.meta["n_steps"], h_min_fs=tr.meta["h_min"],
+                           # occupation of the top cell: > ~0.05 means the finite band is saturating and the
+                           # trajectory is outside the single-band model's validity (docs/WORKLOG.md 1.5)
+                           f_top_max=float(tr.f[:, -1].max()), Te_max=float(tr["T_e"].max()))
             kw = dict(compression="gzip", compression_opts=4, shuffle=True)
             g.create_dataset("t", data=tr.t)
             g.create_dataset("E", data=tr.E)
@@ -166,7 +216,8 @@ def main():
             audit = np.abs(tr["audit"] - tr["audit"][0]).max() / max(tr["u_abs"][-1], 1e-30)
             print(f"{name}: {case['fwhm']:6.1f} fs  {case['intensity']:.2e} W/cm2  {case['wavelength']:.0f} nm  "
                   f"T_e,max {tr['T_e'].max():7.0f} K  steps {tr.meta['n_steps']:6d}  audit {audit:.1e}  "
-                  f"f in [{tr['f_min'].min():.1e}, {tr['f_max'].max():.6f}]  {time.perf_counter() - t0:.0f} s", flush=True)
+                  f"f in [{tr['f_min'].min():.1e}, {tr['f_max'].max():.6f}]  f_top {tr.f[:, -1].max():.1e}  "
+                  f"{time.perf_counter() - t0:.0f} s", flush=True)
     print("wrote", out)
 
 

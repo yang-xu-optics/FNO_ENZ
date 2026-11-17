@@ -78,7 +78,8 @@ def fig_cost():
     ax.set_ylabel("wall time per evaluation (ms)")
     ax.set_title(f"Cost of one collision-integral evaluation ({d['machine']['numba_threads']} CPU threads)")
     for x, y1, y0 in zip(n, b1, b0):
-        ax.annotate(f"×{y1 / y0:.0f}", (x, np.sqrt(y1 * y0)), ha="center", va="center", color=INK2, fontsize=9)
+        if y1 / y0 >= 3:  # label the ratio where the two curves are far enough apart to hold it
+            ax.annotate(f"×{y1 / y0:.0f}", (x, np.sqrt(y1 * y0)), ha="center", va="center", color=INK2, fontsize=9)
     ax.annotate("B1", (n[-1], b1[-1]), xytext=(6, -3), textcoords="offset points", color=INK2)
     ax.annotate("B0", (n[-1], b0[-1]), xytext=(6, -3), textcoords="offset points", color=INK2)
     ax.legend(loc="upper left")
@@ -90,21 +91,20 @@ def fig_transients():
     d = json.loads((R / "gate1.json").read_text())
     z = np.load(R / "gate1_series.npz")
     picks = [(i, c["case"]) for i, c in enumerate(d["cases"])
-             if c["case"]["mode"] == "energy" and abs(c["case"]["level"] - 3e8) < 1 and c["case"]["fwhm"] in (20.0, 50.0, 220.0)]
+             if c["case"]["mode"] == "energy" and abs(c["case"]["level"] - 1e8) < 1 and c["case"]["fwhm"] in (20.0, 50.0, 220.0)]
     fig, axes = plt.subplots(1, len(picks), figsize=(3.5 * len(picks), 3.7), constrained_layout=True, sharey=True)
     for ax, (ic, case) in zip(np.atleast_1d(axes), picks):
         for kind, col, lab in (("B1", BLUE, "B1 (reference)"), ("B0", ORANGE, "B0"), ("thermal", AQUA, "thermal (two-temperature)")):
             t, y = z[f"c{ic}_{kind}_t"], z[f"c{ic}_{kind}_eps_re"]
             ax.plot(t, y - y[0], color=col, label=lab)
-            j = int(np.argmin(np.abs(t - (t[-1] - 0.02 * (t[-1] - t[0])))))
         m = d["cases"][ic]["miss"]
         ax.set_title(f"{case['fwhm']:.0f} fs pump")
         ax.text(0.98, 0.05, f"largest deviation from B1\nB0 {100 * m['B0']['eps_re']:.1f} %   thermal {100 * m['thermal']['eps_re']:.1f} %",
                 transform=ax.transAxes, ha="right", va="bottom", color=INK2, fontsize=8.5)
         ax.set_xlabel("time relative to pump peak (fs)")
     np.atleast_1d(axes)[0].set_ylabel("change of Re ε at the pump frequency")
-    np.atleast_1d(axes)[0].legend(loc="upper left", fontsize=8.5)
-    fig.suptitle("Same absorbed energy (3×10⁸ J/m³), three pulse durations: permittivity transient by collision model",
+    np.atleast_1d(axes)[-1].legend(loc="upper right", fontsize=8.5)  # the long-pulse panel has free space there
+    fig.suptitle("Same absorbed energy (1×10⁸ J/m³), three pulse durations: permittivity transient by collision model",
                  x=0.01, ha="left", fontsize=11, color=INK)
     fig.savefig(R / "fig_gate1_transients.png", dpi=200)
     plt.close(fig)
