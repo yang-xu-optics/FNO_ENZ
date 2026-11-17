@@ -164,7 +164,13 @@ Not measured: any GPU number (no GPU here). Working estimate, to be replaced by 
 
 Conclusions: (i) the grid size sets everything, so the convergence sweep of open item 4 comes before any large request; (ii) WP1 and WP3 need CPU cores, not GPUs, and the code runs on a cluster unchanged; (iii) a GPU is needed for WP2 training and for gradient-based inference through a differentiable (JAX/PyTorch) port in WP4; (iv) sequential samplers in WP4 are limited by wall time per film run (about 2 minutes on a 64-core node at N = 128), which is where a surrogate or a GPU port earns its place. Suggested request: about 50 000 CPU core-hours, one GPU with at least 40 GB for 1 000–1 500 GPU-hours, 500 GB storage, preceded by a small pilot allocation for the GPU benchmark and the convergence sweep.
 
-### 1.9 Open items, in priority order
+### 1.9 Progress report and repository visibility
+
+- Progress report: `python scripts/make_progress_report.py` → `docs/reports/progress_2026-11-17.html`. One self-contained page (inline CSS, inline SVG charts with hover read-outs, light and dark themes); every chart and result table is read from `results/wp1/validation_un2023.json`, `results/wp1/gate1.json` and `results/wp1/gate1_series.npz`. Also published as a private page at https://claude.ai/artifact/TPWgtV8XsG8qHVSaf3eQ7J (republishing the same file keeps the link).
+- Request to make the repository private: **not done, cannot be done from a working session.** The session's GitHub access has no operation that changes repository settings. The owner changes it on GitHub: repository → Settings → General → Danger Zone → Change repository visibility → Make private. The repository was still public when this entry was written.
+- Once it is private: decide whether to track the paper PDFs (about 170 MB). If yes, remove the `references/pdfs/` line from `.gitignore` (and optionally `references/sources/`, `references/text/`), update the "never commit PDFs" rule in `CLAUDE.md` and the note in `references/README.md`, and record it in the decision table.
+
+### 1.10 Open items, in priority order
 
 1. **Write to the authors of [14–16]** (the plan already recommends it): ε∞, e–impurity rate, gold permittivity, grid and time step of [15]; whether κ was recomputed from f; the origin of the 8 % plasma-frequency gap; the 3/16 prefactor; e–ph treatment above 6000 K. This closes the remaining validation gaps.
 2. **Obtain the nine missing PDFs** and redo the seven reconstructed digests, [1] first (it is the WP4 calibration dataset and its two-temperature parameters were never read).

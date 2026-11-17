@@ -7,7 +7,7 @@ Research project: what sets the speed and sign of the optical response of ENZ in
 - **Keep the working log.** Append a dated session entry to `docs/WORKLOG.md` for everything done: scope, results with the script that reproduces them, dead ends, deviations from the plan, open items. Decisions that change the plan also go in its decision table.
 - **Literature.** `references/LITERATURE_SUMMARY.md` is the theory cornerstone; reference numbers `[n]` are the plan's. When a paper is (re)read, update its digest there and, if it changes a conclusion, Part I. Never commit PDFs, TeX sources or extracted text (public repository); they are rebuilt with `python references/fetch_references.py --sources --text`.
 - **Equations.** Any departure from a published formula goes in `docs/theory/` with the reason, and in the log.
-- **Results.** A number enters a gate report (`docs/gates/`) only if a script under `scripts/` regenerates it into `results/`.
+- **Results.** A number enters a gate report (`docs/gates/`) only if a script under `scripts/` regenerates it into `results/`. Progress reports (`docs/reports/`) are built by `scripts/make_progress_report.py` from the same files.
 - **Structure.** Solver code in `src/enzkin/`; later work packages add `src/enzkin/operator/` (WP2) and `src/enzkin/maxwell/` (WP3), `inference/` (WP4), `experiment/` (WP5). Large data go to `data/` (git-ignored).
 
 ## Commands
