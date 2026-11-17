@@ -69,6 +69,8 @@ This is [14] Eq. 15–17 with three corrections:
 
 Evaluation: the antiderivative A is tabulated at k_a + k_b and |k_a − k_b| along diagonals (d = i₂ − i₄) so the innermost loop is a contiguous min/max/multiply reduction (numba, parallel over E₁). Cost is O(N³): 1.8 ms at N = 128, 13 ms at 256, 80 ms at 512 on 4 CPU cores.
 
+A second implementation of the same discrete integral, `collisions/ee_jax.py`, is written in JAX: for each shift d the kernel is an N×N matrix built from two vectors and the sums are two matrix–vector products. It is batched over cells, differentiable, and meant for GPUs; it agrees with the numba kernel to 10⁻¹¹ and keeps the same invariants (`tests/test_ee_jax.py`). On a CPU it is about half as fast as numba.
+
 ### B0: random-k, constant matrix element [40]
 
 ```

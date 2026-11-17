@@ -11,14 +11,21 @@ Stages (results are written after every run, so an interrupted sweep keeps what 
   A   all conditions, 4 eV band, N = 128 and 256
   B   strong conditions, 6 eV band, N = 192 and 384 (same dE as 128 and 256 at 4 eV)
   C   four conditions, 4 eV band, N = 512
+  D   the two hottest conditions, 8 eV band, N = 256 (same dE again): is the 6 eV band wide enough?
 
-One material is used throughout (linear optics calibrated once, on the 256-point grid), so differences
-between grids include any static offset as well as the dynamics.
+One material is used throughout (linear optics calibrated once, on the 256-point grid).  Two things are
+reported for each grid N against the finest grid available for that condition, for an observable y(t):
 
-"Miss" of grid N against the finest grid available for that condition, for an observable y(t):
-    max_t |y_N - y_ref| / max_t |y_ref - y_ref(t_0)|
+    static offset   y_N(t_0) - y_ref(t_0)
+                    the cold state's quadrature difference between grids.  It is the same for every
+                    condition and is absorbed when eps_inf and the impurity rate are calibrated on the grid
+                    in use, as the validation and gate scripts do.
+    miss            max_t |dy_N - dy_ref| / max_t |dy_ref|,   dy(t) = y(t) - y(t_0)
+                    the error of the transient itself, in units of the size of the transient.
 
-Usage:  python scripts/convergence_sweep.py [--stages A B C] [--quick]
+The band-width comparison uses the same measure between runs of equal dE and different band width.
+
+Usage:  python scripts/convergence_sweep.py [--stages A B C D] [--quick]
         python scripts/convergence_sweep.py --summarise      # recompute the summary from the stored series
 """
 from __future__ import annotations
@@ -61,6 +68,8 @@ def key(case):
 
 STRONG = [("energy", 20.0, 3e8), ("energy", 220.0, 1e8), ("energy", 220.0, 3e8), ("field", 220.0, 4e10), ("field", 20.0, 5e11)]
 FINEST = [("energy", 20.0, 1e6), ("energy", 20.0, 1e8), ("energy", 220.0, 1e6), ("energy", 220.0, 3e8)]
+HOTTEST = [("energy", 20.0, 3e8), ("field", 20.0, 5e11)]
+BAND_PAIRS = [((4.0, 128), (6.0, 192)), ((6.0, 192), (8.0, 256))]  # equal dE; narrower band measured against wider
 
 
 def pick(cases, wanted):
@@ -81,8 +90,10 @@ def one_run(mat, N, case):
 
 
 def miss(a, ref):
-    amp = float(np.max(np.abs(ref - ref[0])))
-    return float(np.max(np.abs(a - ref)) / amp) if amp > 0 else float("nan")
+    """Largest deviation of the transient a(t) - a(t0) from the reference transient, in units of its size."""
+    da, dr = a - a[0], ref - ref[0]
+    amp = float(np.max(np.abs(dr)))
+    return float(np.max(np.abs(da - dr)) / amp) if amp > 0 else float("nan")
 
 
 def summarise(series: dict, runs: list) -> dict:
@@ -98,27 +109,29 @@ def summarise(series: dict, runs: list) -> dict:
             continue
         entry = dict(case_key=ck, case=ref["case"], E_max=emax, N_ref=ref["N"], Te_max=ref["Te_max"],
                      amplitude={o: float(np.max(np.abs(series[f'{ref["id"]}_{o}'] - series[f'{ref["id"]}_{o}'][0]))) for o in OBS},
-                     miss={})
+                     miss={}, static={})
         for r in rs[:-1]:
             entry["miss"][str(r["N"])] = {o: miss(series[f'{r["id"]}_{o}'], series[f'{ref["id"]}_{o}']) for o in OBS}
+            entry["static"][str(r["N"])] = {o: float(series[f'{r["id"]}_{o}'][0] - series[f'{ref["id"]}_{o}'][0]) for o in OBS}
         out.append(entry)
-    # band-width effect: 6 eV against 4 eV at the same dE (N = 192 vs 128), in units of the 6 eV transient
+    # band-width effect at equal dE, in units of the wider band's transient
     band = []
-    for (ck, emax), rs in groups.items():
-        if emax != 6.0:
-            continue
-        r6 = next((r for r in rs if r["N"] == 192), None)
-        r4 = next((r for r in groups.get((ck, 4.0), []) if r["N"] == 128), None)
-        if r6 and r4:
-            n = min(len(series[f'{r6["id"]}_T_e']), len(series[f'{r4["id"]}_T_e']))
-            band.append(dict(case_key=ck, case=r6["case"], Te_max_4eV=r4["Te_max"], Te_max_6eV=r6["Te_max"],
-                             miss={o: miss(series[f'{r4["id"]}_{o}'][:n], series[f'{r6["id"]}_{o}'][:n]) for o in OBS}))
+    by_id = {(r["case_key"], r["E_max"], r["N"]): r for r in runs}
+    for ck in dict.fromkeys(r["case_key"] for r in runs):
+        for (e_lo, n_lo), (e_hi, n_hi) in BAND_PAIRS:
+            lo, hi = by_id.get((ck, e_lo, n_lo)), by_id.get((ck, e_hi, n_hi))
+            if lo and hi:
+                n = min(len(series[f'{lo["id"]}_T_e']), len(series[f'{hi["id"]}_T_e']))
+                band.append(dict(case_key=ck, case=hi["case"], E_narrow=e_lo, E_wide=e_hi,
+                                 Te_max_narrow=lo["Te_max"], Te_max_wide=hi["Te_max"],
+                                 f_top_narrow=lo["f_top_max"], f_top_wide=hi["f_top_max"],
+                                 miss={o: miss(series[f'{lo["id"]}_{o}'][:n], series[f'{hi["id"]}_{o}'][:n]) for o in OBS}))
     return dict(grid=out, band_width=band)
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--stages", nargs="*", default=["A", "B", "C"])
+    ap.add_argument("--stages", nargs="*", default=["A", "B", "C", "D"])
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--summarise", action="store_true")
     args = ap.parse_args()
@@ -134,6 +147,7 @@ def main():
 
     mat4 = calibrate_linear_optics(ito_sarkar2023(), 256)
     mat6 = mat4.with_(E_max=6.0)
+    mat8 = mat4.with_(E_max=8.0)
     state["material"] = dict(eps_inf=mat4.eps_inf, gamma_imp=mat4.gamma_imp, calibrated_on_N=256)
     cases = all_cases(args.quick)
     plan = []
@@ -143,6 +157,8 @@ def main():
         plan += [(mat6, N, c) for N in (192, 384) for c in pick(cases, STRONG)]
     if "C" in args.stages:
         plan += [(mat4, 512, c) for c in pick(cases, FINEST)]
+    if "D" in args.stages:
+        plan += [(mat8, 256, c) for c in pick(cases, HOTTEST)]
 
     done = {(r["case_key"], r["E_max"], r["N"]) for r in state["runs"]}
     for mat, N, case in plan:

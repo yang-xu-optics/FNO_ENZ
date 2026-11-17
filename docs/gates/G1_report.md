@@ -24,6 +24,8 @@ What follows from this:
 
 The decision on point 3 is the project lead's; the measurements below are what it should rest on.
 
+**Decision, 2026-11-17:** the project lead dropped the machine-learning surrogate for now. The film solver uses the exact integral, and the plan was revised accordingly (`docs/PROJECT_PLAN.md`, revision 2). The follow-up measurements are in [`G1b_report.md`](G1b_report.md).
+
 ## A. Cost per evaluation
 
 4 numba threads, Linux-6.18.44-fc-v553-x86_64-with-glibc2.39. B1 timings include rebuilding its lookup tables for a new screening wavevector, as happens at every call in a run.

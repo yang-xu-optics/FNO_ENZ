@@ -187,6 +187,8 @@ Implications:
 
 ## 10. Where the literature contradicts the project plan
 
+This list refers to revision 1 of the plan (2026-11-16). Revision 2 (2026-11-17) incorporates every item; it is kept here as the record of why the plan changed.
+
 1. Two-photon absorption cannot operate at 1.1–1.6 µm for E_g = 2.67 eV → M3 is testable only on 800 nm data (Tier 2 regime).
 2. H2 must be phrased for Re ε or ω_p; transmittance sign reversal does not need a density change [24].
 3. M0 is a two-temperature model (not "extended") and needs a temperature-dependent damping law to produce any reversal.
