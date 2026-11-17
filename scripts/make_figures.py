@@ -4,6 +4,8 @@
     results/wp1/fig_validation_un2023.png   peak electron temperature and absorptivity vs pump intensity, this work vs [15]
     results/wp1/fig_gate1_cost.png          cost per collision-integral evaluation vs grid size, B1 vs B0
     results/wp1/fig_gate1_transients.png    change of Re(eps) for three pulse durations: B1, B0, thermal model
+    results/wp1/fig_convergence_sweep.png   change of the permittivity transient when the energy step is halved
+    results/wp1/fig_band_width.png          change of the transient when the band is widened, vs top-cell occupation
 
 Style: one y-axis per panel, small multiples instead of dual axes, 2 px lines, recessive grid, a legend
 plus direct labels, three categorical hues (blue, orange, aqua) that pass colour-vision checks on the
@@ -18,6 +20,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FuncFormatter
 import numpy as np
 
 R = Path("results/wp1")
@@ -111,32 +114,60 @@ def fig_transients():
 
 
 def fig_convergence():
-    """Grid-convergence sweep: miss of each grid against the finest grid run for that condition."""
+    """Grid-convergence sweep: change of the permittivity transient when the energy step is halved."""
     d = json.loads((R / "convergence_sweep.json").read_text())
-    rows = [e for e in d["summary"]["grid"] if e["E_max"] == 4.0]
-    fig, axes = plt.subplots(1, 2, figsize=(9.6, 3.9), constrained_layout=True, sharey=True)
-    for ax, obs, title in ((axes[0], "eps_re", "Re ε transient"), (axes[1], "eps_im", "Im ε transient")):
-        for n, col, mk, lab in (("128", BLUE, "o", "128 points"), ("256", ORANGE, "s", "256 points")):
-            pts = [(e["Te_max"], 100 * e["miss"][n][obs]) for e in rows if n in e["miss"] and int(n) < e["N_ref"]]
-            if pts:
-                x, y = zip(*sorted(pts))
-                ax.plot(x, y, mk, color=col, label=lab, markeredgecolor=SURFACE, markeredgewidth=1.0)
-        ax.axhline(1.0, color=INK2, linewidth=1, linestyle=(0, (4, 3)))
-        ax.annotate("1 % criterion", (ax.get_xlim()[0], 1.0), xytext=(4, 4), textcoords="offset points", color=INK2, fontsize=9)
-        ax.set_xscale("log")
-        ax.set_yscale("log")
-        ax.set_xlabel("peak electron temperature of the run (K)")
-        ax.set_title(title)
-    axes[0].set_ylabel("largest deviation from the finest grid\n(% of the transient amplitude)")
-    axes[0].legend(loc="upper right")
-    fig.suptitle("Grid convergence of the exact collision integral over the condition matrix (4 eV band)",
-                 x=0.01, ha="left", fontsize=11, color=INK)
+    rows = d["summary"]["grid"]
+    worst = lambda m: 100 * max(m["eps_re"], m["eps_im"])
+    series = (("128", 4.0, BLUE, "o", "128 points against 256 (4 eV band)"),
+              ("256", 4.0, ORANGE, "s", "256 points against 512 (4 eV band)"),
+              ("192", 6.0, AQUA, "^", "192 points against 384 (6 eV band)"))
+    fig, ax = plt.subplots(figsize=(7.4, 4.2), constrained_layout=True)
+    for n, emax, col, mk, lab in series:
+        pts = sorted((e["Te_max"], worst(e["halving"][n])) for e in rows if e["E_max"] == emax and n in e["halving"])
+        if pts:
+            x, y = zip(*pts)
+            ax.plot(x, y, mk, color=col, label=lab, markersize=8, markeredgecolor=SURFACE, markeredgewidth=1.2)
+    ax.set_xscale("log")
+    ax.set_yscale("log")
+    ax.set_ylim(0.02, 2.0)
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:g}"))
+    ax.axhline(1.0, color=INK2, linewidth=1, linestyle=(0, (4, 3)))
+    ax.annotate("1 % criterion", (ax.get_xlim()[0], 1.0), xytext=(6, 5), textcoords="offset points", color=INK2, fontsize=9)
+    ax.set_xlabel("peak electron temperature of the run (K)")
+    ax.set_ylabel("change of the permittivity transient\n(% of its amplitude, larger of Re ε and Im ε)")
+    ax.set_title("Halving the energy step changes the transient by less than 1 % everywhere")
+    ax.legend(loc="lower left")
     fig.savefig(R / "fig_convergence_sweep.png", dpi=200)
     plt.close(fig)
 
 
+def fig_band_width():
+    """Band-width effect at equal energy step, against the occupation of the narrower band's top cell."""
+    d = json.loads((R / "convergence_sweep.json").read_text())
+    band = d["summary"]["band_width"]
+    worst = lambda m: 100 * max(m["eps_re"], m["eps_im"])
+    series = ((4.0, BLUE, "o", "4 eV against 6 eV"), (6.0, ORANGE, "s", "6 eV against 8 eV"), (8.0, AQUA, "^", "8 eV against 10 eV"))
+    fig, ax = plt.subplots(figsize=(7.4, 4.2), constrained_layout=True)
+    for e_lo, col, mk, lab in series:
+        pts = sorted((b["f_top_narrow"], worst(b["miss"])) for b in band if b["E_narrow"] == e_lo)
+        if pts:
+            x, y = zip(*pts)
+            ax.plot(x, y, mk, color=col, label=lab, markersize=8, markeredgecolor=SURFACE, markeredgewidth=1.2)
+    ax.set_xscale("log")
+    ax.set_yscale("log")
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:g}"))
+    ax.axhline(1.0, color=INK2, linewidth=1, linestyle=(0, (4, 3)))
+    ax.annotate("1 % criterion", (ax.get_xlim()[0], 1.0), xytext=(6, 5), textcoords="offset points", color=INK2, fontsize=9)
+    ax.set_xlabel("largest occupation reached in the top cell of the narrower band")
+    ax.set_ylabel("change of the permittivity transient\n(% of its amplitude, larger of Re ε and Im ε)")
+    ax.set_title("A band is wide enough while its top cell stays nearly empty")
+    ax.legend(loc="upper left")
+    fig.savefig(R / "fig_band_width.png", dpi=200)
+    plt.close(fig)
+
+
 if __name__ == "__main__":
-    for fn in (fig_validation, fig_cost, fig_transients, fig_convergence):
+    for fn in (fig_validation, fig_cost, fig_transients, fig_convergence, fig_band_width):
         try:
             fn()
             print("wrote", fn.__name__)

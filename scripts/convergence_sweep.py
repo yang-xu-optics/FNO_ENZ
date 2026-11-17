@@ -11,7 +11,8 @@ Stages (results are written after every run, so an interrupted sweep keeps what 
   A   all conditions, 4 eV band, N = 128 and 256
   B   strong conditions, 6 eV band, N = 192 and 384 (same dE as 128 and 256 at 4 eV)
   C   four conditions, 4 eV band, N = 512
-  D   the two hottest conditions, 8 eV band, N = 256 (same dE again): is the 6 eV band wide enough?
+  D   strong conditions, 8 eV band, N = 256 (same dE again): is the 6 eV band wide enough?
+  E   the two hottest conditions, 10 eV band, N = 320: is the 8 eV band wide enough?
 
 One material is used throughout (linear optics calibrated once, on the 256-point grid).  Two things are
 reported for each grid N against the finest grid available for that condition, for an observable y(t):
@@ -23,9 +24,11 @@ reported for each grid N against the finest grid available for that condition, f
     miss            max_t |dy_N - dy_ref| / max_t |dy_ref|,   dy(t) = y(t) - y(t_0)
                     the error of the transient itself, in units of the size of the transient.
 
+"halving" is the same miss between each grid and the one with half its energy step.
+
 The band-width comparison uses the same measure between runs of equal dE and different band width.
 
-Usage:  python scripts/convergence_sweep.py [--stages A B C D] [--quick]
+Usage:  python scripts/convergence_sweep.py [--stages A B C D E] [--quick]
         python scripts/convergence_sweep.py --summarise      # recompute the summary from the stored series
 """
 from __future__ import annotations
@@ -69,7 +72,7 @@ def key(case):
 STRONG = [("energy", 20.0, 3e8), ("energy", 220.0, 1e8), ("energy", 220.0, 3e8), ("field", 220.0, 4e10), ("field", 20.0, 5e11)]
 FINEST = [("energy", 20.0, 1e6), ("energy", 20.0, 1e8), ("energy", 220.0, 1e6), ("energy", 220.0, 3e8)]
 HOTTEST = [("energy", 20.0, 3e8), ("field", 20.0, 5e11)]
-BAND_PAIRS = [((4.0, 128), (6.0, 192)), ((6.0, 192), (8.0, 256))]  # equal dE; narrower band measured against wider
+BAND_PAIRS = [((4.0, 128), (6.0, 192)), ((6.0, 192), (8.0, 256)), ((8.0, 256), (10.0, 320))]  # equal dE; narrower against wider
 
 
 def pick(cases, wanted):
@@ -109,10 +112,13 @@ def summarise(series: dict, runs: list) -> dict:
             continue
         entry = dict(case_key=ck, case=ref["case"], E_max=emax, N_ref=ref["N"], Te_max=ref["Te_max"],
                      amplitude={o: float(np.max(np.abs(series[f'{ref["id"]}_{o}'] - series[f'{ref["id"]}_{o}'][0]))) for o in OBS},
-                     miss={}, static={})
+                     miss={}, static={}, halving={})
         for r in rs[:-1]:
             entry["miss"][str(r["N"])] = {o: miss(series[f'{r["id"]}_{o}'], series[f'{ref["id"]}_{o}']) for o in OBS}
             entry["static"][str(r["N"])] = {o: float(series[f'{r["id"]}_{o}'][0] - series[f'{ref["id"]}_{o}'][0]) for o in OBS}
+        for r, r2 in zip(rs[:-1], rs[1:]):  # each grid against the one with half the energy step
+            if r2["N"] == 2 * r["N"]:
+                entry["halving"][str(r["N"])] = {o: miss(series[f'{r["id"]}_{o}'], series[f'{r2["id"]}_{o}']) for o in OBS}
         out.append(entry)
     # band-width effect at equal dE, in units of the wider band's transient
     band = []
@@ -131,7 +137,7 @@ def summarise(series: dict, runs: list) -> dict:
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--stages", nargs="*", default=["A", "B", "C", "D"])
+    ap.add_argument("--stages", nargs="*", default=["A", "B", "C", "D", "E"])
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--summarise", action="store_true")
     args = ap.parse_args()
@@ -158,7 +164,9 @@ def main():
     if "C" in args.stages:
         plan += [(mat4, 512, c) for c in pick(cases, FINEST)]
     if "D" in args.stages:
-        plan += [(mat8, 256, c) for c in pick(cases, HOTTEST)]
+        plan += [(mat8, 256, c) for c in pick(cases, STRONG)]
+    if "E" in args.stages:
+        plan += [(mat4.with_(E_max=10.0), 320, c) for c in pick(cases, HOTTEST)]
 
     done = {(r["case_key"], r["E_max"], r["N"]) for r in state["runs"]}
     for mat, N, case in plan:

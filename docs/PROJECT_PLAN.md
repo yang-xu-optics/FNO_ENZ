@@ -133,9 +133,9 @@ Comparison models built from the same pieces: the FFT random-k integral of \[40\
 
 **Remaining**
 
-- [ ] Confirm grid convergence over the full condition matrix, including weak excitation and the 6 eV band (gate G1b).
-- [ ] Port the exact integral to JAX for GPU and for gradients; benchmark it on a GPU (gate G1b).
-- [ ] Fix the band model for high intensity: choose the band width, state the validity limit.
+- [x] Confirm grid convergence over the full condition matrix, including weak excitation and the 6 eV band (gate G1b). Done 2026-11-17: an energy step of 31 meV holds 1 % everywhere (`docs/gates/G1b_report.md`).
+- [ ] Port the exact integral to JAX for GPU and for gradients; benchmark it on a GPU (gate G1b). Port done and tested; the GPU benchmark is outstanding.
+- [ ] Fix the band model for high intensity: choose the band width, state the validity limit. Rule found at G1b: widen the band (4, 6, 8 eV at a fixed 31 meV step) when the occupation of its top cell passes 4 × 10^-5. Still to do: rerun the validation against \[15\] and the Gate 1 conditions above about 4000 K with that rule, and state the limit above which the single-band model itself is not trustworthy (results above roughly 7000 K change by 1-3 % between 6, 8 and 10 eV).
 - [ ] Close the validation gaps against \[15\]: the change of Re ε is 20-28 % low, and Im ε depends on how the screening is treated. This needs the authors.
 - [ ] Write to the authors of \[14-16\] for the parameters the papers do not print.
 - [ ] Benchmark dataset: about 10^3 trajectories with the exact integral over 20-250 fs and 1.1-1.6 um, inside the single-band limit, with material parameters varied by 25 %. It serves regression tests, the methods paper, and any later surrogate.
@@ -280,7 +280,7 @@ What revision 1's literature review established, for that day: \[47\] already en
 | Gate | Month | Pass criterion | If it fails |
 | --- | --- | --- | --- |
 | G1 | 2 | **Closed, not passed as written.** The exact integral is 6-46 times costlier than the FFT integral at 128-256 points (266 times at 512), and the FFT integral misses the transient by 7-221 %. | Taken: use the exact integral in WP3; drop the surrogate for now |
-| G1b | 1 | 128 or 256 points reproduce the finest grid within 1 % of the transient amplitude over the whole condition matrix, including weak excitation and the 6 eV band; a film run on the exact integral fits in hours on a cluster node or minutes on a GPU | Use the finer grid and recost WP3 and WP4; reopen the surrogate question if a film run exceeds a day |
+| G1b | 1 | 128 or 256 points reproduce the finest grid within 1 % of the transient amplitude over the whole condition matrix, including weak excitation and the 6 eV band; a film run on the exact integral fits in hours on a cluster node or minutes on a GPU. **Status 2026-11-17: grid and CPU parts met (128 points per 4 eV; 1.7-12 core-hours per film run for 4-8 eV bands); GPU part outstanding.** | Use the finer grid and recost WP3 and WP4; reopen the surrogate question if a film run exceeds a day |
 | G3 | 6 | Validation steps 1-3 pass with parameters fixed at step 2 | Revisit the absorption model and the current equation |
 | G4 | 8 | Synthetic study recovers the generating model in at least 9 of 10 trials | Redesign the WP5 measurements and narrow the claims to H1 and H3 |
 

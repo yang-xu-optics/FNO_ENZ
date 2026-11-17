@@ -202,8 +202,58 @@ Conclusions: (i) the grid size sets everything, so the convergence sweep of open
 
 - Same discrete integral as the numba kernel, written as array operations: for a fixed index shift d the kernel factor is an N×N matrix built from two vectors, and the sums are two matrix–vector products; `jax.lax.map` runs over the 2N−1 shifts with `d_batch` of them in memory at a time. Batched over cells with `vmap`, differentiable, 64-bit.
 - Tests (`tests/test_ee_jax.py`, skipped when JAX is absent): agreement with numba to 10⁻¹¹ for the collision term and the rate, single-state and batched calls agree, number and energy conserved, Fermi–Dirac fixed point, and the gradient of the entropy production matches a finite difference.
-- Reference timing on **one CPU core** (`scripts/bench_b1_jax.py`, `results/wp1/bench_b1_jax_cpu.json`): 6.8 ms per cell at N = 128 and 47 ms at N = 256, against 3.1 and 30 ms for numba on the same core. JAX on a CPU is about twice as slow as numba; the port exists for the GPU and for gradients.
-- **Not done: the GPU benchmark.** This environment has no GPU. On a GPU node: `pip install -U "jax[cuda12]"`, then `python scripts/bench_b1_jax.py --N 128 256 --cells 1 16 100 400`; the script prints the time per call, per cell and per film run, and writes `results/wp1/bench_b1_jax_gpu.json`. This closes the GPU half of gate G1b.
+- Reference timing on **one CPU core** (`scripts/bench_b1_jax.py --numba`, `results/wp1/bench_b1_jax_cpu.json`): 8.0 ms per cell at N = 128 and 48 ms at N = 256, against 3.7 and 27 ms for numba on the same core. JAX on a CPU is about twice as slow as numba; the port exists for the GPU and for gradients.
+- **Not done: the GPU benchmark.** This environment has no GPU. On a GPU node: `pip install -U "jax[cuda12]"`, then `python scripts/bench_b1_jax.py --N 128 192 256 --cells 1 16 100 400`; the script prints the time per call, per cell and per film run, and writes `results/wp1/bench_b1_jax_gpu.json`. This closes the GPU half of gate G1b.
+
+### 2.3 Grid-convergence sweep and gate G1b (`scripts/convergence_sweep.py`, `docs/gates/G1b_report.md`)
+
+**Design.** Exact integral, reference material calibrated once (on 256 points), 1300 nm, 24 conditions: absorbed energy 10⁶, 10⁷, 3×10⁷, 10⁸, 3×10⁸ J/m³ for pulses of 20, 50, 100, 220 fs, and four fixed in-film intensities (100 and 500 GW/cm² at 20 fs, 10 and 40 GW/cm² at 220 fs). Peak electron temperatures run from 431 K to 10 100 K. Stages: A, all conditions at 128 and 256 points over 4 eV; B, five strong conditions over 6 eV at 192 and 384 points; C, four conditions at 512 points; D, the five strong conditions over 8 eV at 256 points; E, the two hottest over 10 eV at 320 points. 72 runs, about 1 h 40 min on this machine. Results: `results/wp1/convergence_sweep.json` (+ `_series.npz`); summary rebuilt with `--summarise`; figures by `scripts/make_figures.py`; report by `scripts/make_g1b_report.py`.
+
+**Measure.** Largest deviation of the transient y(t) − y(t₀) from the finer grid's, divided by the finer grid's transient amplitude.
+
+**Dead end worth remembering.** The first summary compared y(t) itself and showed 13–18 % "miss" at weak excitation. That was not a dynamic error: the cold-state permittivity differs between grids by a constant (−1.0×10⁻³ in Re ε and +8.9×10⁻⁵ in Im ε at 128 points against 512), which is up to 24 % of the weakest transient. It is the same for every condition and disappears when ε∞ and the impurity rate are calibrated on the grid in use, as the validation and gate scripts do. The sweep uses one material on all grids, so the measure was changed to the transient and the static offset is reported separately. **Rule: calibrate the linear optics on the grid in use.**
+
+**Energy step.**
+
+- 128 against 256 points, all 24 conditions: at most 0.72 % (220 fs, 10⁶ J/m³). 128 against 512 (four conditions): at most 0.96 %. 256 against 512: at most 0.24 %.
+- Observed order of convergence 1.3–1.7. Extrapolated to zero step, the 128-point error is 1.1 % and the 256-point error 0.4 % for the weakest long pulse.
+- The error falls with excitation (0.4 % or less against the next grid above 1800 K) and is the same fraction in T_e, ω_p², Re ε and Im ε: a scale error from the quadrature of the cold Fermi edge (k_B T = 26 meV against a 31 meV cell), not a shape error.
+- 6 eV band: 192 against 384 points, at most 0.21 %.
+
+**Band width — the larger error, and not anticipated by the gate.** At equal energy step:
+
+| Narrow → wide | within 1 % up to | beyond |
+| --- | --- | --- |
+| 4 → 6 eV | T_e,max ≈ 3500 K | 2.7 % at 5900 K, 12 % at 8800 K (T_e,max itself 16 % too high) |
+| 6 → 8 eV | ≈ 6700 K | 3.1 % near 8400 K |
+| 8 → 10 eV | not within 1 % at the hottest | 1.3 % near 8400 K |
+
+- All three pairs fall on one curve against the largest occupation reached in the narrower band's top cell (`f_top_max`, recorded by every run): below 1 % while it stays under 4×10⁻⁵, above 1 % from 2×10⁻⁴. **Rule: widen the band when the top-cell occupation passes 4×10⁻⁵**, keeping the 31 meV step (128, 192, 256 points for 4, 6, 8 eV).
+- A narrow band always errs upward (electrons pile up under the cut-off), so earlier 4 eV numbers above about 4000 K overstate T_e and the transient. This affects the Gate 1 conditions at 3×10⁸ J/m³ and is the same effect as the T_e overshoot against [15] (§1.5).
+- For the hottest condition the dependence converges slowly: 12.6 %, 3.1 %, 1.2 % for 4→6, 6→8, 8→10 eV. Several eV above the Fermi level the Kane dispersion is an extrapolation, so this is also a statement about the model: results above roughly 7000 K depend at the percent level on states it does not describe.
+
+**Cost** (`results/wp1/bench_b1_jax_cpu.json`, rerun with nothing else on the machine, one core): numba 3.7, 9.9, 27.0, 67.3 ms per evaluation at 128, 192, 256, 320 points; a film run of 1.6×10⁶ evaluations is 1.7, 4.4, 12.0, 29.9 core-hours. (The Gate 1 report counted 10⁶ evaluations per film run; the count here is 100 cells × 4000 RK4 steps × 4 stages.)
+
+**Gate G1b.** Grid part met at 128 points per 4 eV (at the line for the weakest excitation, comfortably elsewhere; 256 points meet it with a margin of 4). 6 eV grid part met. CPU cost part met. **GPU part outstanding**: no GPU here (§2.2). Consequences for WP3: exact integral, 31 meV step, band width set by the top-cell rule.
+
+**Not covered.** Thin-film (self-consistent field) runs, other wavelengths, other material parameters, time-step error.
+
+### 2.4 Housekeeping
+
+- `pytest` on the bare command line picks an interpreter without numpy in this container; `python3 -m pytest` works (65 tests pass, 53 s). `CLAUDE.md` updated.
+- The CPU benchmark file was overwritten by the rerun; §2.2 quotes the new numbers.
+- Commits are pushed to `claude/eager-euler-1aan36`; partial sweep results were committed once mid-run.
+
+### 2.5 Open items, in priority order (supersedes §1.10)
+
+1. **Run the GPU benchmark** on a GPU node (§2.2) and rerun `python scripts/make_g1b_report.py`; this closes G1b.
+2. **Start WP3** on the exact integral: derive the l = 1 (current) moment of the kinetic equation to choose the current equation; one-dimensional Maxwell solver coupled to one kinetic cell per grid point; validation ladder of the plan.
+3. **Rerun what used the 4 eV band above about 4000 K** with the top-cell rule: the [15] validation at 50–75 GW/cm² (6 or 8 eV) and the Gate 1 conditions at 3×10⁸ J/m³. Add an automatic warning in `enzkin.integrate.run` when `f_top_max` passes the threshold.
+4. **Write to the authors of [14–16]**: ε∞, impurity rate, gold permittivity, grid, time step and band cut-off of [15]; whether κ follows f; the 8 % plasma-frequency gap; the 3/16 prefactor.
+5. **Obtain the nine missing PDFs** and redo the seven reconstructed digests, [1] first.
+6. Extend the convergence sweep to the thin-film drive and to a second wavelength once WP3 has a film solver.
+7. Benchmark dataset (plan WP1): regenerate with the band rule in place of the fixed 4 eV screen.
+8. Repository visibility is still public; the owner changes it on GitHub (§1.9).
 
 ---
 
@@ -223,3 +273,4 @@ Conclusions: (i) the grid size sets everything, so the convergence sweep of open
 | D11 | 2026-11-17 | Plan revised to revision 2; revision 1 archived | D9 and the findings of the literature pass |
 | D12 | 2026-11-17 | The exact integral is ported to JAX (64-bit) for GPU use and gradients; numba stays the CPU reference | WP3 and WP4 need GPU batching over cells and gradients |
 | D10 | 2026-11-17 | Dataset generator rejects cases whose nominal deposit exceeds half the band's capacity | a third of the plan's sampling range saturates a single 4 eV band |
+| D13 | 2026-11-17 | Grid rule for WP3 onward: energy step 31 meV (32 points per eV); band width 4, 6 or 8 eV chosen so that the top-cell occupation stays below 4×10⁻⁵; linear optics calibrated on the grid in use. Replaces the intensity threshold of D8 | convergence sweep, §2.3: step error ≤ 1 %, band cut-off error up to 12 % |

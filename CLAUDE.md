@@ -18,7 +18,7 @@ pip install -e ".[dev]"
 ```
 
 ```bash
-pytest
+python -m pytest
 ```
 
 The full test suite takes about 35 s on 4 cores when nothing else is running; the numba kernels use all cores, so do not run benchmarks and tests at the same time.
@@ -27,7 +27,8 @@ The full test suite takes about 35 s on 4 cores when nothing else is running; th
 
 - Units inside `enzkin` are eV, fs, nm, K (`enzkin.constants`).
 - The energy grid must stay uniform: exact energy conservation relies on i₁ + i₂ = i₃ + i₄.
-- Default band width is 4 eV as printed in [14]; it saturates above about 30 GW/cm² in the geometry of [15]. Use `E_max=6.0` with N scaled to keep ΔE for high-intensity runs (log §1.5).
+- Default band width is 4 eV as printed in [14]. Keep the energy step at 31 meV (32 points per eV) and widen the band (6 eV with N = 192, 8 eV with N = 256) when the top-cell occupation `f_top_max` passes 4×10⁻⁵, roughly T_e above 3500 K for 4 eV and 6700 K for 6 eV; a narrow band overstates T_e and the transient (log §2.3, `docs/gates/G1b_report.md`).
+- Calibrate ε∞ and γ_imp (`enzkin.calibrate`) on the grid in use; the cold permittivity shifts by about 10⁻³ between grids, which is a large fraction of a weak transient.
 - `ElectronElectronB0` gets stiff (rates of several per fs) at high excitation; always integrate with the adaptive `enzkin.integrate.run`.
 - Cloud sessions should use the `FNO_ENZ` environment (network allowlist for arXiv and the repositories).
 - JAX is an optional dependency (`pip install -e ".[jax]"`); its tests are skipped when it is absent. Importing `enzkin.collisions.ee_jax` switches JAX to 64-bit floats.
