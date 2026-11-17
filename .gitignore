@@ -1,0 +1,26 @@
+# --- reference library: binaries and extracted text are local only (public repo, see references/README.md)
+references/pdfs/
+references/sources/
+references/text/
+
+# --- generated data (large); regenerate with scripts/
+data/
+*.h5
+*.hdf5
+*.npz
+!results/**/*.npz
+
+# --- python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+build/
+dist/
+.ipynb_checkpoints/
+
+# --- OS / editor
+.DS_Store
+.vscode/
+.idea/

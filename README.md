@@ -1,0 +1,72 @@
+# FNO_ENZ: learned kinetic closure for ENZ electron dynamics
+
+What sets the speed and sign of the optical response of epsilon-near-zero indium tin oxide under intense ultrashort pulses? This repository holds the project: the reference library and its ingested summary, the ground-truth Boltzmann solver (WP1), and, as the work proceeds, the neural-operator closure (WP2), the Maxwell–kinetic solver (WP3), mechanism inference (WP4) and the experimental comparison (WP5).
+
+**Status (2026-11-17):** WP1 first pass complete: solver built and tested, first validation against published transients, Gate 1 measured. See [`docs/WORKLOG.md`](docs/WORKLOG.md) for what was done and what is open.
+
+## Where things are
+
+| Path | Contents |
+| --- | --- |
+| [`docs/PROJECT_PLAN.md`](docs/PROJECT_PLAN.md) | The project plan (as written 2026-11-16). Source of the work packages, gates and reference numbers. |
+| [`docs/WORKLOG.md`](docs/WORKLOG.md) | **Working log**: chronological record of decisions, results, deviations from the plan and open items. Append to it every session. |
+| [`docs/theory/wp1_kinetic_model.md`](docs/theory/wp1_kinetic_model.md) | Equations exactly as implemented, with corrections to the printed formulas. |
+| [`docs/gates/G1_report.md`](docs/gates/G1_report.md) | Gate 1 measurement and decision. |
+| [`references/`](references/README.md) | Reference library: index, manifest, download script. PDFs are local only (public repo). |
+| [`references/LITERATURE_SUMMARY.md`](references/LITERATURE_SUMMARY.md) | **Ingested summary of all 61 references**: synthesis plus one digest per paper. The theory cornerstone. |
+| `src/enzkin/` | The solver package (WP1). |
+| `tests/` | Structural and physics tests (`pytest`). |
+| `scripts/` | Reproducible runs: validation, Gate 1 benchmark, dataset generation, figures. |
+| `results/wp1/` | Small outputs of those scripts (JSON, figures). Large data go to `data/` (git-ignored). |
+
+Later work packages add `src/enzkin/operator/` (WP2), `src/enzkin/maxwell/` (WP3), `inference/` (WP4) and `experiment/` (WP5), each with its own gate report under `docs/gates/`.
+
+## The solver in one paragraph
+
+`enzkin` evolves the isotropic conduction-electron distribution f(E, t) of a Kane band and the lattice temperature under photo-excitation, electron–electron collisions (two fidelity levels: `B1`, the momentum-resolved screened-Coulomb integral, O(N³); `B0`, the random-k integral evaluated by FFT, O(N log N)), electron–phonon collisions with momentum conservation, and optional interband channels (Auger-like, two-photon). Plasma frequency, damping and permittivity are computed from f without assuming a temperature. All operators conserve particle number and energy to round-off by construction, and Fermi–Dirac distributions are exact fixed points.
+
+```python
+from enzkin.material import ito_sarkar2023
+from enzkin.model import KineticModel
+from enzkin.drive import Pulse, FieldDrive
+from enzkin.integrate import run
+
+model = KineticModel(ito_sarkar2023(), N=256, drive=FieldDrive(Pulse(1300.0, 100.0), 5e10))  # 100 fs, 50 GW/cm² in-film
+tr = run(model, t0=-250.0, t1=800.0, dt=0.5, sample_every=4)
+tr["T_e"], tr["eps_re"], tr["wp2"], tr.f      # extracted temperature, Re eps at the pump, omega_p², f(E, t)
+```
+
+## Getting started
+
+```bash
+pip install -e ".[dev]"
+```
+
+```bash
+pytest
+```
+
+```bash
+python references/fetch_references.py --sources --text
+```
+
+```bash
+python scripts/validate_un2023.py --N 128
+```
+
+```bash
+python scripts/gate1_benchmark.py --N 128
+```
+
+```bash
+python scripts/make_dataset.py --n 64 --N 128 --out data/pilot.h5
+```
+
+Cloud sessions: use the `FNO_ENZ` environment, whose network allowlist covers arXiv and the repositories the reference script needs.
+
+## Conventions
+
+- Reference numbers `[n]` everywhere are those of the project plan.
+- Units inside the package: eV, fs, nm, K. Conversion helpers live in `enzkin.constants`.
+- Every departure from a published formula is recorded in `docs/theory/` and in the working log, with the reason.
+- A result enters a gate report only if a script in `scripts/` regenerates it.

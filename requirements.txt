@@ -1,0 +1,7 @@
+# Runtime for WP1 (ground-truth kinetic solver).  WP2 will add jax or torch.
+numpy>=2.0
+scipy>=1.13
+numba>=0.60
+h5py>=3.10
+matplotlib>=3.8
+pytest>=8.0

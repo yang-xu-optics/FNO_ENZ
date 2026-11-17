@@ -1,0 +1,2246 @@
+[
+ {
+  "n": 1,
+  "key": "alam2016",
+  "group": "ENZ nonlinearity: foundations and models",
+  "title": "Large optical nonlinearity of indium tin oxide in its epsilon-near-zero region",
+  "authors_plan": "M. Z. Alam, I. De Leon, R. W. Boyd",
+  "authors": [
+   "M. Zahirul Alam",
+   "Israel De Leon",
+   "Robert W. Boyd"
+  ],
+  "venue_plan": "Science 352, 795",
+  "year_plan": 2016,
+  "published": {
+   "journal": "Science",
+   "volume": "352",
+   "page": "795-797",
+   "year": 2016,
+   "doi": "10.1126/science.aae0330",
+   "license": "http://www.sciencemag.org/about/science-licenses-journal-article-reuse"
+  },
+  "sources": [],
+  "access": "paywalled",
+  "plan_dagger": false
+ },
+ {
+  "n": 2,
+  "key": "caspani2016",
+  "group": "ENZ nonlinearity: foundations and models",
+  "title": "Enhanced nonlinear refractive index in epsilon-near-zero materials",
+  "authors_plan": "L. Caspani et al.",
+  "authors": [
+   "L. Caspani",
+   "R. P. M. Kaipurath",
+   "M. Clerici",
+   "M. Ferrera",
+   "T. Roger",
+   "J. Kim",
+   "N. Kinsey",
+   "M. Pietrzyk",
+   "A. Di Falco",
+   "V. M. Shalaev",
+   "A. Boltasseva",
+   "D. Faccio"
+  ],
+  "venue_plan": "Phys. Rev. Lett. 116, 233901",
+  "year_plan": 2016,
+  "published": {
+   "journal": "Physical Review Letters",
+   "volume": "116",
+   "page": "233901",
+   "year": 2016,
+   "doi": "10.1103/physrevlett.116.233901",
+   "license": "http://link.aps.org/licenses/aps-default-license"
+  },
+  "arxiv": {
+   "id": "1603.03581",
+   "version": "1603.03581v2",
+   "title": "Enhanced nonlinear refractive index in epsilon-near-zero materials",
+   "submitted": "2016-03-11"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/1603.03581v2"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 3,
+  "key": "reshef2019",
+  "group": "ENZ nonlinearity: foundations and models",
+  "title": "Nonlinear optical effects in epsilon-near-zero media",
+  "authors_plan": "O. Reshef, I. De Leon, M. Z. Alam, R. W. Boyd",
+  "authors": [
+   "Orad Reshef",
+   "Israel De Leon",
+   "M. Zahirul Alam",
+   "Robert W. Boyd"
+  ],
+  "venue_plan": "Nat. Rev. Mater. 4, 535",
+  "year_plan": 2019,
+  "published": {
+   "journal": "Nature Reviews Materials",
+   "volume": "4",
+   "page": "535-551",
+   "year": 2019,
+   "doi": "10.1038/s41578-019-0120-5",
+   "license": "https://www.springernature.com/gp/researchers/text-and-data-mining"
+  },
+  "sources": [],
+  "access": "paywalled",
+  "plan_dagger": false
+ },
+ {
+  "n": 4,
+  "key": "kinsey2019",
+  "group": "ENZ nonlinearity: foundations and models",
+  "title": "Near-zero-index materials for photonics",
+  "authors_plan": "N. Kinsey, C. DeVault, A. Boltasseva, V. M. Shalaev",
+  "authors": [
+   "Nathaniel Kinsey",
+   "Clayton DeVault",
+   "Alexandra Boltasseva",
+   "Vladimir M. Shalaev"
+  ],
+  "venue_plan": "Nat. Rev. Mater. 4, 742",
+  "year_plan": 2019,
+  "published": {
+   "journal": "Nature Reviews Materials",
+   "volume": "4",
+   "page": "742-760",
+   "year": 2019,
+   "doi": "10.1038/s41578-019-0133-0",
+   "license": "https://www.springernature.com/gp/researchers/text-and-data-mining"
+  },
+  "sources": [],
+  "access": "paywalled",
+  "plan_dagger": false
+ },
+ {
+  "n": 5,
+  "key": "khurgin2021",
+  "group": "ENZ nonlinearity: foundations and models",
+  "title": "Fast and slow nonlinearities in epsilon-near-zero materials",
+  "authors_plan": "J. B. Khurgin, M. Clerici, N. Kinsey",
+  "authors": [
+   "Jacob B. Khurgin",
+   "Matteo Clerici",
+   "Nathaniel Kinsey"
+  ],
+  "venue_plan": "Laser Photonics Rev. 15, 2000291",
+  "year_plan": 2021,
+  "published": {
+   "journal": "Laser & Photonics Reviews",
+   "volume": "15",
+   "page": "2000291",
+   "year": 2020,
+   "doi": "10.1002/lpor.202000291",
+   "license": "http://creativecommons.org/licenses/by/4.0/"
+  },
+  "arxiv": {
+   "id": "2007.05613",
+   "version": "2007.05613v1",
+   "title": "Fast and slow nonlinearities in ENZ materials",
+   "submitted": "2020-07-10"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2007.05613v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 6,
+  "key": "secondo2020",
+  "group": "ENZ nonlinearity: foundations and models",
+  "title": "Absorptive loss and band non-parabolicity as a physical origin of large nonlinearity in epsilon-near-zero materials",
+  "authors_plan": "R. Secondo, J. Khurgin, N. Kinsey",
+  "authors": [
+   "Ray Secondo",
+   "Jacob Khurgin",
+   "Nathaniel Kinsey"
+  ],
+  "venue_plan": "Opt. Mater. Express 10, 1545",
+  "year_plan": 2020,
+  "published": {
+   "journal": "Optical Materials Express",
+   "volume": "10",
+   "page": "1545",
+   "year": 2020,
+   "doi": "10.1364/ome.394111",
+   "license": "https://doi.org/10.1364/OA_License_v1#VOR-OA"
+  },
+  "arxiv": {
+   "id": "2004.00134",
+   "version": "2004.00134v1",
+   "title": "Absorptive loss and band non-parabolicity as a physical origin of large nonlinearity in epsilon-near-zero materials",
+   "submitted": "2020-03-31"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2004.00134v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 7,
+  "key": "wang2019",
+  "group": "ENZ nonlinearity: foundations and models",
+  "title": "Extended Drude model for intraband-transition-induced optical nonlinearity",
+  "authors_plan": "H. Wang et al.",
+  "authors": [
+   "Heng Wang",
+   "Kang Du",
+   "Chuhao Jiang",
+   "Zhiqiang Yang",
+   "Lixia Ren",
+   "Wending Zhang",
+   "Soo Jin Chua",
+   "Ting Mei"
+  ],
+  "venue_plan": "Phys. Rev. Applied 11, 064062",
+  "year_plan": 2019,
+  "published": {
+   "journal": "Physical Review Applied",
+   "volume": "11",
+   "page": "064062",
+   "year": 2019,
+   "doi": "10.1103/physrevapplied.11.064062",
+   "license": "https://link.aps.org/licenses/aps-default-license"
+  },
+  "sources": [],
+  "access": "paywalled",
+  "plan_dagger": false
+ },
+ {
+  "n": 8,
+  "key": "secondo2022",
+  "group": "ENZ nonlinearity: foundations and models",
+  "title": "Deterministic modeling of hybrid nonlinear effects in epsilon-near-zero thin films",
+  "authors_plan": "R. Secondo et al.",
+  "authors": [
+   "R. Secondo",
+   "A. Ball",
+   "B. Diroll",
+   "D. Fomra",
+   "K. Ding",
+   "V. Avrutin",
+   "Ü. Özgür",
+   "D. O. Demchenko",
+   "J. B. Khurgin",
+   "N. Kinsey"
+  ],
+  "venue_plan": "Appl. Phys. Lett. 120, 031103",
+  "year_plan": 2022,
+  "published": {
+   "journal": "Applied Physics Letters",
+   "volume": "120",
+   "page": "031103",
+   "year": 2022,
+   "doi": "10.1063/5.0077116",
+   "license": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "sources": [
+   {
+    "kind": "repository",
+    "url": "https://www.osti.gov/servlets/purl/1894216",
+    "license": "CC-BY 4.0 (published version via OSTI)"
+   },
+   {
+    "kind": "publisher-oa",
+    "url": "https://pubs.aip.org/aip/apl/article-pdf/doi/10.1063/5.0077116/16443385/031103_1_online.pdf",
+    "license": "CC-BY 4.0"
+   }
+  ],
+  "access": "open-access",
+  "plan_dagger": false
+ },
+ {
+  "n": 9,
+  "key": "baxter2022",
+  "group": "ENZ nonlinearity: foundations and models",
+  "title": "Understanding the nonlinear optical response of epsilon near zero materials in the time-domain",
+  "authors_plan": "J. Baxter et al.",
+  "authors": [
+   "Joshua Baxter",
+   "Adriana Pérez-Casanova",
+   "Luis Cortes-Herrera",
+   "Antonio Calà Lesina",
+   "Israel De Leon",
+   "Lora Ramunno"
+  ],
+  "venue_plan": "Adv. Photonics Res.",
+  "year_plan": 2022,
+  "published": {
+   "journal": "Advanced Photonics Research",
+   "volume": "4",
+   "page": "2200280",
+   "year": 2023,
+   "doi": "10.1002/adpr.202200280",
+   "license": "http://creativecommons.org/licenses/by/4.0/"
+  },
+  "arxiv": {
+   "id": "2110.14806",
+   "version": "2110.14806v1",
+   "title": "Understanding the nonlinear optical response of epsilon near zero materials in the time-domain",
+   "submitted": "2021-10-27"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2110.14806v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 10,
+  "key": "li2022",
+  "group": "ENZ nonlinearity: foundations and models",
+  "title": "Invertible optical nonlinearity in epsilon-near-zero materials",
+  "authors_plan": "C. Li et al.",
+  "authors": [
+   "Chentao Li",
+   "Xinyu Tian",
+   "Guoce Yang",
+   "Sukrith U. Dev",
+   "Monica S. Allen",
+   "Jeffery W. Allen",
+   "Hayk Harutyunyan"
+  ],
+  "venue_plan": "arXiv",
+  "year_plan": 2022,
+  "published": {
+   "journal": "Physical Review Research",
+   "volume": "5",
+   "page": "013198",
+   "year": 2023,
+   "doi": "10.1103/physrevresearch.5.013198",
+   "license": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "arxiv": {
+   "id": "2203.09600",
+   "version": "2203.09600v1",
+   "title": "Invertible Optical Nonlinearity in Epsilon-near-zero Materials",
+   "submitted": "2022-03-17"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2203.09600v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 11,
+  "key": "scalora2020",
+  "group": "ENZ nonlinearity: foundations and models",
+  "title": "Electrodynamics of conductive oxides: intensity-dependent anisotropy, reconstruction of the effective dielectric constant, and harmonic generation",
+  "authors_plan": "M. Scalora et al.",
+  "authors": [
+   "Michael Scalora",
+   "Jose Trull",
+   "Domenico de Ceglia",
+   "Maria Antonietta Vincenti",
+   "Neset Akozbek",
+   "Zachary Coppens",
+   "Laura Rodríguez-Suné",
+   "Crina Cojocaru"
+  ],
+  "venue_plan": "Phys. Rev. A 101, 053828",
+  "year_plan": 2020,
+  "published": {
+   "journal": "Physical Review A",
+   "volume": "101",
+   "page": "053828",
+   "year": 2020,
+   "doi": "10.1103/physreva.101.053828",
+   "license": "https://link.aps.org/licenses/aps-default-license"
+  },
+  "arxiv": {
+   "id": "2003.01059",
+   "version": "2003.01059v1",
+   "title": "Electrodynamics of Conductive Oxides: Intensity-dependent anisotropy, reconstruction of the effective dielectric constant, and harmonic generation",
+   "submitted": "2020-03-02"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2003.01059v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 12,
+  "key": "rodriguezsune2020",
+  "group": "ENZ nonlinearity: foundations and models",
+  "title": "Study of second and third harmonic generation from an indium tin oxide nanolayer: influence of nonlocal effects and hot electrons",
+  "authors_plan": "L. Rodriguez-Sune et al.",
+  "authors": [
+   "L. Rodríguez-Suné",
+   "M. Scalora",
+   "A. S. Johnson",
+   "C. Cojocaru",
+   "N. Akozbek",
+   "Z. J. Coppens",
+   "D. Perez-Salinas",
+   "S. Wall",
+   "J. Trull"
+  ],
+  "venue_plan": "APL Photonics 5, 010801",
+  "year_plan": 2020,
+  "published": {
+   "journal": "APL Photonics",
+   "volume": "5",
+   "page": "010801",
+   "year": 2020,
+   "doi": "10.1063/1.5129627",
+   "license": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "arxiv": {
+   "id": "1910.00313",
+   "version": "1910.00313v1",
+   "title": "Study of second and third harmonic generation from an indium tin oxide nanolayer: influence of nonlocal effects and hot electrons",
+   "submitted": "2019-10-01"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/1910.00313v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 13,
+  "key": "tamashevich2023",
+  "group": "ENZ nonlinearity: foundations and models",
+  "title": "Field theory description of the non-perturbative optical nonlinearity of epsilon-near-zero media",
+  "authors_plan": "Y. Tamashevich, T. Shubitidze, L. Dal Negro, M. Ornigotti",
+  "authors": [
+   "Yaraslau Tamashevich",
+   "Tornike Shubitidze",
+   "Luca Dal Negro",
+   "Marco Ornigotti"
+  ],
+  "venue_plan": "arXiv",
+  "year_plan": 2023,
+  "published": {
+   "journal": "APL Photonics",
+   "volume": "9",
+   "page": "016105",
+   "year": 2024,
+   "doi": "10.1063/5.0171708",
+   "license": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "arxiv": {
+   "id": "2308.03181",
+   "version": "2308.03181v2",
+   "title": "Field theory description of the non-perturbative optical nonlinearity of epsilon-near-zero media",
+   "submitted": "2023-08-06"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2308.03181v2"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 14,
+  "key": "sarkar2023",
+  "group": "Kinetic theory of low-electron-density Drude materials",
+  "title": "Electronic and thermal response of low-electron-density Drude materials to ultrafast optical illumination",
+  "authors_plan": "S. Sarkar, I. W. Un, Y. Sivan",
+  "authors": [
+   "Subhajit Sarkar",
+   "Ieng Wai Un",
+   "Yonatan Sivan"
+  ],
+  "venue_plan": "Phys. Rev. Applied 19, 014005",
+  "year_plan": 2023,
+  "published": {
+   "journal": "Physical Review Applied",
+   "volume": "19",
+   "page": "014005",
+   "year": 2023,
+   "doi": "10.1103/physrevapplied.19.014005",
+   "license": "https://link.aps.org/licenses/aps-default-license"
+  },
+  "arxiv": {
+   "id": "2207.14528",
+   "version": "2207.14528v1",
+   "title": "The electronic and thermal response of low electron density Drude materials to ultrafast optical illumination",
+   "submitted": "2022-07-29"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2207.14528v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 15,
+  "key": "un2023",
+  "group": "Kinetic theory of low-electron-density Drude materials",
+  "title": "Electronic-based model of the optical nonlinearity of low-electron-density Drude materials",
+  "authors_plan": "I. W. Un, S. Sarkar, Y. Sivan",
+  "authors": [
+   "Ieng-Wai Un",
+   "Subhajit Sarkar",
+   "Yonatan Sivan"
+  ],
+  "venue_plan": "Phys. Rev. Applied 19",
+  "year_plan": 2023,
+  "published": {
+   "journal": "Physical Review Applied",
+   "volume": "19",
+   "page": "044043",
+   "year": 2023,
+   "doi": "10.1103/physrevapplied.19.044043",
+   "license": "https://link.aps.org/licenses/aps-default-license"
+  },
+  "arxiv": {
+   "id": "2210.08504",
+   "version": "2210.08504v3",
+   "title": "An electronic-based model of the optical nonlinearity of low-electron-density-Drude materials",
+   "submitted": "2022-10-16"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2210.08504v3"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 16,
+  "key": "un2026",
+  "group": "Kinetic theory of low-electron-density Drude materials",
+  "title": "Quantum-optical theory of the few-femtosecond nonlinear optical response of Drude metals with a nonparabolic conduction band",
+  "authors_plan": "I. W. Un",
+  "authors": [
+   "Ieng-Wai Un",
+   "Subhajit Sarkar",
+   "Yonatan Sivan"
+  ],
+  "venue_plan": "Phys. Rev. B 113, 165411",
+  "year_plan": 2026,
+  "published": {
+   "journal": "Physical Review B",
+   "volume": "113",
+   "page": "165411",
+   "year": 2026,
+   "doi": "10.1103/9rs8-8zh8",
+   "license": "https://link.aps.org/licenses/aps-default-license"
+  },
+  "arxiv": {
+   "id": "2601.10985",
+   "version": "2601.10985v2",
+   "title": "Quantum-optical theory of the few femtosecond nonlinear optical response of Drude metals with a non-parabolic conduction band",
+   "submitted": "2026-01-16"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2601.10985v2"
+   },
+   {
+    "kind": "author-site",
+    "url": "https://tzin.bgu.ac.il/~sivanyon/Papers/LEDDs/single_cycle_article.pdf",
+    "license": null
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 17,
+  "key": "zhou2020",
+  "group": "Time-varying ENZ experiments",
+  "title": "Broadband frequency translation through time refraction in an epsilon-near-zero material",
+  "authors_plan": "Y. Zhou et al.",
+  "authors": [
+   "Yiyu Zhou",
+   "M. Zahirul Alam",
+   "Mohammad Karimi",
+   "Jeremy Upham",
+   "Orad Reshef",
+   "Cong Liu",
+   "Alan E. Willner",
+   "Robert W. Boyd"
+  ],
+  "venue_plan": "Nat. Commun. 11, 2180",
+  "year_plan": 2020,
+  "published": {
+   "journal": "Nature Communications",
+   "volume": "11",
+   "page": "2180",
+   "year": 2020,
+   "doi": "10.1038/s41467-020-15682-2",
+   "license": "https://creativecommons.org/licenses/by/4.0"
+  },
+  "sources": [
+   {
+    "kind": "publisher-oa",
+    "url": "https://www.nature.com/articles/s41467-020-15682-2.pdf",
+    "license": "CC-BY 4.0"
+   },
+   {
+    "kind": "pmc",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7195366/pdf/",
+    "license": "CC-BY 4.0"
+   }
+  ],
+  "pmcid": "PMC7195366",
+  "access": "open-access",
+  "plan_dagger": true
+ },
+ {
+  "n": 18,
+  "key": "bohn2021",
+  "group": "Time-varying ENZ experiments",
+  "title": "Spatiotemporal refraction of light in an epsilon-near-zero indium tin oxide layer",
+  "authors_plan": "J. Bohn, T. S. Luk, S. Horsley, E. Hendry",
+  "authors": [
+   "Justus Bohn",
+   "Ting Shan Luk",
+   "Simon Horsley",
+   "Euan Hendry"
+  ],
+  "venue_plan": "Optica 8, 1532",
+  "year_plan": 2021,
+  "published": {
+   "journal": "Optica",
+   "volume": "8",
+   "page": "1532",
+   "year": 2021,
+   "doi": "10.1364/optica.436324",
+   "license": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2107.05970v1"
+   },
+   {
+    "kind": "publisher-oa",
+    "url": "https://opg.optica.org/optica/viewmedia.cfm?uri=optica-8-12-1532&seq=0",
+    "license": "CC-BY 4.0"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": true,
+  "arxiv": {
+   "id": "2107.05970",
+   "version": "2107.05970v1",
+   "title": "Spatiotemporal refraction of light in an epsilon-near-zero ITO layer",
+   "submitted": "2021-07-13"
+  }
+ },
+ {
+  "n": 19,
+  "key": "tirole2023",
+  "group": "Time-varying ENZ experiments",
+  "title": "Double-slit time diffraction at optical frequencies",
+  "authors_plan": "R. Tirole et al.",
+  "authors": [
+   "Romain Tirole",
+   "Stefano Vezzoli",
+   "Emanuele Galiffi",
+   "Iain Robertson",
+   "Dries Maurice",
+   "Benjamin Tilmann",
+   "Stefan A. Maier",
+   "John B. Pendry",
+   "Riccardo Sapienza"
+  ],
+  "venue_plan": "Nat. Phys. 19, 999",
+  "year_plan": 2023,
+  "published": {
+   "journal": "Nature Physics",
+   "volume": "19",
+   "page": "999-1002",
+   "year": 2023,
+   "doi": "10.1038/s41567-023-01993-w",
+   "license": "https://www.springernature.com/gp/researchers/text-and-data-mining"
+  },
+  "arxiv": {
+   "id": "2206.04362",
+   "version": "2206.04362v2",
+   "title": "Double-slit time diffraction at optical frequencies",
+   "submitted": "2022-06-09"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2206.04362v2"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": true
+ },
+ {
+  "n": 20,
+  "key": "lustig2023",
+  "group": "Time-varying ENZ experiments",
+  "title": "Time-refraction optics with single cycle modulation",
+  "authors_plan": "E. Lustig et al.",
+  "authors": [
+   "Eran Lustig",
+   "Ohad Segal",
+   "Soham Saha",
+   "Eliyahu Bordo",
+   "Sarah N. Chowdhury",
+   "Yonatan Sharabi",
+   "Avner Fleischer",
+   "Alexandra Boltasseva",
+   "Oren Cohen",
+   "Vladimir M. Shalaev",
+   "Mordechai Segev"
+  ],
+  "venue_plan": "Nanophotonics 12, 2221",
+  "year_plan": 2023,
+  "published": {
+   "journal": "Nanophotonics",
+   "volume": "12",
+   "page": "2221-2230",
+   "year": 2023,
+   "doi": "10.1515/nanoph-2023-0126",
+   "license": "http://creativecommons.org/licenses/by/4.0/"
+  },
+  "sources": [
+   {
+    "kind": "publisher-oa",
+    "url": "https://www.degruyterbrill.com/document/doi/10.1515/nanoph-2023-0126/pdf",
+    "license": "CC-BY 4.0"
+   },
+   {
+    "kind": "pmc",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11501756/pdf/nanoph-12-12-nanoph-2023-0126.pdf",
+    "license": "CC-BY 4.0"
+   }
+  ],
+  "pmcid": "PMC11501756",
+  "access": "open-access",
+  "plan_dagger": false
+ },
+ {
+  "n": 21,
+  "key": "gurung2025",
+  "group": "Time-varying ENZ experiments",
+  "title": "Control of ultrafast hot electron dynamics in epsilon-near-zero conductive oxide thin films",
+  "authors_plan": "S. Gurung et al.",
+  "authors": [
+   "Sudip Gurung",
+   "Subhajit Bej",
+   "Quynh Dang",
+   "Ambaresh Sahoo",
+   "Aleksei Anopchenko",
+   "Zhenhuan Yi",
+   "Alexei V. Sokolov",
+   "Andrea Marini",
+   "Ho Wai Howard Lee"
+  ],
+  "venue_plan": "Sci. Adv. 11, eadu8850",
+  "year_plan": 2025,
+  "published": {
+   "journal": "Science Advances",
+   "volume": "11",
+   "page": "eadu8850",
+   "year": 2025,
+   "doi": "10.1126/sciadv.adu8850",
+   "license": null
+  },
+  "sources": [
+   {
+    "kind": "repository",
+    "url": "https://escholarship.org/content/qt6xt5b0j1/qt6xt5b0j1.pdf",
+    "license": "CC-BY 4.0 (published version via eScholarship)"
+   },
+   {
+    "kind": "pmc",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12094231/pdf/",
+    "license": "CC-BY 4.0"
+   },
+   {
+    "kind": "publisher-oa",
+    "url": "https://www.science.org/doi/pdf/10.1126/sciadv.adu8850",
+    "license": "CC-BY 4.0"
+   }
+  ],
+  "pmcid": "PMC12094231",
+  "access": "open-access",
+  "plan_dagger": false
+ },
+ {
+  "n": 22,
+  "key": "harwood2026",
+  "group": "Time-varying ENZ experiments",
+  "title": "Intraband and interband competition drives ultrafast modulations of indium tin oxide",
+  "authors_plan": "A. C. Harwood et al.",
+  "authors": [
+   "Anthony C. Harwood",
+   "Sean Z. J. Lim",
+   "T. V. Raziman",
+   "Yan Li",
+   "Joseph Stones",
+   "John W. G. Tisch",
+   "Simon A. R. Horsley",
+   "Stefano Vezzoli",
+   "John B. Pendry",
+   "Riccardo Sapienza"
+  ],
+  "venue_plan": "arXiv",
+  "year_plan": 2026,
+  "published": {
+   "journal": "Optica",
+   "volume": "13",
+   "page": "1943",
+   "year": 2026,
+   "doi": "10.1364/optica.607371",
+   "license": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "arxiv": {
+   "id": "2605.21432",
+   "version": "2605.21432v2",
+   "title": "Competing Auger-Like and Intraband Excitations Drive Anomalous Modulations in Indium Tin Oxide",
+   "submitted": "2026-05-20"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2605.21432v2"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 23,
+  "key": "ozlu2026",
+  "group": "Time-varying ENZ experiments",
+  "title": "Nonlinearity reversal in epsilon-near-zero indium tin oxide driven by few-cycle light pulse",
+  "authors_plan": "M. G. Ozlu et al.",
+  "authors": [
+   "Mustafa Goksu Ozlu",
+   "Colton Fruhling",
+   "Ian Hoffman",
+   "Jae Ik Choi",
+   "Marcello Ferrera",
+   "Alexandra Boltasseva",
+   "Vladimir M. Shalaev"
+  ],
+  "venue_plan": "arXiv",
+  "year_plan": 2026,
+  "arxiv": {
+   "id": "2606.11567",
+   "version": "2606.11567v1",
+   "title": "Nonlinearity Reversal in Epsilon-Near-Zero Indium Tin Oxide Driven by Few-Cycle Light Pulse",
+   "submitted": "2026-06-10"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2606.11567v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 24,
+  "key": "choi2026",
+  "group": "Time-varying ENZ experiments",
+  "title": "Pathway to optical-cycle dynamic photonics: extreme electron temperatures in transparent conducting oxides",
+  "authors_plan": "J. I. Choi et al.",
+  "authors": [
+   "Jae Ik Choi",
+   "Vahagn Mkhitaryan",
+   "Colton Fruhling",
+   "Jacob B. Khurgin",
+   "Alexander V. Kildishev",
+   "Vladimir M. Shalaev",
+   "Alexandra Boltasseva"
+  ],
+  "venue_plan": "Nat. Commun.",
+  "year_plan": 2026,
+  "published": {
+   "journal": "Nature Communications",
+   "volume": "17",
+   "page": "11129",
+   "year": 2026,
+   "doi": "10.1038/s41467-026-77671-1",
+   "license": "https://creativecommons.org/licenses/by-nc-nd/4.0"
+  },
+  "arxiv": {
+   "id": "2512.24641",
+   "version": "2512.24641v2",
+   "title": "Pathway to Optical-Cycle Dynamic Photonics: Extreme Electron Temperatures in Transparent Conducting Oxides",
+   "submitted": "2025-12-31"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2512.24641v2"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 25,
+  "key": "segal2026",
+  "group": "Time-varying ENZ experiments",
+  "title": "Sub-cycle time-refraction at optical frequencies",
+  "authors_plan": "O. Segal et al.",
+  "authors": [
+   "Ohad Segal",
+   "Noa Konforty",
+   "Oded Schiller",
+   "Yonatan Plotnik",
+   "Maxwell J. Tolchin",
+   "Jon-Paul Maria",
+   "Mordechai Segev"
+  ],
+  "venue_plan": "arXiv",
+  "year_plan": 2026,
+  "published": {
+   "journal": "CLEO 2026",
+   "volume": null,
+   "page": "FM2E.2",
+   "year": 2026,
+   "doi": "10.1364/cleo_fs.2026.fm2e.2",
+   "license": null
+  },
+  "arxiv": {
+   "id": "2601.05566",
+   "version": "2601.05566v1",
+   "title": "Sub-cycle time-refraction at optical frequencies",
+   "submitted": "2026-01-09"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2601.05566v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 26,
+  "key": "galiffi2022",
+  "group": "Time-varying media: context and constraints",
+  "title": "Photonics of time-varying media",
+  "authors_plan": "E. Galiffi et al.",
+  "authors": [
+   "Emanuele Galiffi",
+   "Romain Tirole",
+   "Shixiong Yin",
+   "Huanan Li",
+   "Stefano Vezzoli",
+   "Paloma A. Huidobro",
+   "Mário G. Silveirinha",
+   "Riccardo Sapienza",
+   "Andrea Alù",
+   "J. B. Pendry"
+  ],
+  "venue_plan": "Adv. Photonics 4, 014002",
+  "year_plan": 2022,
+  "published": {
+   "journal": "Advanced Photonics",
+   "volume": "4",
+   "page": "1-32",
+   "year": 2022,
+   "doi": "10.1117/1.ap.4.1.014002",
+   "license": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "arxiv": {
+   "id": "2111.08640",
+   "version": "2111.08640v2",
+   "title": "Photonics of Time-Varying Media",
+   "submitted": "2021-11-16"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2111.08640v2"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 27,
+  "key": "hayran2022",
+  "group": "Time-varying media: context and constraints",
+  "title": "hw versus hk: dispersion and energy constraints on time-varying photonic materials and time crystals",
+  "authors_plan": "Z. Hayran, J. B. Khurgin, F. Monticone",
+  "authors": [
+   "Zeki Hayran",
+   "Jacob B. Khurgin",
+   "Francesco Monticone"
+  ],
+  "venue_plan": "Opt. Mater. Express 12, 3904",
+  "year_plan": 2022,
+  "published": {
+   "journal": "Optical Materials Express",
+   "volume": "12",
+   "page": "3904",
+   "year": 2022,
+   "doi": "10.1364/ome.471672",
+   "license": "https://doi.org/10.1364/OA_License_v2#VOR-OA"
+  },
+  "arxiv": {
+   "id": "2208.00459",
+   "version": "2208.00459v2",
+   "title": "$\\hbar ω$ versus $\\hbar \\boldsymbol{k}$: Dispersion and Energy Constraints on Time-Varying Photonic Materials and Time Crystals",
+   "submitted": "2022-07-31"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2208.00459v2"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 28,
+  "key": "saha2023",
+  "group": "Time-varying media: context and constraints",
+  "title": "Photonic time crystals: a materials perspective",
+  "authors_plan": "S. Saha et al.",
+  "authors": [
+   "Soham Saha",
+   "Ohad Segal",
+   "Colton Fruhling",
+   "Eran Lustig",
+   "Mordechai Segev",
+   "Alexandra Boltasseva",
+   "Vladimir M. Shalaev"
+  ],
+  "venue_plan": "Opt. Express 31, 8267",
+  "year_plan": 2023,
+  "published": {
+   "journal": "Optics Express",
+   "volume": "31",
+   "page": "8267",
+   "year": 2023,
+   "doi": "10.1364/oe.479257",
+   "license": "https://doi.org/10.1364/OA_License_v2#VOR-OA"
+  },
+  "sources": [
+   {
+    "kind": "author-site",
+    "url": "https://phsites.technion.ac.il/msegev/wp-content/uploads/sites/34/2024/08/oe-31-5-8267-compressed.pdf",
+    "license": "Optica OA (published version, Segev group site)"
+   },
+   {
+    "kind": "publisher-oa",
+    "url": "https://opg.optica.org/oe/viewmedia.cfm?uri=oe-31-5-8267&seq=0",
+    "license": "Optica OA"
+   },
+   {
+    "kind": "preprint",
+    "url": "https://preprints.opticaopen.org/articles/preprint/Photonic_time_crystals_A_materials_perspective/21916053/2/files/38983889.pdf",
+    "license": "CC-BY 4.0"
+   }
+  ],
+  "access": "open-access",
+  "plan_dagger": false
+ },
+ {
+  "n": 29,
+  "key": "lobet2023",
+  "group": "Time-varying media: context and constraints",
+  "title": "New horizons in near-zero refractive index photonics and hyperbolic metamaterials",
+  "authors_plan": "M. Lobet et al.",
+  "authors": [
+   "Michaël Lobet",
+   "Nathaniel Kinsey",
+   "Iñigo Liberal",
+   "Humeyra Caglayan",
+   "Paloma A. Huidobro",
+   "Emanuele Galiffi",
+   "Jorge Ricardo Mejía-Salazar",
+   "Giovanna Palermo",
+   "Zubin Jacob",
+   "Nicolò Maccaferri"
+  ],
+  "venue_plan": "arXiv",
+  "year_plan": 2023,
+  "published": {
+   "journal": "ACS Photonics",
+   "volume": "10",
+   "page": "3805-3820",
+   "year": 2023,
+   "doi": "10.1021/acsphotonics.3c00747",
+   "license": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "arxiv": {
+   "id": "2306.01314",
+   "version": "2306.01314v2",
+   "title": "New horizons in near-zero refractive index photonics and hyperbolic metamaterials",
+   "submitted": "2023-06-02"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2306.01314v2"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": true
+ },
+ {
+  "n": 30,
+  "key": "solis2021",
+  "group": "Time-varying media: context and constraints",
+  "title": "Time-varying materials in the presence of dispersion: plane-wave propagation in a Lorentzian medium with temporal discontinuity",
+  "authors_plan": "D. M. Solis, R. Kastner, N. Engheta",
+  "authors": [
+   "Diego M. Solís",
+   "Raphael Kastner",
+   "Nader Engheta"
+  ],
+  "venue_plan": "Photon. Res. 9, 1842",
+  "year_plan": 2021,
+  "published": {
+   "journal": "Photonics Research",
+   "volume": "9",
+   "page": "1842",
+   "year": 2021,
+   "doi": "10.1364/prj.427368",
+   "license": "https://doi.org/10.1364/OA_License_v1"
+  },
+  "arxiv": {
+   "id": "2103.06142",
+   "version": "2103.06142v1",
+   "title": "Time-Varying Materials in Presence of Dispersion: Plane-Wave Propagation in a Lorentzian Medium with Temporal Discontinuity",
+   "submitted": "2021-03-10"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2103.06142v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": true
+ },
+ {
+  "n": 31,
+  "key": "horsley2023",
+  "group": "Time-varying media: context and constraints",
+  "title": "Eigenpulses of dispersive time-varying media",
+  "authors_plan": "S. A. R. Horsley, E. Galiffi, Y.-T. Wang",
+  "authors": [
+   "S. A. R. Horsley",
+   "E. Galiffi",
+   "Y.-T. Wang"
+  ],
+  "venue_plan": "Phys. Rev. Lett. 130, 203803",
+  "year_plan": 2023,
+  "published": {
+   "journal": "Physical Review Letters",
+   "volume": "130",
+   "page": "203803",
+   "year": 2023,
+   "doi": "10.1103/physrevlett.130.203803",
+   "license": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "arxiv": {
+   "id": "2208.11778",
+   "version": "2208.11778v1",
+   "title": "Eigenpulses of dispersive time-varying media",
+   "submitted": "2022-08-24"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2208.11778v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": true
+ },
+ {
+  "n": 32,
+  "key": "rethfeld2002",
+  "group": "Non-equilibrium electron kinetics in metals",
+  "title": "Ultrafast dynamics of nonequilibrium electrons in metals under femtosecond laser irradiation",
+  "authors_plan": "B. Rethfeld, A. Kaiser, M. Vicanek, G. Simon",
+  "authors": [
+   "B. Rethfeld",
+   "A. Kaiser",
+   "M. Vicanek",
+   "G. Simon"
+  ],
+  "venue_plan": "Phys. Rev. B 65, 214303",
+  "year_plan": 2002,
+  "published": {
+   "journal": "Physical Review B",
+   "volume": "65",
+   "page": "214303",
+   "year": 2002,
+   "doi": "10.1103/physrevb.65.214303",
+   "license": "http://link.aps.org/licenses/aps-default-license"
+  },
+  "sources": [],
+  "access": "paywalled",
+  "plan_dagger": true
+ },
+ {
+  "n": 33,
+  "key": "mueller2013",
+  "group": "Non-equilibrium electron kinetics in metals",
+  "title": "Relaxation dynamics in laser-excited metals under nonequilibrium conditions",
+  "authors_plan": "B. Y. Mueller, B. Rethfeld",
+  "authors": [
+   "B. Y. Mueller",
+   "B. Rethfeld"
+  ],
+  "venue_plan": "Phys. Rev. B 87, 035139",
+  "year_plan": 2013,
+  "published": {
+   "journal": "Physical Review B",
+   "volume": "87",
+   "page": "035139",
+   "year": 2013,
+   "doi": "10.1103/physrevb.87.035139",
+   "license": "http://link.aps.org/licenses/aps-default-license"
+  },
+  "sources": [],
+  "access": "paywalled",
+  "plan_dagger": true
+ },
+ {
+  "n": 34,
+  "key": "carpene2006",
+  "group": "Non-equilibrium electron kinetics in metals",
+  "title": "Ultrafast laser irradiation of metals: beyond the two-temperature model",
+  "authors_plan": "E. Carpene",
+  "authors": [
+   "E. Carpene"
+  ],
+  "venue_plan": "Phys. Rev. B 74, 024301",
+  "year_plan": 2006,
+  "published": {
+   "journal": "Physical Review B",
+   "volume": "74",
+   "page": "024301",
+   "year": 2006,
+   "doi": "10.1103/physrevb.74.024301",
+   "license": "http://link.aps.org/licenses/aps-default-license"
+  },
+  "sources": [],
+  "access": "paywalled",
+  "plan_dagger": true
+ },
+ {
+  "n": 35,
+  "key": "dellavalle2012",
+  "group": "Non-equilibrium electron kinetics in metals",
+  "title": "Real-time optical mapping of the dynamics of nonthermal electrons in thin gold films",
+  "authors_plan": "G. Della Valle et al.",
+  "authors": [
+   "G. Della Valle",
+   "M. Conforti",
+   "S. Longhi",
+   "G. Cerullo",
+   "D. Brida"
+  ],
+  "venue_plan": "Phys. Rev. B 86, 155139",
+  "year_plan": 2012,
+  "published": {
+   "journal": "Physical Review B",
+   "volume": "86",
+   "page": "155139",
+   "year": 2012,
+   "doi": "10.1103/physrevb.86.155139",
+   "license": "http://link.aps.org/licenses/aps-default-license"
+  },
+  "sources": [
+   {
+    "kind": "publisher-free",
+    "url": "https://link.aps.org/pdf/10.1103/PhysRevB.86.155139",
+    "license": null
+   },
+   {
+    "kind": "repository",
+    "url": "https://hal.science/hal-02394961",
+    "license": null
+   }
+  ],
+  "access": "open-access",
+  "plan_dagger": true
+ },
+ {
+  "n": 36,
+  "key": "dubi2019",
+  "group": "Non-equilibrium electron kinetics in metals",
+  "title": "'Hot' electrons in metallic nanostructures: non-thermal carriers or heating?",
+  "authors_plan": "Y. Dubi, Y. Sivan",
+  "authors": [
+   "Yonatan Dubi",
+   "Yonatan Sivan"
+  ],
+  "venue_plan": "Light Sci. Appl. 8, 89",
+  "year_plan": 2019,
+  "published": {
+   "journal": "Light: Science & Applications",
+   "volume": "8",
+   "page": "89",
+   "year": 2019,
+   "doi": "10.1038/s41377-019-0199-x",
+   "license": "https://creativecommons.org/licenses/by/4.0"
+  },
+  "arxiv": {
+   "id": "1810.00565",
+   "version": "1810.00565v4",
+   "title": "\"Hot\" electrons in metallic nanostructures -- non-thermal carriers or heating?",
+   "submitted": "2018-10-01"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/1810.00565v4"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": true
+ },
+ {
+  "n": 37,
+  "key": "brown2016",
+  "group": "Non-equilibrium electron kinetics in metals",
+  "title": "Ab initio phonon coupling and optical response of hot electrons in plasmonic metals",
+  "authors_plan": "A. M. Brown, R. Sundararaman, P. Narang, W. A. Goddard III, H. A. Atwater",
+  "authors": [
+   "Ana M. Brown",
+   "Ravishankar Sundararaman",
+   "Prineha Narang",
+   "William A. Goddard",
+   "Harry A. Atwater"
+  ],
+  "venue_plan": "Phys. Rev. B 94, 075120",
+  "year_plan": 2016,
+  "published": {
+   "journal": "Physical Review B",
+   "volume": "94",
+   "page": "075120",
+   "year": 2016,
+   "doi": "10.1103/physrevb.94.075120",
+   "license": "http://link.aps.org/licenses/aps-default-license"
+  },
+  "arxiv": {
+   "id": "1602.00625",
+   "version": "1602.00625v2",
+   "title": "Ab initio phonon coupling and optical response of hot electrons in plasmonic metals",
+   "submitted": "2016-02-01"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/1602.00625v2"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 38,
+  "key": "uehlein2022",
+  "group": "Non-equilibrium electron kinetics in metals",
+  "title": "Implementation of the electronic non-equilibrium in the two-temperature model",
+  "authors_plan": "M. Uehlein, S. T. Weber, B. Rethfeld",
+  "authors": [
+   "Markus Uehlein",
+   "Sebastian T. Weber",
+   "Baerbel Rethfeld"
+  ],
+  "venue_plan": "Nanomaterials 12, 1655",
+  "year_plan": 2022,
+  "published": {
+   "journal": "Nanomaterials",
+   "volume": "12",
+   "page": "1655",
+   "year": 2022,
+   "doi": "10.3390/nano12101655",
+   "license": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "arxiv": {
+   "id": "2112.01851",
+   "version": "2112.01851v1",
+   "title": "Implementation of the electronic non-equilibrium in the two-temperature model",
+   "submitted": "2021-12-03"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2112.01851v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 39,
+  "key": "uehlein2025",
+  "group": "Non-equilibrium electron kinetics in metals",
+  "title": "Capturing non-equilibrium electron dynamics in metals accurately and efficiently",
+  "authors_plan": "M. Uehlein et al.",
+  "authors": [
+   "M. Uehlein",
+   "H. T. Snowden",
+   "C. Seibel",
+   "T. Held",
+   "S. T. Weber",
+   "R. J. Maurer",
+   "B. Rethfeld"
+  ],
+  "venue_plan": "arXiv",
+  "year_plan": 2025,
+  "published": {
+   "journal": "Journal of Applied Physics",
+   "volume": "138",
+   "page": "063103",
+   "year": 2025,
+   "doi": "10.1063/5.0276556",
+   "license": "https://creativecommons.org/licenses/by-nc/4.0/"
+  },
+  "arxiv": {
+   "id": "2503.09479",
+   "version": "2503.09479v1",
+   "title": "Capturing non-equilibrium electron dynamics in metals accurately and efficiently",
+   "submitted": "2025-03-12"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2503.09479v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 40,
+  "key": "roden2026",
+  "group": "Non-equilibrium electron kinetics in metals",
+  "title": "Thermalization of optically excited Fermi systems: electron-electron collisions in solid metals",
+  "authors_plan": "S. Roden et al.",
+  "authors": [
+   "Stephanie Roden",
+   "Christopher Seibel",
+   "Tobias Held",
+   "Markus Uehlein",
+   "Sebastian T. Weber",
+   "Baerbel Rethfeld"
+  ],
+  "venue_plan": "arXiv",
+  "year_plan": 2026,
+  "published": {
+   "journal": "Physics of Plasmas",
+   "volume": "33",
+   "page": "053906",
+   "year": 2026,
+   "doi": "10.1063/5.0312335",
+   "license": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "arxiv": {
+   "id": "2601.11371",
+   "version": "2601.11371v1",
+   "title": "Thermalization of Optically Excited Fermi Systems: Electron-Electron Collisions in Solid Metals",
+   "submitted": "2026-01-16"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2601.11371v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 41,
+  "key": "maliyov2024",
+  "group": "Non-equilibrium electron kinetics in metals",
+  "title": "Dynamic mode decomposition of nonequilibrium electron-phonon dynamics: accelerating the first-principles real-time Boltzmann equation",
+  "authors_plan": "I. Maliyov, J. Yin, J. Yao, C. Yang, M. Bernardi",
+  "authors": [
+   "Ivan Maliyov",
+   "Jia Yin",
+   "Jia Yao",
+   "Chao Yang",
+   "Marco Bernardi"
+  ],
+  "venue_plan": "npj Comput. Mater. 10, 123",
+  "year_plan": 2024,
+  "published": {
+   "journal": "npj Computational Materials",
+   "volume": "10",
+   "page": "123",
+   "year": 2024,
+   "doi": "10.1038/s41524-024-01308-4",
+   "license": "https://creativecommons.org/licenses/by/4.0"
+  },
+  "arxiv": {
+   "id": "2311.07520",
+   "version": "2311.07520v1",
+   "title": "Dynamic mode decomposition of nonequilibrium electron-phonon dynamics: accelerating the first-principles real-time Boltzmann equation",
+   "submitted": "2023-11-13"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2311.07520v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 42,
+  "key": "li2021fno",
+  "group": "Neural operators and learned kinetic closures",
+  "title": "Fourier neural operator for parametric partial differential equations",
+  "authors_plan": "Z. Li et al.",
+  "authors": [
+   "Zongyi Li",
+   "Nikola Kovachki",
+   "Kamyar Azizzadenesheli",
+   "Burigede Liu",
+   "Kaushik Bhattacharya",
+   "Andrew Stuart",
+   "Anima Anandkumar"
+  ],
+  "venue_plan": "ICLR 2021",
+  "year_plan": 2021,
+  "arxiv": {
+   "id": "2010.08895",
+   "version": "2010.08895v3",
+   "title": "Fourier Neural Operator for Parametric Partial Differential Equations",
+   "submitted": "2020-10-18"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2010.08895v3"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": true
+ },
+ {
+  "n": 43,
+  "key": "kovachki2023",
+  "group": "Neural operators and learned kinetic closures",
+  "title": "Neural operator: learning maps between function spaces with applications to PDEs",
+  "authors_plan": "N. Kovachki et al.",
+  "authors": [
+   "Nikola Kovachki",
+   "Zongyi Li",
+   "Burigede Liu",
+   "Kamyar Azizzadenesheli",
+   "Kaushik Bhattacharya",
+   "Andrew Stuart",
+   "Anima Anandkumar"
+  ],
+  "venue_plan": "J. Mach. Learn. Res. 24, 89",
+  "year_plan": 2023,
+  "arxiv": {
+   "id": "2108.08481",
+   "version": "2108.08481v6",
+   "title": "Neural Operator: Learning Maps Between Function Spaces",
+   "submitted": "2021-08-19"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2108.08481v6"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": true
+ },
+ {
+  "n": 44,
+  "key": "lu2021deeponet",
+  "group": "Neural operators and learned kinetic closures",
+  "title": "Learning nonlinear operators via DeepONet based on the universal approximation theorem of operators",
+  "authors_plan": "L. Lu, P. Jin, G. Pang, Z. Zhang, G. E. Karniadakis",
+  "authors": [
+   "Lu Lu",
+   "Pengzhan Jin",
+   "Guofei Pang",
+   "Zhongqiang Zhang",
+   "George Em Karniadakis"
+  ],
+  "venue_plan": "Nat. Mach. Intell. 3, 218",
+  "year_plan": 2021,
+  "published": {
+   "journal": "Nature Machine Intelligence",
+   "volume": "3",
+   "page": "218-229",
+   "year": 2021,
+   "doi": "10.1038/s42256-021-00302-5",
+   "license": "https://www.springernature.com/gp/researchers/text-and-data-mining"
+  },
+  "arxiv": {
+   "id": "1910.03193",
+   "version": "1910.03193v3",
+   "title": "DeepONet: Learning nonlinear operators for identifying differential equations based on the universal approximation theorem of operators",
+   "submitted": "2019-10-08"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/1910.03193v3"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": true
+ },
+ {
+  "n": 45,
+  "key": "li2021pino",
+  "group": "Neural operators and learned kinetic closures",
+  "title": "Physics-informed neural operator for learning partial differential equations",
+  "authors_plan": "Z. Li et al.",
+  "authors": [
+   "Zongyi Li",
+   "Hongkai Zheng",
+   "Nikola Kovachki",
+   "David Jin",
+   "Haoxuan Chen",
+   "Burigede Liu",
+   "Kamyar Azizzadenesheli",
+   "Anima Anandkumar"
+  ],
+  "venue_plan": "arXiv",
+  "year_plan": 2021,
+  "published": {
+   "journal": "ACM / IMS Journal of Data Science",
+   "volume": "1",
+   "page": "1-27",
+   "year": 2024,
+   "doi": "10.1145/3648506",
+   "license": "https://www.acm.org/publications/policies/copyright_policy#Background"
+  },
+  "arxiv": {
+   "id": "2111.03794",
+   "version": "2111.03794v4",
+   "title": "Physics-Informed Neural Operator for Learning Partial Differential Equations",
+   "submitted": "2021-11-06"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2111.03794v4"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": true
+ },
+ {
+  "n": 46,
+  "key": "xiao2022relaxnet",
+  "group": "Neural operators and learned kinetic closures",
+  "title": "RelaxNet: a structure-preserving neural network to approximate the Boltzmann collision operator",
+  "authors_plan": "T. Xiao, M. Frank",
+  "authors": [
+   "Tianbai Xiao",
+   "Martin Frank"
+  ],
+  "venue_plan": "arXiv",
+  "year_plan": 2022,
+  "published": {
+   "journal": "Journal of Computational Physics",
+   "volume": "490",
+   "page": "112317",
+   "year": 2023,
+   "doi": "10.1016/j.jcp.2023.112317",
+   "license": "https://www.elsevier.com/tdm/userlicense/1.0/"
+  },
+  "arxiv": {
+   "id": "2211.08149",
+   "version": "2211.08149v1",
+   "title": "RelaxNet: A structure-preserving neural network to approximate the Boltzmann collision operator",
+   "submitted": "2022-11-15"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2211.08149v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 47,
+  "key": "lee2024spol",
+  "group": "Neural operators and learned kinetic closures",
+  "title": "Structure-preserving operator learning: modeling the collision operator of kinetic equations",
+  "authors_plan": "J. Y. Lee, S. Schotthofer, M. Frank and co-authors",
+  "authors": [
+   "Jae Yong Lee",
+   "Steffen Schotthöfer",
+   "Tianbai Xiao",
+   "Sebastian Krumscheid",
+   "Martin Frank"
+  ],
+  "venue_plan": "arXiv",
+  "year_plan": 2024,
+  "arxiv": {
+   "id": "2402.16613",
+   "version": "2402.16613v1",
+   "title": "Structure-Preserving Operator Learning: Modeling the Collision Operator of Kinetic Equations",
+   "submitted": "2024-02-26"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2402.16613v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": true
+ },
+ {
+  "n": 48,
+  "key": "lee2025fourierspecnet",
+  "group": "Neural operators and learned kinetic closures",
+  "title": "FourierSpecNet: neural collision operator approximation inspired by the Fourier spectral method for solving the Boltzmann equation",
+  "authors_plan": "J. Y. Lee, G. J. Jung, B. C. Lim, H. J. Hwang",
+  "authors": [
+   "Jae Yong Lee",
+   "Gwang Jae Jung",
+   "Byungchan Lim",
+   "Hyung Ju Hwang"
+  ],
+  "venue_plan": "arXiv",
+  "year_plan": 2025,
+  "published": {
+   "journal": "Kinetic and Related Models",
+   "volume": "21",
+   "page": "69-103",
+   "year": 2026,
+   "doi": "10.3934/krm.2026004",
+   "license": null
+  },
+  "arxiv": {
+   "id": "2504.20408",
+   "version": "2504.20408v2",
+   "title": "FourierSpecNet: Neural Collision Operator Approximation Inspired by the Fourier Spectral Method for Solving the Boltzmann Equation",
+   "submitted": "2025-04-29"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2504.20408v2"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 49,
+  "key": "hu2025",
+  "group": "Neural operators and learned kinetic closures",
+  "title": "Solving the BGK model and Boltzmann equation by Fourier neural operator with conservative constraints",
+  "authors_plan": "B. Hu, K. Qi",
+  "authors": [
+   "Boyun Hu",
+   "Kunlun Qi"
+  ],
+  "venue_plan": "arXiv",
+  "year_plan": 2025,
+  "arxiv": {
+   "id": "2510.13047",
+   "version": "2510.13047v2",
+   "title": "Solving the BGK Model and Boltzmann equation by Fourier Neural Operator with conservative constraints",
+   "submitted": "2025-10-14"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2510.13047v2"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 50,
+  "key": "zhao2025",
+  "group": "Neural operators and learned kinetic closures",
+  "title": "Data-driven construction of a generalized kinetic collision operator from molecular dynamics",
+  "authors_plan": "Y. Zhao, W. Burby, A. Christlieb, H. Lei",
+  "authors": [
+   "Yue Zhao",
+   "Joshua Burby",
+   "Andrew Christlieb",
+   "Huan Lei"
+  ],
+  "venue_plan": "arXiv",
+  "year_plan": 2025,
+  "published": {
+   "journal": "Physical Review Letters",
+   "volume": "135",
+   "page": "185101",
+   "year": 2025,
+   "doi": "10.1103/gml7-f2ng",
+   "license": "https://link.aps.org/licenses/aps-default-license"
+  },
+  "arxiv": {
+   "id": "2503.24208",
+   "version": "2503.24208v2",
+   "title": "Data-driven construction of a generalized kinetic collision operator from molecular dynamics",
+   "submitted": "2025-03-31"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2503.24208v2"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 51,
+  "key": "burles2026",
+  "group": "Neural operators and learned kinetic closures",
+  "title": "A neural operator closure for Landau damping in electrostatic plasma",
+  "authors_plan": "S. Burles, E. Camporeale, O. Pezzi",
+  "authors": [
+   "Samuel Burles",
+   "Enrico Camporeale",
+   "Oreste Pezzi"
+  ],
+  "venue_plan": "arXiv",
+  "year_plan": 2026,
+  "published": {
+   "journal": "Journal of Plasma Physics",
+   "volume": "92",
+   "page": "E149",
+   "year": 2026,
+   "doi": "10.1017/s0022377826102517",
+   "license": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "arxiv": {
+   "id": "2607.29364",
+   "version": "2607.29364v1",
+   "title": "A Neural Operator Closure for Landau Damping in Electrostatic Plasma",
+   "submitted": "2026-07-31"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2607.29364v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 52,
+  "key": "luo2026",
+  "group": "Neural operators and learned kinetic closures",
+  "title": "Resolution-independent machine learning heat flux closure for ICF plasmas",
+  "authors_plan": "M. Luo, A. R. Bell, F. Miniati, S. M. Vinko, G. Gregori",
+  "authors": [
+   "M. Luo",
+   "A. R. Bell",
+   "F. Miniati",
+   "S. M. Vinko",
+   "G. Gregori"
+  ],
+  "venue_plan": "PRX Intelligence",
+  "year_plan": 2026,
+  "published": {
+   "journal": "PRX Intelligence",
+   "volume": "1",
+   "page": "013017",
+   "year": 2026,
+   "doi": "10.1103/9l4n-mnz6",
+   "license": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "arxiv": {
+   "id": "2604.03439",
+   "version": "2604.03439v1",
+   "title": "Resolution-Independent Machine Learning Heat Flux Closure for ICF Plasmas",
+   "submitted": "2026-04-03"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2604.03439v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 53,
+  "key": "shah2024",
+  "group": "Neural operators and learned kinetic closures",
+  "title": "Accelerating electron dynamics simulations through machine learned time propagators",
+  "authors_plan": "K. Shah, A. Cangi",
+  "authors": [
+   "Karan Shah",
+   "Attila Cangi"
+  ],
+  "venue_plan": "ICML 2024 AI4Science Workshop",
+  "year_plan": 2024,
+  "arxiv": {
+   "id": "2407.09628",
+   "version": "2407.09628v2",
+   "title": "Accelerating Electron Dynamics Simulations through Machine Learned Time Propagators",
+   "submitted": "2024-07-12"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2407.09628v2"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 54,
+  "key": "shah2025",
+  "group": "Neural operators and learned kinetic closures",
+  "title": "Machine learning time propagators for time-dependent density functional theory simulations",
+  "authors_plan": "K. Shah, A. Cangi",
+  "authors": [
+   "Karan Shah",
+   "Attila Cangi"
+  ],
+  "venue_plan": "arXiv",
+  "year_plan": 2025,
+  "published": {
+   "journal": "Machine Learning: Science and Technology",
+   "volume": "7",
+   "page": "035019",
+   "year": 2026,
+   "doi": "10.1088/2632-2153/ae68d4",
+   "license": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "arxiv": {
+   "id": "2508.16554",
+   "version": "2508.16554v3",
+   "title": "Machine Learning Time Propagators for Time-Dependent Density Functional Theory Simulations",
+   "submitted": "2025-08-22"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2508.16554v3"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 55,
+  "key": "gu2022neurolight",
+  "group": "Neural operators in photonics; machine learning for ultrafast metrology",
+  "title": "NeurOLight: a physics-agnostic neural operator enabling parametric photonic device simulation",
+  "authors_plan": "J. Gu et al.",
+  "authors": [
+   "Jiaqi Gu",
+   "Zhengqi Gao",
+   "Chenghao Feng",
+   "Hanqing Zhu",
+   "Ray Chen",
+   "Duane Boning",
+   "David Pan"
+  ],
+  "venue_plan": "arXiv / NeurIPS 2022",
+  "year_plan": 2022,
+  "published": {
+   "journal": "Advances in Neural Information Processing Systems 35",
+   "volume": null,
+   "page": "14623-14636",
+   "year": 2022,
+   "doi": "10.52202/068431-1063",
+   "license": null
+  },
+  "arxiv": {
+   "id": "2209.10098",
+   "version": "2209.10098v1",
+   "title": "NeurOLight: A Physics-Agnostic Neural Operator Enabling Parametric Photonic Device Simulation",
+   "submitted": "2022-09-19"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2209.10098v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 56,
+  "key": "ma2024pic2osim",
+  "group": "Neural operators in photonics; machine learning for ultrafast metrology",
+  "title": "PIC2O-Sim: a physics-inspired causality-aware dynamic convolutional neural operator for ultra-fast photonic device FDTD simulation",
+  "authors_plan": "P. Ma, H. Yang, Z. Gao, D. S. Boning, J. Gu",
+  "authors": [
+   "Pingchuan Ma",
+   "Haoyu Yang",
+   "Zhengqi Gao",
+   "Duane S. Boning",
+   "Jiaqi Gu"
+  ],
+  "venue_plan": "arXiv",
+  "year_plan": 2024,
+  "published": {
+   "journal": "APL Photonics",
+   "volume": "10",
+   "page": "036104",
+   "year": 2025,
+   "doi": "10.1063/5.0242728",
+   "license": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "arxiv": {
+   "id": "2406.17810",
+   "version": "2406.17810v1",
+   "title": "PIC2O-Sim: A Physics-Inspired Causality-Aware Dynamic Convolutional Neural Operator for Ultra-Fast Photonic Device FDTD Simulation",
+   "submitted": "2024-06-24"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2406.17810v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 57,
+  "key": "aps2026pifno",
+  "group": "Neural operators in photonics; machine learning for ultrafast metrology",
+  "title": "Physics-informed Fourier neural operator for nanophotonic scattering in nonlinear media",
+  "authors_plan": "(B. L. Blackwood, S. Hawley?)",
+  "authors": [],
+  "venue_plan": "APS Global Physics Summit 2026 (poster)",
+  "year_plan": 2026,
+  "sources": [
+   {
+    "kind": "abstract-page",
+    "url": "https://meetings-archive.aps.org/smt/2026/mar-h00-01/159/",
+    "license": null
+   },
+   {
+    "kind": "abstract-page",
+    "url": "https://repository.belmont.edu/surs/320",
+    "license": null
+   },
+   {
+    "kind": "abstract-page",
+    "url": "https://repository.belmont.edu/spark_presentations/622",
+    "license": null
+   }
+  ],
+  "access": "abstract-only",
+  "plan_dagger": false
+ },
+ {
+  "n": 58,
+  "key": "zahavy2018",
+  "group": "Neural operators in photonics; machine learning for ultrafast metrology",
+  "title": "Deep learning reconstruction of ultrashort pulses",
+  "authors_plan": "T. Zahavy, A. Dikopoltsev, O. Cohen, S. Mannor, M. Segev",
+  "authors": [
+   "Tom Zahavy",
+   "Alex Dikopoltsev",
+   "Daniel Moss",
+   "Gil Ilan Haham",
+   "Oren Cohen",
+   "Shie Mannor",
+   "Mordechai Segev"
+  ],
+  "venue_plan": "Optica 5, 666",
+  "year_plan": 2018,
+  "published": {
+   "journal": "Optica",
+   "volume": "5",
+   "page": "666",
+   "year": 2018,
+   "doi": "10.1364/optica.5.000666",
+   "license": "https://doi.org/10.1364/OA_License_v1#VOR-OA"
+  },
+  "arxiv": {
+   "id": "1803.06024",
+   "version": "1803.06024v1",
+   "title": "Deep Learning Reconstruction of Ultra-Short Pulses",
+   "submitted": "2018-03-15"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/1803.06024v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 59,
+  "key": "zhang2025",
+  "group": "Neural operators in photonics; machine learning for ultrafast metrology",
+  "title": "Hybrid deep reconstruction for vignetting-free upconversion imaging through scattering in ENZ materials",
+  "authors_plan": "H. Zhang, Y. Xu, et al.",
+  "authors": [
+   "Hao Zhang",
+   "Yang Xu",
+   "Wenwen Zhang",
+   "Saumya Choudhary",
+   "M. Zahirul Alam",
+   "Long D. Nguyen",
+   "Matthew Klein",
+   "Shivashankar Vangala",
+   "J. Keith Miller",
+   "Eric G. Johnson",
+   "Joshua R. Hendrickson",
+   "Robert W. Boyd",
+   "Sergio Carbajo"
+  ],
+  "venue_plan": "arXiv",
+  "year_plan": 2025,
+  "published": {
+   "journal": "Light: Science & Applications",
+   "volume": "15",
+   "page": "327",
+   "year": 2026,
+   "doi": "10.1038/s41377-026-02375-6",
+   "license": "https://creativecommons.org/licenses/by/4.0"
+  },
+  "arxiv": {
+   "id": "2508.13096",
+   "version": "2508.13096v1",
+   "title": "Hybrid Deep Reconstruction for Vignetting-Free Upconversion Imaging through Scattering in ENZ Materials",
+   "submitted": "2025-08-18"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2508.13096v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 60,
+  "key": "ball2024",
+  "group": "Neural operators in photonics; machine learning for ultrafast metrology",
+  "title": "A space-time knife-edge in epsilon-near-zero films for ultrafast pulse characterization",
+  "authors_plan": "A. Ball et al.",
+  "authors": [
+   "Adam Ball",
+   "Ray Secondo",
+   "Dhruv Fomra",
+   "Jingwei Wu",
+   "Samprity Saha",
+   "Amit Agrawal",
+   "Henri Lezec",
+   "Nathaniel Kinsey"
+  ],
+  "venue_plan": "arXiv",
+  "year_plan": 2024,
+  "published": {
+   "journal": "Laser & Photonics Reviews",
+   "volume": "19",
+   "page": "2401462",
+   "year": 2024,
+   "doi": "10.1002/lpor.202401462",
+   "license": "http://creativecommons.org/licenses/by/4.0/"
+  },
+  "arxiv": {
+   "id": "2408.00577",
+   "version": "2408.00577v1",
+   "title": "A Space-Time Knife-Edge In Epsilon-Near-Zero Films for Ultrafast Pulse Characterization",
+   "submitted": "2024-08-01"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2408.00577v1"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false
+ },
+ {
+  "n": 61,
+  "key": "cranmer2020",
+  "group": "Inference",
+  "title": "The frontier of simulation-based inference",
+  "authors_plan": "K. Cranmer, J. Brehmer, G. Louppe",
+  "authors": [
+   "Kyle Cranmer",
+   "Johann Brehmer",
+   "Gilles Louppe"
+  ],
+  "venue_plan": "Proc. Natl. Acad. Sci. 117, 30055",
+  "year_plan": 2020,
+  "published": {
+   "journal": "Proceedings of the National Academy of Sciences",
+   "volume": "117",
+   "page": "30055-30062",
+   "year": 2020,
+   "doi": "10.1073/pnas.1912789117",
+   "license": "https://www.pnas.org/site/aboutpnas/licenses.xhtml"
+  },
+  "arxiv": {
+   "id": "1911.01429",
+   "version": "1911.01429v3",
+   "title": "The frontier of simulation-based inference",
+   "submitted": "2019-11-04"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/1911.01429v3"
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": true
+ }
+]
