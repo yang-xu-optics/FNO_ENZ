@@ -1,8 +1,20 @@
 # Maxwell-Kinetic Model of ENZ Electron Dynamics: Project Plan
 
-Revision 2 · Nov 17, 2026 · @Yang
+Revision 2.1 · Nov 18, 2026 · @Yang
 
-Revision 1 (Nov 16, 2026, "Learned Kinetic Closure for ENZ Electron Dynamics") is kept unchanged at `docs/archive/PROJECT_PLAN_v1_2026-11-16.md`. Reference numbers are the same in both.
+Revision 1 (Nov 16, 2026, "Learned Kinetic Closure for ENZ Electron Dynamics") is kept unchanged at `docs/archive/PROJECT_PLAN_v1_2026-11-16.md`. Reference numbers are the same in both; revision 2.1 adds \[62\].
+
+## What changed in revision 2.1
+
+Prompted by Un, Sarkar & Sivan, Nanophotonics 15, e70272 (2026), now reference \[62\]: a density-matrix calculation, with the full collision integrals, of a 4 nm ITO sphere under a 5 fs pump.
+
+| Change | Reason | Evidence |
+| --- | --- | --- |
+| Tier 2 (few-cycle pumps) is split. Tier 2a drives every kinetic cell of the WP3 film solver by the field-resolved J.E instead of the cycle-averaged absorbed power, and is validated against \[62\] in the nanosphere limit. Tier 2b, the density matrix of \[16, 62\], is kept only for coherent signatures. Flagship claims stay at pumps of 20 fs and longer until Tier 2a passes. | In \[62\] a thermal model driven by the instantaneous net absorbed power reproduces the density-matrix permittivity for a 5 fs pump. The density matrix absorbs through the finite size of the particle, which does not carry over to a film. | `references/LITERATURE_SUMMARY.md`, \[62\]; `docs/theory/un2026_notes.md` |
+| The electron-phonon coupling (deformation potential D) and the impurity damping model become free material parameters in WP4, with a prior covering at least D = 8.6-17.2 eV. | The same group's two parameter sets differ by four in the coupling (\[14\]: 17.2 eV, no impurity term; \[62\]: 8.6 eV plus Brooks-Herring impurities). The linear permittivity fixes only the total damping; with the two sets a 100 fs transient recovers in 0.5 and 1.9 ps, against 60-400 fs measured. | `scripts/check_un2026.py` |
+| WP1 has an optional Brooks-Herring impurity damping and the parameter set of \[62\] (done). | Needed to run the authors' current parameter set. | `src/enzkin/collisions/eimp.py`, `ito_un2026()` |
+| M0 may take its electron-electron damping from the generalised Fermi-liquid rate of \[62\] instead of a free power law. | The formula reproduces the exact integral within 3 % near the Fermi level (checked with the corrections to its printed form). | `docs/theory/un2026_notes.md` |
+| The observation table and H3 note that \[62\]'s theory predicts a larger change and a slower recovery than \[20\] measured, and that its authors point to film effects. | Supports testing H3 on \[20\]. | \[62\] Sec. 5 |
 
 ## What changed in revision 2
 
@@ -50,14 +62,14 @@ ITO near its ENZ wavelength gives order-unity index changes in under a picosecon
 - Energy-balance and two-temperature models \[6-9\].
 - Hydrodynamic Maxwell models with nonlocal and hot-electron terms \[11, 12\].
 - Boltzmann-type kinetics in energy space \[14, 15\]. At 220 fs the kinetic and thermal permittivities coincide; non-thermal electrons matter for the rise under pumps of 30 fs and shorter.
-- An energy-space density-matrix model for few-femtosecond pulses \[16\].
+- An energy-space density-matrix model for few-femtosecond pulses \[16\], applied to a 5 fs pump on a 4 nm sphere in \[62\]: the change is of order one and cumulative, electron-electron thermalisation takes about 12 fs at TW/cm2, and a thermal model driven by the instantaneous absorbed power reproduces the permittivity.
 
 **Observations that these do not jointly explain**
 
 | Observation | Source | Mechanism proposed |
 | --- | --- | --- |
 | Reflectivity rise of 1-10 fs fitted under a pump of 225 fs field FWHM (159 fs in intensity); the fit is one parameter of a non-dispersive r(t) of a saturated ITO/Au mirror, with no error bar | Tirole et al. \[19\] | None at the time; non-thermal electrons proposed later \[15\] |
-| Fast rise and recovery (10-30 fs in transmission, hundreds of fs in reflection) under a 6 fs, 800 nm pump | Lustig et al. \[20\] | Open; the authors point to film thickness |
+| Fast rise and recovery (10-30 fs in transmission, hundreds of fs in reflection) under a 6 fs, 800 nm pump | Lustig et al. \[20\] | Open; the authors point to film thickness. The intraband theory of \[62\] predicts a larger change and a recovery set by slow electron-phonon cooling, and names film gradients, an interband Kerr term or multiphoton absorption as possible causes |
 | Sign reversal of ΔR/R and ΔT/T under a 6.4 fs, 800 nm pump; a fit crossover at 4.9 TW/cm2, full reversal near 8-10 TW/cm2 | Ozlu et al. \[23\] | Interband two-photon absorption once intraband excitation lifts Pauli blocking |
 | Non-monotonic, oscillatory complex Fresnel coefficients above 55 mJ/cm2 (136 fs, 1300 nm) | Harwood et al. \[22\] | Auger-like interband relaxation added to an energy-balance model |
 | Oscillatory, sign-reversing transmittance over a few optical cycles (simulation, not a measurement) | Choi et al. \[24\] | Extreme electron temperatures at fixed carrier density |
@@ -66,7 +78,7 @@ ITO near its ENZ wavelength gives order-unity index changes in under a picosecon
 
 **Gaps**
 
-1. **No distribution-resolved kinetic model is coupled to Maxwell in a film.** Temperature-level and hydrodynamic models have been run in time-domain Maxwell solvers \[9, 11, 12\], but they do not resolve the electron distribution. The kinetic model uses a time-dependent permittivity in the adiabatic approximation \[15\]. The density-matrix model treats a 4 nm sphere in the quasi-static limit and names layers as future work \[16\]. The experiments use 20-620 nm films, often at oblique incidence, where field enhancement, depth-dependent absorption and probe dispersion all shape the measured transient.
+1. **No distribution-resolved kinetic model is coupled to Maxwell in a film.** Temperature-level and hydrodynamic models have been run in time-domain Maxwell solvers \[9, 11, 12\], but they do not resolve the electron distribution. The kinetic model uses a time-dependent permittivity in the adiabatic approximation \[15\]. The density-matrix model treats a 4 nm sphere in the quasi-static limit and names layers as future work \[16, 62\]. The experiments use 20-620 nm films, often at oblique incidence, where field enhancement, depth-dependent absorption and probe dispersion all shape the measured transient.
 2. **The mechanisms have never been tested against each other.** Each group fits its own data with its own model. No study runs several mechanisms through one forward model on a shared dataset.
 3. **The current equation of a heated ENZ film has not been derived.** Models insert a time-varying plasma frequency into a Drude current equation in one of two ways \[9, 11, 31\]. The two give the same new frequency after a change but different amplitudes, and nobody has shown which one the kinetics imply.
 
@@ -88,7 +100,7 @@ H2 is deliberately not stated for the transmittance: a fixed-density thermal mod
 
 Discriminators for H2. Two-photon absorption follows the instantaneous intensity squared, gated by the depletion of the band bottom, so at fixed fluence it strengthens as the pulse shortens; \[23\]'s own simulation shows no reversal at 100 fs for the same fluence. Auger-like excitation follows the hot-electron population, so it tracks absorbed energy. Lag is a weak discriminator, because both published reversals peak 120-150 fs after the pump. The energetic constraint is the strong one: two 1300 nm photons carry 1.91 eV, below the 2.67 eV gap of \[23\].
 
-Evidence so far for H1 and H3, from WP1: a thermal model built from the same operators misses the kinetic permittivity transient by 11-17 % for 20 fs pumps and 3-5 % at 220 fs; and several experiments already report film effects on the measured dynamics \[17, 18, 20, 60\].
+Evidence so far for H1 and H3, from WP1: a thermal model built from the same operators misses the kinetic permittivity transient by 11-17 % for 20 fs pumps and 3-5 % at 220 fs; and several experiments already report film effects on the measured dynamics \[17, 18, 20, 60\]. \[62\] adds that intraband kinetics in a uniform particle recovers on the electron-phonon time, far slower than the 10-40 fs transmission recovery of \[20\]; if a film calculation confirms this, the fast recovery is outside H1 and a candidate for H3. Recovery times also depend on the electron-phonon coupling, which is not settled (WP4).
 
 **Target claims for the flagship paper**
 
@@ -99,7 +111,7 @@ Evidence so far for H1 and H3, from WP1: a thermal model built from the same ope
 
 **Scope limits.**
 
-- The Boltzmann description is cycle-averaged. One optical cycle at 1.2 um is 4 fs, so it is reliable for pumps longer than about 20 fs. The sub-8 fs experiments \[20, 23\] need the coherent density-matrix level \[16\] (Tier 2).
+- The Boltzmann description is cycle-averaged. One optical cycle at 1.2 um is 4 fs, so it is reliable for pumps longer than about 20 fs. For the sub-8 fs experiments \[20, 23\] the first step is Tier 2a (field-resolved absorption in the film solver); the coherent density-matrix level \[16, 62\] (Tier 2b) is needed only for coherent features. The field also displaces the Fermi sphere by 0.5-1.3 k_F in those experiments (`scripts/field_regime.py`), an intra-cycle effect neither level contains.
 - A single conduction band of finite width holds a finite energy, about 5 x 10^8 J/m3 above the cold state for a 4 eV band. Conditions that deposit more are outside the model. As a rule of thumb this is an in-film intensity near 10^11 W/cm2 for a 100 fs pulse.
 
 ## WP1: Ground-truth kinetic solver (months 0-3)
@@ -137,11 +149,15 @@ Comparison models built from the same pieces: the FFT random-k integral of \[40\
 - [ ] Port the exact integral to JAX for GPU and for gradients; benchmark it on a GPU (gate G1b). Port done and tested; the GPU benchmark is outstanding.
 - [ ] Fix the band model for high intensity: choose the band width, state the validity limit. Rule found at G1b: widen the band (4, 6, 8 eV at a fixed 31 meV step) when the occupation of its top cell passes 4 × 10^-5. Still to do: rerun the validation against \[15\] and the Gate 1 conditions above about 4000 K with that rule, and state the limit above which the single-band model itself is not trustworthy (results above roughly 7000 K change by 1-3 % between 6, 8 and 10 eV).
 - [ ] Close the validation gaps against \[15\]: the change of Re ε is 20-28 % low, and Im ε depends on how the screening is treated. This needs the authors.
-- [ ] Write to the authors of \[14-16\] for the parameters the papers do not print.
+- [ ] Write to the authors of \[14-16, 62\] for the parameters the papers do not print, and ask which parameter set (D = 17.2 eV, or 8.6 eV with impurities) applies to which sample (list in `references/LITERATURE_SUMMARY.md`, Part I §11).
+- [x] Optional Brooks-Herring impurity damping and the parameter set of \[62\] (`ito_un2026()`); the rates of \[62\] checked against enzkin (`scripts/check_un2026.py`, `docs/theory/un2026_notes.md`). Done 2026-11-18.
 - [ ] Benchmark dataset: about 10^3 trajectories with the exact integral over 20-250 fs and 1.1-1.6 um, inside the single-band limit, with material parameters varied by 25 %. It serves regression tests, the methods paper, and any later surrogate.
 - [ ] Compare with the reduced athermal model of \[39\] as a second baseline (optional).
 
-**Tier 2 (stretch).** Implement the energy-space density matrix of \[16\] for few-cycle pumps, and measure its cost. The sign-reversal data \[20, 23\] and the Auger-versus-two-photon test both sit in this regime.
+**Tier 2 (stretch): few-cycle pumps.** The sign-reversal data \[20, 23\] and the Auger-versus-two-photon test both sit in this regime.
+
+- *Tier 2a.* In the WP3 film solver, drive each cell's absorption by the instantaneous J.E from the field solver instead of the cycle-averaged power (kinetic cells, or thermal cells for M0). Validation: reproduce \[62\] Fig. 4a,b (Re ε from -2.6 to -1.0 and Im ε from 1.85 to 2.25 at 160 THz for E0 = 1.2 V/nm) in the quasi-static nanosphere limit, with a size-broadened damping matched to \[62\] Fig. 1b. This needs the unprinted ε∞ and the time course of the temperature from the authors, or a fit.
+- *Tier 2b.* The energy-space density matrix of \[16, 62\], only if coherent signatures (the 2ω ripple, stimulated emission at high field) are targeted. For films it needs a coherent form of collision-assisted absorption first, because \[16, 62\] absorb through the particle's finite size.
 
 ## WP3: Maxwell-kinetic closure (months 1-7)
 
@@ -152,7 +168,7 @@ WP3 embeds the exact kinetic solver in a one-dimensional time-domain Maxwell sol
 - 1D FDTD through the film thickness. Normal incidence first, then TM oblique incidence, which is needed for ENZ-mode excitation \[21\].
 - Films of 20-310 nm on a substrate, with 2-5 nm cells: roughly 100 kinetic cells.
 - Multirate stepping: fields at about 5 as, kinetics at 0.25-1 fs with a rate-limited step.
-- The cycle-averaged absorbed power J.E in each cell drives that cell's absorption term.
+- The cycle-averaged absorbed power J.E in each cell drives that cell's absorption term; for few-cycle pumps the instantaneous J.E does (Tier 2a).
 - Written in JAX, so the same code runs on CPU and GPU and gives gradients for WP4.
 
 **Constitutive law: a derivation task.** The literature uses two current equations for a time-varying plasma frequency:
@@ -190,13 +206,15 @@ WP4 runs the published mechanisms through one forward model and lets the data ra
 
 | Model | Physics | Extra free parameters | Source |
 | --- | --- | --- | --- |
-| M0 | Thermal electrons only: two-temperature model with full Fermi integrals, temperature-dependent chemical potential, and a damping law that rises with electron temperature. | Coupling constants; damping exponent and reference temperature | \[9, 24\] |
-| M1 | Non-thermal intraband kinetics at fixed carrier density | Electron-electron prefactor, electron-impurity rate, band width | \[14, 15\] |
+| M0 | Thermal electrons only: two-temperature model with full Fermi integrals, temperature-dependent chemical potential, and a damping law that rises with electron temperature. | Electron-phonon coupling; damping exponent and reference temperature, or the generalised Fermi-liquid electron-electron rate of \[62\] with an Umklapp fraction | \[9, 24, 62\] |
+| M1 | Non-thermal intraband kinetics at fixed carrier density | Electron-electron prefactor, deformation potential D, impurity damping (constant rate or Brooks-Herring density), Umklapp fraction of electron-electron damping, band width | \[14, 15, 62\] |
 | M2 | M1 plus Auger-like interband relaxation | Rate, gap, valence-band mass | \[22\] |
 | M3 | M1 plus interband two-photon absorption with state filling. Open only for pumps below about 930 nm. | Two-photon coefficient, gap, valence-band mass | \[23\] |
 | M4 | M2 and M3 together | Both |  |
 
 \[22\] and \[23\] assume different gaps (3.9 and 2.67 eV) and print no valence-band parameters; both are fitted or taken from the authors.
+
+**Damping and cooling are separate parameters.** The linear permittivity fixes only the total momentum-relaxation rate. How it splits between electron-phonon and impurity scattering sets the cooling rate, because only phonons take energy. \[14, 15\] use D = 17.2 eV with a constant impurity rate; \[62\] uses D = 8.6 eV with Brooks-Herring impurities (four times weaker coupling). The prior on D spans at least 8.6-17.2 eV, the impurity model is a discrete choice, and recovery times (\[1, 21\], WP5) constrain the split. These are sample parameters in the hierarchical fit.
 
 **Pipeline**
 
@@ -215,7 +233,9 @@ WP4 runs the published mechanisms through one forward model and lets the data ra
 | Tirole et al. \[19\] | Time-diffraction fringes | Sensitive to rise time | on request |
 | Gurung et al. \[21\] | Relaxation time against intensity and angle | Tests recovery dynamics | in the paper and supplement |
 | Harwood et al. \[22\] | Complex reflection and transmission coefficients in time, 1300 nm | Amplitude and phase at high fluence; tests M2 | on request |
-| Lustig et al. \[20\], Ozlu et al. \[23\] | Shifts, sign reversal, 800 nm few-cycle pumps | Tier 2 only; the only data that can separate M2 from M3 | on request \[23\] |
+| Lustig et al. \[20\], Ozlu et al. \[23\] | Shifts, sign reversal, 800 nm few-cycle pumps | Tier 2a once validated; the only data that can separate M2 from M3 | on request \[23\] |
+| Un et al. \[62\] | Simulated ε(t) under a 5 fs pump, electron-electron and electron-phonon rates (4 nm sphere) | Validation of Tier 2a and of the electron-electron rate; not a measurement | on request |
+| Herbst et al., Adv. Sci. 13, e16818 (2026), cited by \[62\] (not yet read) | Transmitted field of ITO nanocrystals under two-cycle pumps, by fieldoscopy | Candidate few-cycle dataset with nearly uniform fields | to be checked |
 | Choi et al. \[24\] | Simulated transients, public code | Cross-check of M0 | Figshare |
 | Own double-blind FROG data | Measured pump and probe fields plus complex gate | Removes assumed-pulse systematics | own |
 
@@ -262,7 +282,7 @@ A collinear or near-collinear geometry is preferred: a crossing angle smears the
 The structure-preserving neural operator is not built now. It comes back if one of these is measured:
 
 - WP4 inference is too slow with the exact solver even on a GPU. An emulator from model parameters to observables may then serve better than a collision-operator surrogate.
-- The Tier 2 density-matrix solver, whose state is two-dimensional in energy, is too expensive to run in a film.
+- The Tier 2b density-matrix solver, whose state is two-dimensional in energy, is needed in a film and is too expensive there.
 - Films with lateral structure need thousands of cells.
 
 What revision 1's literature review established, for that day: \[47\] already enforces one conservation law exactly and \[46\] has an exact equilibrium fixed point, so the novelty would be two weighted invariants, Pauli blocking, a Fermi-Dirac fixed point with exact conservation, and an entropy constraint. \[49\] learns a flow map, not a collision operator. Training through the solver is necessary \[51\]. The surrogate must deliver the collision rate as well as the collision term. The exact index identity that gives conservation needs a uniform energy grid. Details are in `references/LITERATURE_SUMMARY.md`, Part I §8.
@@ -297,7 +317,8 @@ Gate G2 of revision 1 (acceptance of the neural operator) is suspended with WP2.
 | The exact solver is not as cheap as the first measurement suggests (finer grid needed, wider band, more cells) | Medium | Gate G1b measures it before WP3 depends on it; GPU port; the deferred operator |
 | Ground-truth physics or parameters are wrong | High | Corrections to \[14\] are documented and tested; \[15\] is reproduced only in part; write to the authors; material parameters inferred per sample |
 | The current equation cannot be closed at the level of an isotropic distribution | Medium | Carry the l = 1 part of the distribution per cell; report both forms and their observable difference |
-| Few-cycle data lie outside Boltzmann validity | Certain for \[20, 23\] | Flagship claims limited to pumps of 20 fs and longer. Tier 2 is a stretch goal. |
+| Few-cycle data lie outside Boltzmann validity | Certain for \[20, 23\] | Tier 2a (field-resolved absorption), validated against \[62\]; flagship claims limited to pumps of 20 fs and longer until it passes. Tier 2b only for coherent features. |
+| The electron-phonon coupling and the impurity damping are not settled | Certain: the same group uses D = 17.2 eV \[14\] and 8.6 eV \[62\] | Infer them per sample from linear permittivity and recovery times; ask the authors; report how conclusions depend on the split |
 | High-intensity data lie outside the single-band model | Certain above about 5 x 10^8 J/m3 absorbed | State the limit; widen the band; add higher bands only if the data demand it |
 | Mechanisms cannot be separated with available data | High for Auger against two-photon at 1.1-1.6 um | Restrict that comparison to 800 nm data; synthetic identifiability study first; WP5 designed to break the degeneracy |
 | Inference is too slow for sequential sampling | Medium | Parallel simulation-based inference; GPU port; parameter-to-observable emulator |
@@ -307,7 +328,8 @@ Gate G2 of revision 1 (acceptance of the neural operator) is suspended with WP2.
 
 **Who could get there first**
 
-- The Sivan group has the kinetic theory and names layer geometries as future work \[16\].
+- The Sivan group has the kinetic theory, its single-cycle extension \[62\], and names layer geometries as future work \[16, 62\].
+- The Scalora group has time-domain hydrodynamic film models \[11, 12\] and reproduced \[20\] with one (Phys. Rev. A 112, 013502 (2025), cited by \[62\]).
 - The Purdue groups have few-cycle experiments and their own models \[23, 24\].
 - The Imperial group has complex-coefficient data at high fluence \[22\].
 
@@ -339,7 +361,7 @@ The case for PRL rests on three things: it settles a named disagreement among re
 
 ## References
 
-All 61 entries were checked against Crossref and arXiv on Nov 17, 2026, and the numbering is that of revision 1. Download status, what was read for each paper, and the digests are in `references/README.md` and `references/LITERATURE_SUMMARY.md`.
+Entries 1-61 were checked against Crossref and arXiv on Nov 17, 2026, and the numbering is that of revision 1. Entry 62 was added in revision 2.1. Download status, what was read for each paper, and the digests are in `references/README.md` and `references/LITERATURE_SUMMARY.md`.
 
 
 **ENZ nonlinearity: foundations and models**
@@ -426,3 +448,7 @@ All 61 entries were checked against Crossref and arXiv on Nov 17, 2026, and the 
 **Inference**
 
 61. Kyle Cranmer, Johann Brehmer, Gilles Louppe, "The frontier of simulation-based inference," Proceedings of the National Academy of Sciences 117, 30055-30062 (2020). [arXiv:1911.01429](https://arxiv.org/abs/1911.01429). [doi](https://doi.org/10.1073/pnas.1912789117).
+
+**Added in revision 2.1**
+
+62. Ieng-Wai Un, Subhajit Sarkar, Yonatan Sivan, "Origin, strength, and speed of the nonlinear optical response of transparent conducting oxides to single-cycle optical pulses," Nanophotonics 15, e70272 (2026). [arXiv:2608.11756](https://arxiv.org/abs/2608.11756). [doi](https://doi.org/10.1002/nap2.70272). Open access (CC BY 4.0).

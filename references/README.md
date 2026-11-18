@@ -1,6 +1,6 @@
 # Reference library
 
-All 61 references of `docs/PROJECT_PLAN.md`, numbered as in the plan.
+All 62 references of `docs/PROJECT_PLAN.md`, numbered as in the plan ([62] added in revision 2.1, 2026-11-18).
 
 | File | What it is |
 | --- | --- |
@@ -9,9 +9,9 @@ All 61 references of `docs/PROJECT_PLAN.md`, numbered as in the plan.
 | `fetch_references.py` | Rebuilds the local library from the manifest: `python references/fetch_references.py --sources --text`. |
 | `pdfs/`, `sources/`, `text/` | The papers (`NN_key.pdf`), arXiv TeX sources and extracted text. **Local only, not in git** (see below). |
 
-## Status (51 of 61 PDFs on disk when this index was written, 2026-11-17)
+## Status (52 of 62 PDFs on disk; index written 2026-11-17, [62] added 2026-11-18)
 
-- **51 obtained**: 47 from arXiv (TeX source for most), [16] also from the authors' site, [8] via OSTI, [17] from Nature Communications, [21] via eScholarship, [28] from the Segev group site.
+- **52 obtained**: 47 from arXiv (TeX source for most), [16] also from the authors' site, [8] via OSTI, [17] from Nature Communications, [21] via eScholarship, [28] from the Segev group site, [62] (published version and Supporting Information, CC BY) supplied by the project lead; `fetch_references.py` gets its arXiv version and the SI from the authors' site (`62_un2026nanophot_si.pdf`).
 - **2 open-access papers not obtained** because the publisher sites reject scripted clients: [20] (Nanophotonics; full text was read from Europe PMC XML) and [35] (free-to-read at APS; abstract only). Download these in a browser and save them under the names in the table.
 - **7 paywalled, no legitimate open copy found**: [1], [3], [4], [7], [32], [33], [34]. Their digests are reconstructions from abstracts and citing papers and are flagged as such. Drop the PDFs in `pdfs/` under the listed names if you have library access; `fetch_references.py` leaves existing files alone, and `--text` will extract them.
 - **[57]** is a conference poster with no paper; the abstracts of the two related Belmont University records are in the digest.

@@ -87,7 +87,7 @@ The two kernels agree near the Fermi level and part ways with excitation energy:
 
 ## 5. Electron–phonon collisions (`collisions/eph.py`)
 
-Acoustic deformation-potential scattering with a Debye spectrum [14 Eq. 5–11]: D = 17.2 eV, ρ_m = 7120 kg m⁻³, v_s = 6400 m s⁻¹, E_D = 60.3 meV, lattice in equilibrium at T_ph.
+Acoustic deformation-potential scattering with a Debye spectrum [14 Eq. 5–11]: D = 17.2 eV, ρ_m = 7120 kg m⁻³, v_s = 6400 m s⁻¹, E_D = 60.3 meV, lattice in equilibrium at T_ph. The same authors later use D = 8.6 eV with the same formula, together with Brooks–Herring impurity scattering ([62] Table S1; preset `ito_un2026()`); G scales as D², so the two sets differ by four in the electron cooling rate. Which value describes a given film is a WP4 inference question (see `docs/theory/un2026_notes.md`).
 
 Multiplying [14] Eq. 9 by ρ(E) shows that the kernel is symmetric in the two electron states,
 
@@ -129,8 +129,11 @@ The rate is 0.0585 fs⁻¹ at E_F and 300 K, proportional to T_ph, and its optic
 ```
 ω_p²[f] = e²/(ε₀m₀) ∫ρ f w_opt dE                         [15] Eq. 10 (by parts: e²/(3ε₀)∫ρv²(−∂f/∂E)dE)
 ε(ω)    = ε_∞ − e²/(ε₀m₀) ∫ρ f w_opt /(ω + iη(E))² dE       [15] Eq. 9
-η(E)    = 1/τ_ee(E) + 1/τ_eph(E) + γ_imp
+η(E)    = 1/τ_ee(E) + 1/τ_eph(E) + γ_imp [+ η_imp^BH(E) if n_imp > 0]
 ```
+
+The optional Brooks–Herring term (`collisions/eimp.py`) is the out-scattering rate of elastic screened-Coulomb scattering on n_imp ionised donors of charge Z, screened by ε_b with the κ of the current f:
+η_imp(E) = (2π n_imp/ħ)(Ze²/ε₀ε_b)²(2π)⁻³ (π/k²)(dk/dE) [(1 + κ²/2k²)² − 1]⁻¹. This is [62] Eq. S9 with the sign inside the bracket corrected (printed 1 − κ²/2k²); the test `test_brooks_herring_rate_matches_elastic_sphere_integral` checks it against the angular integral. Being elastic, it changes η(E) but not f(E).
 
 To first order in η/ω this is a Drude term with Γ = 2⟨η⟩ (`drude_equivalent`). ε_∞ and γ_imp are not printed in [14, 15]; matching [15]'s plotted ε(230 THz, 300 K) = 0.172 + 0.399i gives ε_∞ = 3.451 and γ_imp = 0.0352 fs⁻¹ (`enzkin.calibrate`), with the zero crossing at 224 THz ([15]: ≈225 THz).
 

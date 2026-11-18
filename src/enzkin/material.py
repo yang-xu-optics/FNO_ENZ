@@ -33,6 +33,9 @@ class Material:
     # --- momentum relaxation not affecting f(E) --------------------------------------------
     gamma_imp: float  # electron-impurity collision rate entering the damping only, 1/fs
     name: str = "material"
+    # --- optional energy-dependent impurity damping (Brooks-Herring, collisions/eimp.py) ---------
+    n_imp: float = 0.0  # ionised-impurity density, 1/nm^3 (0 switches the term off)
+    Z_imp: float = 1.0  # impurity charge
 
     # ---- derived -------------------------------------------------------------------------
     @property
@@ -116,3 +119,27 @@ def ito_sarkar2023(**overrides) -> Material:
     )
     base.update(overrides)
     return Material(**base)
+
+
+def ito_un2026(**overrides) -> Material:
+    """ITO as in Table S1 of Un, Sarkar & Sivan, Nanophotonics 15, e70272 (2026) (ref. [62]).
+
+    Same band, density and lattice as :func:`ito_sarkar2023`, but the authors' later damping budget:
+
+    ========== ================= ==================================================================
+    D_def      8.6 eV            Table S1, "obtained by fitting the ITO permittivity at the bulk limit and
+                                 at room temperature" (Wang et al. 2019, plan ref. [7]); [14] used 17.2 eV
+                                 with the same e-ph formula, so G is 4 times smaller here
+    n_imp      0.05 nm^-3        Table S1, Brooks-Herring ionised-impurity scattering (collisions/eimp.py)
+    Z_imp      1                 Table S1
+    gamma_imp  0.0 fs^-1         replaced by the energy-dependent Brooks-Herring rate
+    eps_b      4.0               not in Table S1; (S6), (S9), (S18) screen with eps_b, (S3)-(S4) with eps_inf
+    eps_inf    3.45              not printed; calibrate per sample (enzkin.calibrate)
+    ========== ================= ==================================================================
+
+    With eps_inf = 3.45 this set gives eps(230 THz, 300 K) = 0.14 + 0.17i, against 0.172 + 0.399i plotted in
+    [15]: it describes a lower-loss film than [15] (scripts/check_un2026.py).
+    """
+    base = dict(D_def=8.6, n_imp=0.05, Z_imp=1.0, gamma_imp=0.0, name="ITO (Un/Sarkar/Sivan 2026, Table S1)")
+    base.update(overrides)
+    return ito_sarkar2023(**base)

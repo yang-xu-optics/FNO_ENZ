@@ -30,7 +30,8 @@ import numpy as np
 
 from . import constants as c
 from . import optics, thermo
-from .collisions.ee import ElectronElectronB1
+from .collisions.ee import ElectronElectronB1, thomas_fermi_kappa
+from .collisions.eimp import brooks_herring_rate
 from .collisions.eph import ElectronPhonon
 from .excitation import Excitation
 from .grid import EnergyGrid
@@ -84,10 +85,12 @@ class KineticModel:
 
     # --- damping and permittivity -------------------------------------------------------
     def damping(self, f, T_ph, rate_ee=None):
-        """eta(E) = 1/tau_ee + 1/tau_eph + gamma_imp, 1/fs."""
+        """eta(E) = 1/tau_ee + 1/tau_eph + gamma_imp (+ Brooks-Herring impurities if mat.n_imp > 0), 1/fs."""
         if rate_ee is None:
             rate_ee = self.ee.rate(f)
         extra = sum(term.damping_extra(f) for term in self.interband if hasattr(term, "damping_extra"))
+        if self.mat.n_imp > 0.0:
+            extra = extra + brooks_herring_rate(self.grid, self.mat, thomas_fermi_kappa(self.grid, self.mat, f))
         return rate_ee + self.eph.rate(f, T_ph) + self.mat.gamma_imp + extra
 
     def permittivity(self, f, T_ph, omega, rate_ee=None):

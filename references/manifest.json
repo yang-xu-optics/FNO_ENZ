@@ -2242,5 +2242,52 @@
   ],
   "access": "arxiv",
   "plan_dagger": true
+ },
+ {
+  "n": 62,
+  "key": "un2026nanophot",
+  "group": "Kinetic theory of low-electron-density Drude materials",
+  "title": "Origin, Strength, and Speed of the Nonlinear Optical Response of Transparent Conducting Oxides to Single-Cycle Optical Pulses",
+  "authors_plan": "I.-W. Un, S. Sarkar, Y. Sivan",
+  "authors": [
+   "Ieng-Wai Un",
+   "Subhajit Sarkar",
+   "Yonatan Sivan"
+  ],
+  "venue_plan": "Nanophotonics 15, e70272",
+  "year_plan": 2026,
+  "published": {
+   "journal": "Nanophotonics",
+   "volume": "15",
+   "page": "e70272",
+   "year": 2026,
+   "doi": "10.1002/nap2.70272",
+   "license": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "arxiv": {
+   "id": "2608.11756",
+   "version": "2608.11756v1",
+   "title": "Origin, strength, and speed of the nonlinear optical response of transparent conducting oxides to single-cycle optical pulses",
+   "submitted": "2026-08-12"
+  },
+  "sources": [
+   {
+    "kind": "arxiv",
+    "url": "https://arxiv.org/pdf/2608.11756v1"
+   },
+   {
+    "kind": "author-site",
+    "url": "https://tzin.bgu.ac.il/~sivanyon/Papers/LEDDs/single_cycle_letter.pdf",
+    "license": null
+   },
+   {
+    "kind": "author-site-si",
+    "url": "https://tzin.bgu.ac.il/~sivanyon/Papers/LEDDs/single_cycle_letter_SI.pdf",
+    "license": null
+   }
+  ],
+  "access": "arxiv",
+  "plan_dagger": false,
+  "added": "2026-11-18, revision 2.1 of the plan; published PDF and SI supplied by the project lead"
  }
 ]

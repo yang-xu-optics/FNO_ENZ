@@ -1,10 +1,10 @@
 # Literature summary: theory cornerstone for the ENZ kinetic-closure project
 
-Built 2026-11-17 from the 61 references of `docs/PROJECT_PLAN.md`. Reference numbers `[n]` are the plan's.
+Built 2026-11-17 from the 61 references of `docs/PROJECT_PLAN.md`; [62] (Un, Sarkar & Sivan, Nanophotonics 2026) added 2026-11-18. Reference numbers `[n]` are the plan's.
 
 **How to use this file.** Part I is the synthesis: the physics the project stands on, the equations and parameter values to implement, where printed formulas are wrong, and where the literature disagrees with the project plan. Part II holds one digest per paper with equations, numbers and their locations. When Part I and a digest differ, the digest is closer to the source; when a digest and the paper differ, the paper wins.
 
-**How it was produced, and how far to trust it.** 52 papers were read in full text: 51 from PDF (with arXiv TeX source where it exists) and [20] from Europe PMC full-text XML; the 97-page [43] was read selectively, as its digest states. [35] and [57] were available as abstracts only. Seven paywalled papers ([1], [3], [4], [7], [32], [33], [34]) could not be obtained; their digests are reconstructions from the abstract (where one could be retrieved) and from how the other papers in the library cite them, and are flagged "NOT READ". Supplementary materials were mostly unavailable, and for papers with an arXiv and a journal version the arXiv version was read. Each digest states exactly what was read; the appendix lists it for all 61. The reading was done by ten parallel reading passes with a common template; statements marked "(my reading)", "(my calculation)" or "(background)" inside digests are the reader's inferences, not the paper's. Items in Part I marked **[verified in code]** were re-derived and checked numerically while building the WP1 solver (`src/enzkin`, `tests/`).
+**How it was produced, and how far to trust it.** 53 papers were read in full text: 52 from PDF (with arXiv TeX source where it exists; [62] with its Supporting Information, supplied by the project lead) and [20] from Europe PMC full-text XML; the 97-page [43] was read selectively, as its digest states. [35] and [57] were available as abstracts only. Seven paywalled papers ([1], [3], [4], [7], [32], [33], [34]) could not be obtained; their digests are reconstructions from the abstract (where one could be retrieved) and from how the other papers in the library cite them, and are flagged "NOT READ". Supplementary materials were mostly unavailable, and for papers with an arXiv and a journal version the arXiv version was read. Each digest states exactly what was read; the appendix lists it for all 62. The reading was done by ten parallel reading passes with a common template; statements marked "(my reading)", "(my calculation)" or "(background)" inside digests are the reader's inferences, not the paper's. Items in Part I marked **[verified in code]** were re-derived and checked numerically while building the WP1 solver (`src/enzkin`, `tests/`).
 
 ---
 
@@ -15,9 +15,9 @@ Built 2026-11-17 from the 61 references of `docs/PROJECT_PLAN.md`. Reference num
 1. **ITO near its ENZ wavelength is a degenerate electron gas in a non-parabolic band.** Typical films: n ≈ 1–1.5×10²¹ cm⁻³, band-edge mass 0.26–0.40 mₑ, Kane non-parabolicity C ≈ 0.42 eV⁻¹, E_F ≈ 0.9–1 eV (T_F ≈ 10⁴ K), ε∞ ≈ 3.5–4, zero crossing at 1200–1550 nm [1, 5, 6, 9, 14, 23].
 2. **Sub-gap light heats the conduction electrons; hot electrons are heavier on average; the plasma frequency drops and the ENZ point redshifts** [5–9, 14, 15]. Because Re ε ≈ 0 initially, the *relative* change of ε, and hence of the index, is of order one [1, 2]. The mass that matters is the transport mass, ω_p² ∝ ∫ρ f w_opt dE ([15] Eq. 9–10), identical to the averaged-mass formulas of [5, 6, 8] after integration by parts **[verified in code]**.
 3. **The electron heat capacity is small** (γ_e ≈ 12.7 J m⁻³ K⁻², five times less than gold), so electrons reach several thousand kelvin at tens of GW/cm² and a sizeable fraction of T_F at higher intensity; the chemical potential falls and can turn negative [14, 15] **[verified in code]**.
-4. **Electron–electron scattering is fast** (Fermi-liquid coefficient K ≈ 0.065 eV⁻² fs⁻¹, thermalisation in tens of fs, about ten times faster than in gold) [14]. A two-temperature description is therefore adequate for pulses of ≳100 fs, and non-thermal electrons matter for the *rise* under ≲30 fs pumps [15]. The plan's phrase "attributes the real-permittivity change to non-thermal electrons [14, 15]" overstates this: at 220 fs the thermal and kinetic permittivities coincide.
-5. **Electron–phonon energy transfer is slow and restricted by momentum conservation**: k_F ≈ q_D/4, so only phonons with q ≤ 2k participate; G ≈ 2.5×10¹⁶ W m⁻³ K⁻¹ at low T_e, rising with T_e [14] **[verified in code]**. Recovery of the response is electron cooling on a few hundred fs [1, 5, 6, 9, 15, 21].
-6. **"Instantaneous" rise means ε′ follows the absorbed energy**, i.e. the running integral of the pump, not the electron temperature of a thermalised gas [5, 15]. In [15] the 10–90 % rise is ≈210–230 fs for a 220 fs pump and 37 fs for a 30 fs pump. No microscopic model in the library predicts a rise *faster* than the pump.
+4. **Electron–electron scattering is fast** (Fermi-liquid coefficient K ≈ 0.065 eV⁻² fs⁻¹, thermalisation in tens of fs, about ten times faster than in gold) [14]. A two-temperature description is therefore adequate for pulses of ≳100 fs, and non-thermal electrons matter for the *rise* under ≲30 fs pumps [15]. Under a 5 fs pump the rate rises to ≈1/12 fs at ≈4500 K [62], and a generalised Fermi-liquid formula with a finite band bottom reproduces the full integral (A₀ < π², a negative linear term) [62] **[verified in code against B1]**. The plan's phrase "attributes the real-permittivity change to non-thermal electrons [14, 15]" overstates this: at 220 fs the thermal and kinetic permittivities coincide.
+5. **Electron–phonon energy transfer is slow and restricted by momentum conservation**: k_F ≈ q_D/4, so only phonons with q ≤ 2k participate; G ≈ 2.5×10¹⁶ W m⁻³ K⁻¹ at low T_e, rising with T_e [14] **[verified in code]**. Recovery of the response is electron cooling on a few hundred fs [1, 5, 6, 9, 15, 21]. **The e–ph strength is not settled**: the same group's later parameter set [62] halves the deformation potential (D = 8.6 instead of 17.2 eV, G four times smaller) and moves the missing damping into Brooks–Herring impurity scattering; with it a 100 fs transient recovers in 1.9 ps instead of 0.5 ps, slower than any measured ITO film (60–400 fs) **[verified in code]**.
+6. **"Instantaneous" rise means ε′ follows the absorbed energy**, i.e. the running integral of the pump, not the electron temperature of a thermalised gas [5, 15]. In [15] the 10–90 % rise is ≈210–230 fs for a 220 fs pump and 37 fs for a 30 fs pump. No microscopic model in the library predicts a rise *faster* than the pump. Under a single-cycle pump [62] finds the same cumulative behaviour, decorated by a 2ω ripple from coherences, and reproduces it with a thermal model driven by the instantaneous absorbed power Ṗ·E.
 7. **At ≳1 TW/cm² and sub-10 fs pumps the response changes sign or oscillates** [20, 22, 23, 24]. Three explanations compete (Section 5). They differ on whether the conduction-band density changes.
 8. **What is measured is not ε(t).** Every experiment reads the response through a film: transit-limited frequency shifts [17], interface phase terms that reverse the shift's sign [18], a saturated Berreman mirror whose *reflectivity* rise was fitted [19], thickness-dependent red shifts [20], and non-collinear geometric smearing of 100 fs–1 ps [60]. This is hypothesis H3, and the literature supports it piecemeal but nobody has tested it with a distribution-resolved model.
 9. **The ultimate response time is acknowledged as open** by the reviews themselves ("still an open research question" [26]; "unexpectedly fast… sparked ongoing theoretical investigations" [29]).
@@ -48,7 +48,7 @@ $$\Phi=\Big[\frac{q\kappa}{q^2+\kappa^2}+\arctan\frac{q}{\kappa}\Big]_{q_{lo}}^{
 
 $$P=c_{ee}\,\frac{1}{\hbar(2\pi)^3}\Big(\frac{e^2}{\varepsilon_0\varepsilon_b}\Big)^2\Big(\frac{m_0}{\hbar^2\kappa}\Big)^3,\qquad \kappa^2=\frac{e^2}{\varepsilon_0\varepsilon_b}\int\rho\,(-\partial_E f)\,dE,\qquad \varepsilon_b=4 .$$
 
-Corrections **[verified in code]**: (i) [14] Eq. 15 carries a spurious factor 4π³ in q_TF² — [16] says so in a footnote; without it κ = 3.83 nm⁻¹. (ii) [14] Eq. 16–17 are printed with one power of ħ too many; [14] Eq. 19 for K is dimensionally right. (iii) The printed prefactor corresponds to c_ee = 3/16; a spin-summed direct-term golden-rule derivation gives c_ee = 1. With c_ee = 3/16, K = 0.065 eV⁻² fs⁻¹. Prefactors across the literature differ by factors of 3 ([40]: textbook Fermi-liquid prefactor had to be cut 2.8× to match the full integral; [37]: D_e = 0.016–0.021 eV⁻¹), so **c_ee is a fit parameter**, as the plan's M1 row assumes.
+Corrections **[verified in code]**: (i) [14] Eq. 15 carries a spurious factor 4π³ in q_TF² — [16] says so in a footnote; without it κ = 3.83 nm⁻¹. (ii) [14] Eq. 16–17 are printed with one power of ħ too many; [14] Eq. 19 for K is dimensionally right. (iii) The printed prefactor corresponds to c_ee = 3/16; a spin-summed direct-term golden-rule derivation gives c_ee = 1. With c_ee = 3/16, K = 0.065 eV⁻² fs⁻¹. Prefactors across the literature differ by factors of 3 ([40]: textbook Fermi-liquid prefactor had to be cut 2.8× to match the full integral; [37]: D_e = 0.016–0.021 eV⁻¹), so **c_ee is a fit parameter**, as the plan's M1 row assumes. [62] prints the energy-space rate (S19) with exactly the B1 kernel and c_ee = 3/16 **[verified in code]**; its population equation (S2) carries an extra ½ relative to its rate (S7) as printed, which sharpens rather than settles the question.
 
 **Electron–electron, random-k (level B0)** ([40] Eq. 14–17):
 
@@ -61,6 +61,8 @@ With a = ρf, b = ρ(1−f) this is one convolution and one correlation: gain = 
 $$Q_{e\text{-}ph}(E)=\frac{D^2}{4\pi\rho_m(\hbar v_s)^4}\frac{m_0}{\hbar k(E)}\int_0^{\epsilon_{max}}\!\!\epsilon^2d\epsilon\Big\{(n_B+1)\big[(1-f(E))f(E+\epsilon)m(E+\epsilon)-(1-f(E-\epsilon))f(E)m(E-\epsilon)\big]+n_B\big[\dots\big]\Big\},$$
 
 with m(E) = 1+2CE. Correction **[verified in code, and independently by the reading pass]**: with the printed cut-off ε_max = min(E_D, 2ħv_s k(E)) the term does not conserve electron number and gives G ≈ 8×10¹⁶; with the pair-symmetric triangle condition ħv_s|k−k′| ≤ ε ≤ min(E_D, ħv_s(k+k′)) it conserves number exactly and reproduces the published 2.5×10¹⁶ W m⁻³ K⁻¹ ([14] Eq. 27). Other flags in [14]: Eq. 26 is garbled; the "~30×" reduction of G by momentum conservation is 14–17× by the paper's own formula; "Umklapp treated as in [14]" in the plan has no counterpart — [14] never mentions Umklapp (only a footnote in [16] does).
+
+**Electron–impurity (damping only)** ([62] Eq. S6, S9): Brooks–Herring scattering on ionised donors, elastic, so it changes η(E) but not f(E). Out-scattering rate η_imp(E) = (2π n_imp/ħ)(Ze²/ε₀ε_b)²(2π)⁻³(π/k²)(dk/dE)[(1 + κ²/2k²)² − 1]⁻¹; the printed bracket has a minus sign that makes the rate negative for κ < 2k **[verified in code: closed form against the angular integral]**. [62] uses n_imp = 0.05 nm⁻³, Z = 1 together with D = 8.6 eV; [15] used an unprinted constant rate. Implemented as an option (`enzkin/collisions/eimp.py`, `ito_un2026()`).
 
 **Optics from f** ([15] Eq. 9–10):
 
@@ -90,6 +92,7 @@ To first order in η/ω this is a Drude term with damping Γ = 2⟨η⟩. Neithe
 | [17] | 2×310 nm clamped | — | — | — | ≈3.8 (reader's fit) | ≈2.95×10¹⁵, ≈1.4×10¹⁴ s⁻¹ (reader's fit) | ≈1240 nm |
 | [22] | 310 nm on glass | not stated | "modified Kane" | not stated | not stated | ≈3.03×10¹⁵, 0.11–0.14×10¹⁵ rad/s (from figure) | ≈1300 nm |
 | [23] | 270 nm on glass | 1.0 | 0.35 | — | 3.9 | γ = 1.24×10¹⁴ rad/s | 1240 nm |
+| [62] Table S1 | 4 nm sphere (model); D fitted to the bulk permittivity of [7]'s film | 1.5 | 0.3964 | 0.4191 | not printed | D = 8.6 eV, Brooks–Herring n_imp = 0.05 nm⁻³: Γ ≈ 0.074 fs⁻¹ in bulk with ε∞ = 3.45 (my calculation, against 0.175 fs⁻¹ for [15]) | — (sphere resonance ≈180 THz) |
 
 The band-edge mass is the least settled parameter (0.26 vs 0.35–0.40); a comment in the [16] source even says 0.4 "is too high (0.4 instead of 0.26)". WP1 samples it rather than fixing it.
 
@@ -104,7 +107,8 @@ The band-edge mass is the least settled parameter (0.26 vs 0.35–0.40); a comme
 | Electron cooling / response recovery | 360 fs [1]; 170–400 fs [6, 60]; 62→170 fs rising with intensity [21]; 10–30 fs (transmission) vs hundreds of fs (reflection) at 2 TW/cm², 6 fs pump [20] | |
 | Auger-like lag | 120 fs (assigned, not fitted) | [22] |
 | Inferred reflectivity rise under 225 fs pump | 1–10 fs "equally good", no error bar | [19] |
-| e–e thermalisation under a 5 fs pump (4 nm sphere, density matrix) | ≈12 fs at 1 TW/cm² (T̃_e ≈ 4500 K), rate ∝ \|E₀\|²; ~1 fs projected at 10 TW/cm² | [16] companion Letter |
+| e–e thermalisation under a 5 fs pump (4 nm sphere, density matrix) | ≈12 fs at "1 TW/cm²" (T̃_e ≈ 4500 K), rate ∝ \|E₀\|²; ~1 fs projected at 10 TW/cm². enzkin B1 gives 20 fs at 4500 K, 12 fs at ≈6500 K | [62] |
+| e–ph rate at E_F, 300 K | 0.059 fs⁻¹ with D = 17.2 eV [14]; ≈0.01 fs⁻¹ in [62] (0.015 in enzkin with its D = 8.6 eV) | [14, 62], code |
 
 Open conflict: [15] predicts *faster* T_e decay at higher intensity; [21] measures *slower* relaxation with intensity; [20] reports recovery ten times faster at ten times the intensity. [15] reconciles its own prediction with slower *reflection* recovery through the ENZ shift exceeding the resonance width — an electromagnetic effect, again H3.
 
@@ -134,7 +138,7 @@ $$\text{(a)}\ \ \dot J+\gamma J=\varepsilon_0\,\omega_p^2(t)\,E\qquad\qquad \tex
 
 (a) is used by the FDTD two-temperature baseline [9], by the hydrodynamic models [11, 12] (which add −(ṅ/n)Ṗ for a density change), and is the oscillator-density model of [30] (D, B, P, Ṗ continuous across a temporal step). (b) is the main form of [31] (J/ω_p² continuous, J jumps); at fixed density it equals the plan's WP3 law with +(ṁ*/m*)J. Both give the same new frequency after a step but different time-reflected and transmitted amplitudes, and only (a) has a zero-frequency mode. **None of [26, 27, 30, 31] identifies (a) with a density change and (b) with a mass change — that assignment is the project's.** It is physically reasonable (new carriers arrive without drift; heating at conserved momentum lowers the velocity), but which form heated ITO obeys depends on whether the heating collisions conserve momentum: e–e scattering does, assisted absorption does not. It has to be derived from the l = 1 moment of the kinetic equation in WP3; when benchmarking against [9] the ṁ* term must be off.
 
-**What the film does to the measurement (H3).** [17]: the shift measures Δn/Δt during transit. [18]: interface phase terms reverse the sign of the shift at high angle; its quasi-static transfer-matrix model with ω_p(t) is exactly the adiabatic baseline for the H3 test. [19]: α = 1/2 fs⁻¹ is the rise of |r|² of a saturated ITO/Au mirror from a one-parameter, non-dispersive r(t). [20]: thickness-dependent red shift. The companion Letter of [16] finds its single-nanosphere theory at odds with [20]'s 40 fs transmission decay and names field and temperature gradients and transport in the 300 nm film as one possible cause (asserted). [60]: in a non-collinear geometry the pump front sweeps the spot in (w/v) sin θ ≈ 0.35–1 ps for a 600 µm pump — an effect a 1D solver cannot represent. [12]: the 35–50 nm nonlocal blueshift was simulated with m₀* = 0.033 mₑ, n ~ 10²⁰ cm⁻³; with realistic ITO values the pressure coefficient is ≈30× smaller, so it is not the expected correction for WP3.
+**What the film does to the measurement (H3).** [17]: the shift measures Δn/Δt during transit. [18]: interface phase terms reverse the sign of the shift at high angle; its quasi-static transfer-matrix model with ω_p(t) is exactly the adiabatic baseline for the H3 test. [19]: α = 1/2 fs⁻¹ is the rise of |r|² of a saturated ITO/Au mirror from a one-parameter, non-dispersive r(t). [20]: thickness-dependent red shift. [62] finds its single-nanosphere theory at odds with [20]'s 40 fs transmission decay and size of change, and names field and temperature gradients and transport in the 300 nm film as one possible cause (asserted), next to interband Kerr and multiphoton terms. [60]: in a non-collinear geometry the pump front sweeps the spot in (w/v) sin θ ≈ 0.35–1 ps for a 600 µm pump — an effect a 1D solver cannot represent. [12]: the 35–50 nm nonlocal blueshift was simulated with m₀* = 0.033 mₑ, n ~ 10²⁰ cm⁻³; with realistic ITO values the pressure coefficient is ≈30× smaller, so it is not the expected correction for WP3.
 
 **Energy cost.** Δε ~ 1 in a TCO needs >10 J/cm³ absorbed ([27] Eq. 5; ≈0.6 eV per electron by [5]'s formula); the 2ω time-crystal term is ≈100× weaker than the slow grating term [27]; a photonic time crystal needs Δn = 0.1–1 within one cycle [28].
 
@@ -151,6 +155,8 @@ $$\text{(a)}\ \ \dot J+\gamma J=\varepsilon_0\,\omega_p^2(t)\,E\qquad\qquad \tex
 | [22] | 310 nm ITO/glass | 1300 nm, 136 fs, 4.6–153 mJ/cm² | complex r(t), t(t) by FROG retrieval | (n_c, U_c) rate model | on request |
 | [23] | 270 nm ITO/glass | 800 nm, 6.4 fs, ≤11 TW/cm² | ΔR/R, ΔT/T at 1225 nm | three-level rate model + TMM | on request (MATLAB code too) |
 | [24] | (simulation) | — | — | TTM, Python code on Figshare 10.6084/m9.figshare.33283908 | public |
+| [62] | (simulation) 4 nm ITO sphere | 175 THz, 5 fs, E₀ = 0.6–2.4 V/nm | ε(160 THz, τ_d), f(𝓔,t), e–e and e–ph rates | density matrix + thermal model | on request |
+| Herbst et al. 2026 (not in library, cited by [62]) | ITO nanocrystals | two-cycle, ≈10.7 fs, near their ENZ (≈2 µm) | transmitted field by fieldoscopy (90 as resolution) | — | not checked |
 | [2] | 900 nm AZO | 785 nm, 100 fs | n₂ | χ⁽³⁾ | open DOI 10.17861/d82f29dc-5c47-4c5a-b893-c1ea93ab5224 |
 
 Corrections to the plan's anomaly table: [21] reports relaxation-time ratios of 2.7 (ITO) and 2.9 (AZO), i.e. +171 % and +185 % (">200 %" holds only relative to the extrapolated zero-intensity value); the "40 %" ENZ-mode figure is AZO (ITO ≈ +23 %). [19]'s 225 fs is a field-envelope FWHM (159 fs in intensity). [15] models the earlier saturable-mirror experiment (pump 60°, probe 65°), not the double-slit experiment [19]. [24] is a theory paper, not an observation. The plan's film range "20–310 nm" excludes [17]'s 620 nm stack.
@@ -188,7 +194,7 @@ Implications:
 
 ## 10. Where the literature contradicts the project plan
 
-This list refers to revision 1 of the plan (2026-11-16). Revision 2 (2026-11-17) incorporates every item; it is kept here as the record of why the plan changed.
+This list refers to revision 1 of the plan (2026-11-16). Revision 2 (2026-11-17) incorporates every item; it is kept here as the record of why the plan changed. Items 12–13 come from [62] and are incorporated in revision 2.1 (2026-11-18).
 
 1. Two-photon absorption cannot operate at 1.1–1.6 µm for E_g = 2.67 eV → M3 is testable only on 800 nm data (Tier 2 regime).
 2. H2 must be phrased for Re ε or ω_p; transmittance sign reversal does not need a density change [24].
@@ -201,6 +207,8 @@ This list refers to revision 1 of the plan (2026-11-16). Revision 2 (2026-11-17)
 9. [58–60] are not double-blind FROG precedents.
 10. [36]'s tiny non-thermal power fraction is a CW result and must not be used for femtosecond pumping.
 11. Citation fixes: [16] has three authors (Un, Sarkar, Sivan); [22] was retitled and published (Optica 13, 1943); [10], [13], [29], [39], [40], [46], [48], [50]–[52], [54]–[56], [59], [60] are now published (see `references/README.md`); [47]'s authors are Lee, Schotthöfer, Xiao, Krumscheid, Frank; [50]'s second author is J. W. Burby.
+12. Revision 2 says sub-8 fs data need the density matrix of [16] and that it is too expensive in a film. [62] shows that for a 5 fs pump a thermal model driven by the instantaneous absorbed power reproduces the density-matrix permittivity, and [16]'s finite-size absorption does not transfer to films anyway: the first few-cycle step is a field-resolved J·E drive of the WP3 cells (Tier 2a).
+13. Revision 2 fixes the e–ph coupling at the [14] value; the authors' own later set [62] has a four times weaker coupling and an energy-dependent impurity damping. D (or G) and the impurity model must be inferred.
 
 ## 11. What must come from the authors or from papers not in the library
 
@@ -209,7 +217,7 @@ This list refers to revision 1 of the plan (2026-11-16). Revision 2 (2026-11-17)
 - [23]: the MATLAB rate-equation code (units of β and σ are inconsistent as printed); which pulse duration the model used.
 - [24]: Supplementary Sections 1–13; the Figshare code is public.
 - [1]: the paper and its supplement (two-temperature parameters, R/T data vs angle).
-- [16]: the Supporting Information of its companion Letter (generalised Fermi-liquid coefficients, thermal-model details); the Letter itself is digested under [16].
+- [62]: T̃_e(t) for the runs of Figs. 4–5; ε∞ and the dielectric constant used for screening (ε∞ in S3–S4, ε_b elsewhere); the band top and grid; whether the ½ of (S2) or the rate (S7) without it was integrated; which intensity convention ("1 TW/cm²" for E₀ = 1.8 V/nm); how D = 8.6 eV and n_imp were fitted and whether they apply to films such as [15]'s.
 - Valence-band mass and density of states for ITO (needed by M2 and M3; printed in neither [22] nor [23]).
 
 ---
@@ -1080,7 +1088,7 @@ Peak T_ph for the 30 fs cases is not shown (curves end at 450 fs). No decay-rate
 **Source read:** arXiv:2601.10985v2 (26 Feb 2026), full text + TeX source; figure values from the vector paths of the PDF (±1 THz, ±0.01). The arXiv version lists three authors, Ieng-Wai Un, Subhajit Sarkar and Yonatan Sivan (the project plan cites Un alone), and spells the title "few femtosecond … non-parabolic". The journal reference could not be checked against these files.
 **Role in this project:** Tier-2 stretch model of WP1 (coherent level for few-cycle pumps; state two-dimensional in energy); it also corrects one formula each of [14] and [15] and shows what the cycle-averaged Boltzmann description leaves out.
 
-**What it does.** Derives equations of motion for the conduction-electron density matrix in energy space for a Kane band: populations f(𝓔,t) plus coherences between states of different energy, driven by the real field with no rotating-wave or cycle averaging. Applies them to an ITO nanosphere in the quasi-static limit under a 5 fs, 175 THz pulse. This paper concentrates on the formulation and on coherence signatures; strength and speed of the permittivity response are in a companion Letter (its Ref. 1, Un, Sarkar, Sivan, "Origin, strength, and speed of the nonlinear optical response of transparent conducting oxides to single-cycle optical pulses"). The Letter was obtained on 2026-11-18 and is digested at the end of this entry.
+**What it does.** Derives equations of motion for the conduction-electron density matrix in energy space for a Kane band: populations f(𝓔,t) plus coherences between states of different energy, driven by the real field with no rotating-wave or cycle averaging. Applies them to an ITO nanosphere in the quasi-static limit under a 5 fs, 175 THz pulse. This paper concentrates on the formulation and on coherence signatures; strength and speed of the permittivity response are in a companion Letter (its Ref. 1, Un, Sarkar, Sivan, "Origin, strength, and speed of the nonlinear optical response of transparent conducting oxides to single-cycle optical pulses"). The Letter is reference [62] of this library.
 
 **Model / method.** Start (momentum space): reduced density matrix ρ with ρ_kk = f_k, dipole coupling −d_z E(t), Kane dispersion ħk(𝓔) = √(2m_e*𝓔(1+C𝓔)) (12). Dipole elements follow from momentum elements of a one-dimensional infinitely deep well of width L, (d_z)_kk′ = −2ieħ (p_z)_kk′/[(p²)_kk − (p²)_k′k′] (6). Relaxation operator: populations relax by the same e-e, e-ph and e-imp collision integrals as in [14, 15] (7a); coherences decay in a relaxation-time form corrected to preserve the continuity equation,
 
@@ -1148,18 +1156,95 @@ Diagnostics: P_photon-e(t) = ∫₀^{𝓔_max}ρ_e 𝓔 (∂f/∂t)_photon-e d�
 - No data-availability statement.
 - The sign reversal of Ozlu et al. [23] is not addressed: interband channels are absent.
 
-**Companion Letter.** Un, Sarkar, Sivan, "Origin, strength, and speed of the nonlinear optical response of transparent conducting oxides to single-cycle optical pulses", arXiv:2608.11756v1 (12 Aug 2026). Source read: main text (author copy from tzin.bgu.ac.il); the Supporting Information was not read. Not one of the plan's 61 references.
-
-- Same system as above (4 nm ITO sphere in air, 5 fs pulse at 175 THz, E₀ = 0.6, 1.2, 2.4 V/nm incident; 1.2 V/nm is called "comparable to the field levels used in" [20] and Herbst et al. 2026). Momentum-space density matrix with the rigorous e–e and e–ph integrals of [14, 15] on the populations; no permittivity is defined a priori, the polarization is traced from the coherences, and a weak probe of 5 or 20 fs is simulated to extract an "instantaneous permittivity" ε(ω_pr, τ_d).
-- Strength: Re and Im ε change by up to ≈250 % (relative) at E₀ = 1.2 V/nm, comparable to longer pulses at similar fluence (their example: 160 GW/cm² × 30 fs ≈ 5 mJ/cm²). The change accumulates and persists after the pulse; the authors say it "should not be approximated by a Kerr nonlinearity", although a Kerr form can fit the initial rise (simulated).
-- Coherence: the permittivity rise carries a 2ω₀ (≈3 fs) ripple from the off-diagonal elements. Stimulated emission grows to nearly the size of absorption at the highest field but never exceeds it; excited-state absorption makes the change superlinear in |E₀|², stimulated emission pulls it back to sublinear (simulated).
-- **A thermal model is enough for ε(t).** An effective-temperature model, C_e dT̃_e/dt = −G(T̃_e − T_ph) + Ṗ·E, with the oscillating net absorption Ṗ·E (not its cycle average) and the coherences recomputed from the thermal f, gives "nearly identical" permittivity dynamics to the full density-matrix run (their Fig. 4; simulated).
-- Thermalisation: e–e collision rates grow with absorbed energy; at an incident 1 TW/cm² (T̃_e ≈ 4500 K) the e–e time is ≈12 fs and nearly energy independent; the rate scales linearly with |E₀|², and "single femtosecond" times are projected for 10 TW/cm² (extrapolated). A generalised Fermi-liquid formula (their Eq. 3, coefficients in the SI) reproduces the numerical rate despite strongly non-thermal f. The e–ph rate is essentially constant, so e–ph cannot explain fast recovery.
-- Against experiment: the predicted change is "much larger than the experimentally measured transmission and reflection changes" of [20], and the predicted slow decay is "at odds with the observed 40-femtosecond decay time of the transmission". Offered explanations (asserted): the film in [20] closer to transparency exposing an instantaneous interband Kerr term (Narimanov, ACS Photonics 12, 402 (2025)); multiphoton absorption; and, for the 300 nm film, "substantial field and temperature gradients ... transport and spatiotemporal effects". They point to the hydrodynamic model of Scalora et al., Phys. Rev. A 112, 013502 (2025), which was used to reproduce [20]'s data.
-- Use for this project: (i) the strongest available support for H3-type explanations of the fast recovery in [20] comes from the authors of [14–16] themselves; (ii) for few-cycle pumps the cycle-averaged absorption term is the approximation that has to go, while a thermal description of the populations may survive, which suggests a cheap intermediate model (WP1 kinetics or M0 driven by the instantaneous J·E); (iii) the absorption here is finite-size (Landau-type) damping in a 4 nm box, so the formalism does not carry over to a 40–300 nm film, where absorption is phonon-, impurity- or Umklapp-assisted, without a new coherent treatment of collision-assisted absorption (my reading); (iv) the field-driven coupling between coherences is still dropped, while the field displaces the Fermi sphere by roughly k_F at 1.2 V/nm incident, taking the linear local-field factor of ≈2 at 175 THz (my estimate, dk = eE_loc/ħω as in `scripts/field_regime.py`).
-
+**Companion Letter.** Published as Un, Sarkar, Sivan, Nanophotonics 15, e70272 (2026); added to the library as **[62]** and digested there (2026-11-18). It supersedes the short note on its arXiv version that stood here.
 ---
 
+### [62] Un, Sarkar & Sivan, "Origin, strength, and speed of the nonlinear optical response of transparent conducting oxides to single-cycle optical pulses" — Nanophotonics 15, e70272 (2026); arXiv:2608.11756
+
+**Source read:** published version (Wiley, CC BY 4.0, received 7 June, accepted 18 August 2026), all 11 pages incl. figures, and the Supporting Information (9 pages), both supplied by the project lead on 2026-11-18; figure values read by eye from the PDF (±10 %). Not in revision 2 of the plan; added as [62]. The arXiv v1 text (12 Aug 2026) read the day before is the same paper.
+**Role in this project:** the only microscopic, collision-resolved calculation of TCO dynamics under a single-cycle pump; source of the authors' current ITO parameter set (Table S1), of a generalised Fermi-liquid e–e rate, and of the "thermal model driven by the instantaneous absorbed power" that defines the cheap few-cycle path (plan Tier 2a). Companion of [16], which holds the formalism.
+
+**What it does.** Solves the density matrix (populations and coherences) of the conduction electrons of a 4 nm ITO sphere in air, quasi-statically coupled to its own polarization, under a 5 fs, 175 THz pump, with the rigorous e–e (screened Coulomb), e–ph (deformation potential) and e–impurity (Brooks–Herring) collision integrals of [14, 15] acting on the populations and their functional derivatives as decoherence rates. A weak 5 or 20 fs probe is simulated to extract a time-dependent "instantaneous permittivity". The paper asks how strong the response is, where it comes from, and how fast it turns on and off.
+
+**Model / method.**
+
+Equations of motion (SI Eq. S1; d_kk′ dipole elements of a 1D infinite well of the particle size, h_kk′ a phase factor that keeps charge continuity, η_kk′ = (η_k + η_k′)/2):
+
+$$\partial_t f_k=-\tfrac{i}{\hbar}E_{NP}(t)\sum_{k'}\big[d_{k'k}\rho_{kk'}-d_{kk'}\rho_{k'k}\big]+\big(\partial_tf_k\big)_{e\text{-}e}+\big(\partial_tf_k\big)_{e\text{-}ph}+\big(\partial_tf_k\big)_{e\text{-}imp},$$
+
+$$\partial_t\rho_{kk'}=-\eta_{kk'}\big(\rho_{kk'}-h_{kk'}\rho_{k'k}\big)-\tfrac{i}{\hbar}(\mathcal E_k-\mathcal E_{k'})\rho_{kk'}+\tfrac{i}{\hbar}E_{NP}(t)d_{kk'}\big[f_{k'}-f_k\big],$$
+
+solved in energy space after angular integration ([16]). Local field (main Eq. 1): E_NP = [3ε_h E_inc − P_NP/ε₀]/(ε∞ + 2ε_h), P_NP = (2/V)Σ d_k′k ρ_kk′ (S10). Collision terms: e–e (S2) with M(q) = e²/[ε₀ε∞(q² + q_TF²)] and q_TF² = −(e²/ε₀ε∞)Σ∂f/∂𝓔 (S3–S4; a footnote repeats that the 4π³ of [15] Eq. 15 is an error); e–ph (S5) with coupling πD²q²/(ρVω_ph), linear phonons, Debye cut-off; e–impurity (S6), Brooks–Herring. Rates η = functional derivatives (S7–S9). The linear permittivity (S11) and the "ANTHℰM" instantaneous permittivity (S12) of the sphere have the Lindhard-like form Σ 2|d|²(𝓔_k − 𝓔_k′)(f_k′ − f_k)/[(𝓔_k − 𝓔_k′)² − (ħω)² − 2iħ²ωη_kk′]. Coherences are split into absorption and stimulated-emission parts (S13–S16) to separate the two.
+
+Thermal model (main Eq. 2), the paper's simple alternative:
+
+$$C_e(\tilde T_e)\,\frac{d\tilde T_e}{dt}=-G_{e\text{-}ph}(\tilde T_e-T_{ph})+\dot{\mathbf P}_{NP}(t)\cdot\mathbf E_{NP}(t),$$
+
+with the instantaneous (not cycle-averaged) net absorbed power, C_e from [14] Eq. 25, G from [14] Eq. 26; the coherences and P_NP are then computed from the density-matrix equation with the thermal f(T̃_e(t)) (footnote 2). For long pulses Ṗ·E averages to ω₀ε″|E|²/2, the absorption of [15].
+
+Generalised Fermi-liquid e–e rate (S24), derived by expanding only the Fermi-Dirac product of the thermal rate (S21) to second order in (𝓔 − μ)/k_BT̃_e while keeping the screened matrix element exact and the lower band edge finite:
+
+$$\eta^T_{e\text{-}e}(\mathcal E,\tilde T_e)\approx K(\tilde T_e)\Big[A_0(k_B\tilde T_e)^2+A_1\,k_B\tilde T_e(\mathcal E-\mu)+A_2(\mathcal E-\mu)^2\Big],$$
+
+with K the T → 0 coefficient of [14] Eq. 19 (S25) and A_n(𝓔, T̃_e) double integrals (S26); A₀ → π², A₁ → 0, A₂ → 1 in the textbook limit. T̃_e is defined by energy matching (S20).
+
+As printed, five formulas need corrections (details and checks in `docs/theory/un2026_notes.md`): the Fermi-Dirac product (S22) lacks a factor 1/4; (S23) has tanh((𝓔₁ − 𝓔₂)/k_BT̃_e) where (S26) and the expansion need tanh((𝓔₁ − 𝓔₂)/2k_BT̃_e); (S26) lacks 1/(k_BT̃_e)²; (S25) lacks the 1/(2π)³ of (S19); the bracket of (S9) reads 1 − q_TF²/2k² where 1 + q_TF²/2k² is needed (the printed form is negative for q_TF < 2k). The population equation (S2) carries a factor ½ that the rate (S7) does not, so the two differ by 2 as printed. Screening uses ε∞ in (S3–S4) but ε_b in (S6), (S9), (S18), (S25). ρ is printed in kg/m².
+
+**Numbers.**
+
+| Quantity | Value | Where |
+| --- | --- | --- |
+| System | ITO sphere, 4 nm diameter, in air (ε_h = 1), quasi-static; dipole resonance ≈180 THz (≈0.7 eV) | Sec. 3, Fig. 1 |
+| Pump | E_inc = E₀exp[−2ln2(t/τ_p)²]cos ω₀t, τ_p = 5 fs (intensity FWHM), ω₀/2π = 175 THz (0.72 eV, 1.71 µm, cycle 5.7 fs) | Sec. 3 |
+| Fields | E₀ = 0.6, 1.2, 1.8, 2.4 V/nm incident; 1.2 V/nm "comparable to the field levels used in" [20] and Herbst et al. 2026 | Sec. 4.1 |
+| Intensity convention | "1 TW/cm²" for E₀ = 1.8 V/nm, i.e. I = E₀²/Z₀ (0.86 TW/cm²); with I = E₀²/2Z₀ it is 0.43 TW/cm² (my calculation) | Sec. 4.2 |
+| Table S1 | C = 0.4191 eV⁻¹; m* = 0.3964 mₑ; 𝓔_F = 0.8793 eV; n ≈ 1.5×10²⁷ m⁻³; **D = 8.6 eV** ("obtained by fitting the ITO permittivity at the bulk limit and at room temperature" of Wang et al. 2019, plan ref. [7]); ρ = 7120 (printed kg/m²); v_ph = 6400 m/s; 𝓔_D = 0.06 eV; **n_imp = 0.05 nm⁻³, Z = 1** | SI Table S1 |
+| Not printed | ε∞, ε_b, band top 𝓔_max, energy grid, time step, T̃_e(t) for any run | — |
+| ε(ω) of the sphere at 300 K | ε′ ≈ −3.2, ε″ ≈ 2.4 at 150 THz; ε′ = 0 near 240 THz; ε′ ≈ +1.6, ε″ ≈ 0.3 at 300 THz (by eye) | Fig. 1b |
+| Instantaneous ε at 160 THz, E₀ = 1.2 V/nm | ε′: −2.6 → −1.0; ε″: 1.85 → 2.25; rise between ≈ −5 and +8 fs with a ≈3 fs ripple; thermal model and ANTHℰM nearly coincide (by eye) | Fig. 4a,b |
+| Δε′ (max) vs absorbed energy U_abs | ≈0.4, 1.5, 2.7, 3.9 at U_abs ≈ 0.02, 0.2, 0.5, 1.05×10⁹ J/m³ (sublinear); without stimulated emission linear, ≈4 at 0.27×10⁹ J/m³ (by eye) | Fig. 4c |
+| Δε′ vs E₀ | ≈0.3, 0.7, 1.0, 1.5, 2.6, 3.9 for E₀ ≈ 0.4–2.4 V/nm; with excited-state absorption but no stimulated emission 2.7, 6.9, 13.3 at 1.2, 1.8, 2.4 V/nm (by eye) | Fig. 4d |
+| e–e rate | 1/η_e-e ≈ 12 fs, nearly energy independent, at T̃_e ≈ 4500 K ("1 TW/cm²", E₀ = 1.8 V/nm, t = 5 fs); η_e-e(𝓔_F) ≈ 0.005 → 0.17 fs⁻¹ for E₀² ≈ 0.16 → 5.8 V²/nm², roughly ∝ E₀²; at 𝓔_F + 1 eV ≈ 0.03 → 0.18 fs⁻¹ | Sec. 4.2, Fig. 5a,b, S1a |
+| A₀, A₁, A₂ at 𝓔 = 𝓔_F | A₀ ≈ 9.4, 8.6, 6.3, 4.9, 4.0; A₁ ≈ −0.1, −0.3, −0.75, −0.85, −0.85; A₂ ≈ 0.95, 0.85, 0.55, 0.42, 0.35 for T̃_e = 300, 1000, 3000, 5000, 7000 K (by eye) | Fig. S1b–d |
+| e–ph rate | ≈0.001 (0.1𝓔_F), ≈0.01 (𝓔_F), ≈0.06 fs⁻¹ (3𝓔_F), the same at −5, 0, +5 fs | Fig. 5c |
+| Simulation window | ≈ −10 to +20 fs | Fig. 2 |
+
+**Key results.**
+
+- Simulated: the permittivity change is of order one (Δε′ up to ≈4, "∼250 %" relative), comparable to longer pulses of similar fluence; it accumulates during the pulse and persists afterwards, so it is absorptive and "should not be approximated by a Kerr nonlinearity", although a Kerr form can fit the initial rise.
+- Simulated: during the pulse the dynamics is coherent (photon–electron term dominates; collisions act after). The population deviation is not the long-pulse non-thermal shoulder but an oscillating population inversion near 𝓔_F, attributed to momentum conservation in the photon–electron term.
+- Simulated: stimulated emission grows to nearly the size of absorption at the highest field but never exceeds it; excited-state absorption makes Δε′ superlinear in E₀², stimulated emission makes the net change sublinear (sub-cubic nonlinearity), and Δε′ is linear in the gross absorbed energy only without stimulated emission.
+- Simulated: the 3 fs (1/2ω₀) ripple on ε(t) is the signature of coherences; the thermal model reproduces it through the phase lag of Ṗ behind E.
+- **Simulated: the thermal model (Eq. 2) gives a permittivity "nearly identical" to ANTHℰM for E₀ = 1.2 V/nm**, "despite the strong deviation from thermal equilibrium", which the authors attribute to the thermal nature of the absorption term and to fast e–e scattering.
+- Simulated: the rise time of the extracted ε″ shortens with probe duration (5 vs 20 fs); ε′ is less sensitive.
+- Derived and simulated: the generalised Fermi-liquid formula reproduces the exact e–e rate; the finite band bottom lowers A₀ and A₂ below π² and 1 and creates a negative A₁ that grows with T̃_e. The e–e rate grows roughly linearly with E₀²; "single femtosecond" times are projected for 10 TW/cm² (extrapolation).
+- Argued: only the Umklapp fraction of e–e scattering contributes to the permittivity rise; the permittivity relaxes on the e–ph time, which is distribution-independent and slow, so e–ph does not explain the 40 fs transmission decay of [20].
+- Argued: the cumulative heating limits optical photonic time crystals in TCOs (repeated modulation keeps heating the electrons); THz operation is not affected.
+- Stated: the predicted response is "much larger than the experimentally measured transmission and reflection changes" of [20] and its slow decay is "at odds with the observed 40-fs decay time of the transmission". Offered reasons (asserted): electrons driven closer to transparency exposing an instantaneous interband Kerr term (Narimanov, ACS Photonics 12, 402 (2025)); multiphoton absorption (Clerici et al., Nat. Commun. 8, 15829 (2017)); field and temperature gradients, transport and spatiotemporal effects in the 300 nm film; the hydrodynamic model of Scalora et al., Phys. Rev. A 112, 013502 (2025) reproduces [20]'s data.
+
+**Assumptions and limitations.**
+
+- Stated: 4 nm quasi-static sphere (uniform field and temperature); intraband only (the resonance at 0.7 eV is far from interband thresholds); nonlocality neglected ("at most, a modest quantitative" effect); the field-driven coupling between coherences dropped as in [16].
+- Absorption in the model is finite-size (Landau-type) through the box dipoles; phonon-, impurity- and Umklapp-assisted absorption, which is what absorbs in a 40–300 nm film, is absent (my reading). The thermal-model agreement is shown for one field and one probe frequency.
+- The field displaces the Fermi sphere by roughly k_F at E₀ = 1.2 V/nm (local field ≈2E₀), the regime where the dropped coherence–coherence coupling matters (my estimate, `scripts/field_regime.py` method).
+- Up to 1.05×10⁹ J/m³ is absorbed, twice what a 4 eV band can hold above the cold state (≈5×10⁸ J/m³), so the unprinted band top must be well above 4 eV for the highest fields (my calculation).
+- The time dependence of T̃_e is not printed, so the "12 fs at 4500 K" statement cannot be checked against a temperature-resolved rate (my reading).
+
+**Use for this project.**
+
+- **Checked against enzkin (`scripts/check_un2026.py`, `results/wp1/check_un2026.json`) [verified in code]:**
+  - The exact rate (S19) has the kernel and prefactor of the B1 integral with c_ee = 3/16, so their e–e term is ours.
+  - The generalised Fermi-liquid coefficients, implemented independently with the corrections above, reproduce Fig. S1b–d: A₀(𝓔_F) = 9.46, 8.51, 6.06, 4.65, 3.73 against ≈9.4, 8.6, 6.3, 4.9, 4.0; A₂ = 0.95, 0.83, 0.53, 0.40, 0.32 against ≈0.95, 0.85, 0.55, 0.42, 0.35. The formula then matches the B1 rate of a Fermi-Dirac distribution within 3 % near μ (and within 30 % at 0.5𝓔_F at 300 K, where the expansion is poor, as the authors say).
+  - B1 gives 1/η_e-e(𝓔_F) = 20 fs at 4500 K and ≈12 fs only at ≈6500 K. Their "≈12 fs at ≈4500 K", and Fig. 5a near 0.5𝓔_F at t = −5 fs, are 1.5–2 times faster than our rate at the stated conditions. Not resolvable from the paper: T̃_e(t), the dielectric constant in the screening and the ½ between (S2) and (S7) are open.
+  - Fig. 5c matches our e–ph rate with D = 8.6 eV within 1.2–1.5× at 𝓔_F–3𝓔_F, and not with D = 17.2 eV of [14] (6× too high). The authors did change D.
+  - With Table S1 (D = 8.6 eV, Brooks–Herring impurities) and ε∞ = 3.45 the bulk film has Γ = 0.074 fs⁻¹ and ε(230 THz) = 0.14 + 0.17i, against Γ = 0.175 fs⁻¹ and 0.172 + 0.399i of [15]; G = 6.6×10¹⁵ instead of 2.6×10¹⁶ W m⁻³ K⁻¹; a 100 fs pulse depositing 10⁸ J/m³ gives a Re ε recovery (1/e) of 1.9 ps instead of 0.52 ps. Measured film recoveries are 60–400 fs [1, 6, 21, 60]. **The same group's two parameter sets differ by four in the e–ph coupling, so D (or G) must be inferred, not fixed** (plan revision 2.1, decision D15).
+- Few-cycle path (plan Tier 2a): the thermal-model result says the permittivity follows the instantaneous net absorbed energy even under a single-cycle pump. In a film the analogue is to drive each kinetic (or thermal) cell by the field-resolved J·E of the Maxwell solver instead of the cycle-averaged absorption term. Validation target: Fig. 4a,b (ε′ −2.6 → −1.0, ε″ 1.85 → 2.25 at 160 THz, E₀ = 1.2 V/nm) in the quasi-static sphere limit.
+- e–e rates for thermal models: the generalised Fermi-liquid formula is a cheap, checked e–e rate for M0's damping law (only its Umklapp share damps, per the authors).
+- Code: `enzkin.material.ito_un2026()` (Table S1) and Brooks–Herring damping (`enzkin/collisions/eimp.py`, off unless `n_imp > 0`).
+- Cited, not in the library: Herbst et al., Adv. Sci. 13, e16818 (2026) (fieldoscopy of ITO nanocrystals under two-cycle pulses, a candidate few-cycle dataset); Scalora et al. 2025 (hydrodynamic model of [20]); Narimanov 2025; Sommer et al., Nature 534, 86 (2016).
+- Data availability (verbatim): "The data that support the findings of this study are available from the corresponding author upon reasonable request."
+
+---
 ## Time-varying ENZ experiments
 ### [17] Zhou et al., "Broadband frequency translation through time refraction in an epsilon-near-zero material" — Nat. Commun. 11, 2180 (2020)
 
@@ -3853,3 +3938,4 @@ Sequential (active-learning) variants update the proposal for $\theta$ toward th
 | [59] | `zhang2025` | arXiv v1 full text (no TeX source) + Fig. 1 inspected in the PDF. The published version and the six supplementary videos were not read. H. Zhang and Y. Xu are equal-contribution first authors; 13 authors (UCLA/SLAC, Rochester, ... |
 | [60] | `ball2024` | arXiv v1 full text including the supplement (no TeX source); equations and figures checked in the PDF. The published version was not compared. v1 has no "Methods" section although the text refers to one; experimental details ar... |
 | [61] | `cranmer2020` | arXiv v3 full text + TeX source (the whole review; nothing skipped) + Fig. 3 inspected. Journal pagination is from the reference manifest, not from the text read. |
+| [62] | `un2026nanophot` | Published version (Nanophotonics 15, e70272, CC BY) all 11 pages + Supporting Information (9 pages), supplied by the project lead; figures read by eye. arXiv:2608.11756v1 read the day before. Added 2026-11-18. |

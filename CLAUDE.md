@@ -1,6 +1,6 @@
 # FNO_ENZ: notes for working sessions
 
-Research project: what sets the speed and sign of the optical response of ENZ indium tin oxide under intense ultrashort pulses. Plan: `docs/PROJECT_PLAN.md` (revision 2: kinetic solver, Maxwell-kinetic film model, mechanism inference, experiment; the neural-operator surrogate is deferred). Revision 1 is in `docs/archive/`. Start every session by reading the last entry and the open items of `docs/WORKLOG.md`.
+Research project: what sets the speed and sign of the optical response of ENZ indium tin oxide under intense ultrashort pulses. Plan: `docs/PROJECT_PLAN.md` (revision 2.1: kinetic solver, Maxwell-kinetic film model, mechanism inference, experiment; the neural-operator surrogate is deferred; few-cycle pumps are Tier 2a/2b). Revision 1 is in `docs/archive/`. Start every session by reading the last entry and the open items of `docs/WORKLOG.md`.
 
 ## Standing rules
 
@@ -28,6 +28,7 @@ The full test suite takes about 35 s on 4 cores when nothing else is running; th
 - Units inside `enzkin` are eV, fs, nm, K (`enzkin.constants`).
 - The energy grid must stay uniform: exact energy conservation relies on i₁ + i₂ = i₃ + i₄.
 - Default band width is 4 eV as printed in [14]. Keep the energy step at 31 meV (32 points per eV) and widen the band (6 eV with N = 192, 8 eV with N = 256) when the top-cell occupation `f_top_max` passes 4×10⁻⁵, roughly T_e above 3500 K for 4 eV and 6700 K for 6 eV; a narrow band overstates T_e and the transient (log §2.3, `docs/gates/G1b_report.md`).
+- Two published ITO parameter sets exist and differ by four in the electron–phonon coupling: `ito_sarkar2023()` ([14, 15]: D = 17.2 eV, constant impurity rate, used for the validation against [15]) and `ito_un2026()` ([62]: D = 8.6 eV plus Brooks–Herring impurities). Say which one a result uses; the split between e–ph and impurity damping sets the cooling time (log §4.2).
 - Calibrate ε∞ and γ_imp (`enzkin.calibrate`) on the grid in use; the cold permittivity shifts by about 10⁻³ between grids, which is a large fraction of a weak transient.
 - `ElectronElectronB0` gets stiff (rates of several per fs) at high excitation; always integrate with the adaptive `enzkin.integrate.run`.
 - Cloud sessions should use the `FNO_ENZ` environment (network allowlist for arXiv and the repositories).

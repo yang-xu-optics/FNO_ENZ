@@ -174,3 +174,44 @@ def test_eph_rate_exceeds_population_transfer_rate(grid, mat, f_noneq):
     fm[i] -= h
     transfer = -(op.rhs(fp, 300.0)[0][i] - op.rhs(fm, 300.0)[0][i]) / (2 * h)
     assert op.rate(f_noneq, 300.0)[i] > transfer > 0
+
+
+# ---- electron-impurity (Brooks-Herring) damping -------------------------------------------------
+def test_brooks_herring_rate_matches_elastic_sphere_integral():
+    """Closed form (corrected Eq. S9 of ref. [62]) against a direct integral over the elastic sphere."""
+    import math
+
+    from enzkin.collisions.eimp import brooks_herring_rate
+    from enzkin.grid import EnergyGrid
+    from enzkin.material import ito_un2026
+
+    m = ito_un2026()
+    g = EnergyGrid(m.band, m.E_max, 128)
+    kappa = 3.8
+    rate = brooks_herring_rate(g, m, kappa)
+    v0 = m.Z_imp * c.E2_OVER_EPS0 / m.eps_b
+    x = np.linspace(-1.0, 1.0, 200001)
+    for i in (10, 28, 60):
+        k = g.k[i]
+        dkdE = g.mfac[i] / (2.0 * m.band.h2m * k)
+        ang = np.trapezoid(1.0 / (2 * k * k * (1 - x) + kappa**2) ** 2, x)  # int d(cos theta) |V|^2 / v0^2
+        direct = 2 * math.pi / c.HBAR * m.n_imp * v0**2 / (2 * math.pi) ** 3 * k * k * dkdE * 2 * math.pi * ang
+        assert rate[i] == pytest.approx(direct, rel=1e-6)
+    assert np.all(rate > 0)
+
+
+def test_impurity_damping_is_off_by_default_and_adds_when_on(mat):
+    from enzkin.material import ito_un2026
+    from enzkin.model import KineticModel
+
+    assert mat.n_imp == 0.0
+    m0 = KineticModel(mat, N=64)
+    f0, Tph = m0.split(m0.initial_state(300.0))
+    base = m0.damping(f0, Tph)
+    m1 = KineticModel(mat.with_(n_imp=0.05), N=64)
+    with_imp = m1.damping(f0, Tph)
+    assert np.all(with_imp > base)
+    # scales linearly with the impurity density
+    m2 = KineticModel(mat.with_(n_imp=0.10), N=64)
+    np.testing.assert_allclose(m2.damping(f0, Tph) - base, 2.0 * (with_imp - base), rtol=1e-10)
+    assert ito_un2026().D_def == 8.6

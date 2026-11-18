@@ -295,6 +295,43 @@ Peak displacement of the Fermi sphere by the local field, dk = eE_loc/ħω, agai
 - WP3 derivation task: carry the l = 1 part of the distribution and quantify the intra-cycle (Kane-mass) nonlinearity at the [15] conditions (dk/k_F ≈ 0.5).
 - Cheap intermediate few-cycle model suggested by the companion Letter: WP1 populations (or M0) driven by the instantaneous J·E from the Maxwell solver instead of the cycle-averaged absorption term; validate against the Letter's Fig. 4 if its parameters can be matched.
 
+## Session 4 — 2026-11-18 — ingest of Un, Sarkar & Sivan (Nanophotonics 2026) and plan revision 2.1
+
+**Scope requested.** The project lead supplied the published version and Supporting Information of Un, Sarkar & Sivan, "Origin, strength, and speed of the nonlinear optical response of transparent conducting oxides to single-cycle optical pulses", Nanophotonics 15, e70272 (2026), and asked to understand and ingest it, then revise and re-evaluate the project if necessary.
+
+### 4.1 Ingest
+
+- Read: all 11 pages and the 9-page SI (figures by eye). Added as reference **[62]**: manifest entry (`un2026nanophot`, arXiv:2608.11756, CC BY), full digest in `references/LITERATURE_SUMMARY.md` (after [16], whose short note on the arXiv version now points to [62]), Part I §1, §2, §3, §4, §6, §7, §10, §11 and the appendix updated, `references/README.md` updated. PDFs are in the local library (`references/pdfs/62_un2026nanophot*.pdf`, git-ignored); `fetch_references.py` now stores supplementary PDFs as `NN_key_si.pdf`.
+- What the paper does: density matrix (populations + coherences) of a 4 nm ITO sphere, quasi-static, 5 fs pump at 175 THz, E₀ = 0.6–2.4 V/nm, with the e–e, e–ph and (new) Brooks–Herring e–impurity integrals. Findings: O(1), cumulative permittivity change (not Kerr-like) with a 2ω ripple from coherences; stimulated emission comparable to absorption at the highest field; a thermal model driven by the instantaneous net absorbed power Ṗ·E reproduces the density-matrix permittivity; e–e thermalisation ≈12 fs at "1 TW/cm²" (T̃_e ≈ 4500 K), ∝ E₀²; generalised Fermi-liquid formula; e–ph relaxation slow and distribution-independent; prediction at odds with [20] (larger change, slower decay), with film gradients/transport among the suggested causes.
+- Printed-formula problems found (all in `docs/theory/un2026_notes.md`): (S9) sign in the bracket; (S22) missing 1/4; (S23) tanh argument; (S26) missing 1/(k_BT)²; (S25) missing 1/(2π)³; factor 2 between (S2) and (S7); ε∞ vs ε_b in the screening; ρ units. Unprinted: ε∞, ε_b, band top, grid, T̃_e(t).
+
+### 4.2 Checks against enzkin (`scripts/check_un2026.py` → `results/wp1/check_un2026.json`)
+
+- e–e: (S19) is the B1 integral with c_ee = 3/16. The generalised Fermi-liquid coefficients, implemented independently, match Fig. S1 to 2–7 % (A₀(E_F) = 9.46/8.51/6.06/4.65/3.73 vs ≈9.4/8.6/6.3/4.9/4.0 at 300–7000 K) once (S22)'s 1/4 is restored, and the formula reproduces the B1 thermal rate within 3 % near μ. Absolute rate: B1 gives 20 fs at 4500 K, 12 fs at ≈6500 K; the paper's "12 fs at 4500 K" is 1.5–2× faster; not resolvable without T̃_e(t).
+- e–ph: Fig. 5c matches enzkin with **D = 8.6 eV** (within 1.2–1.5×), not with the 17.2 eV of [14] (6× too high). The authors changed the deformation potential and added Brooks–Herring impurities (n_imp = 0.05 nm⁻³, Z = 1).
+- Consequences (bulk film, ε∞ = 3.45): Γ = 0.074 vs 0.175 fs⁻¹; ε(230 THz) = 0.14 + 0.17i vs 0.172 + 0.399i ([15]); G = 6.6×10¹⁵ vs 2.6×10¹⁶ W m⁻³ K⁻¹; Re ε recovery (1/e) of a 100 fs, 10⁸ J/m³ transient **1.9 ps vs 0.52 ps**, against 60–400 fs measured in ITO films. The e–ph coupling is not settled even within the group that defines the model.
+
+### 4.3 Code
+
+- `src/enzkin/collisions/eimp.py`: Brooks–Herring out-scattering rate (corrected S9), screened with ε_b and the κ of the current f; added to the damping in `KineticModel.damping` when `mat.n_imp > 0`. Off by default: no existing result changes.
+- `Material` gains `n_imp` (nm⁻³, default 0) and `Z_imp` (default 1); preset `ito_un2026()` (D = 8.6 eV, n_imp = 0.05, Z = 1, gamma_imp = 0).
+- Tests: closed form against the elastic-sphere angular integral; damping off by default, on and linear in n_imp. Theory: `docs/theory/wp1_kinetic_model.md` §5, §8.
+
+### 4.4 Re-evaluation and plan revision 2.1 (`docs/PROJECT_PLAN.md`)
+
+- **Unchanged:** the central question, H1–H3, the flagship scope (pumps ≥20 fs), WP3 as the next build. The paper supports the project's direction: the authors themselves cannot explain [20] with intraband kinetics in a uniform particle and point to film effects, which is what WP3/H3 test.
+- **Tier 2 split** (D16): Tier 2a = field-resolved J·E drive of the WP3 cells, validated against [62] Fig. 4 in the nanosphere limit; Tier 2b = density matrix, only for coherent features (needs a coherent collision-assisted absorption term for films first).
+- **Damping vs cooling** (D15): D (e–ph coupling) and the impurity damping model are free per-sample parameters in WP4 (M0, M1), prior D ≥ 8.6–17.2 eV; M1 also gets an Umklapp fraction for the e–e share of the damping; M0 may use the generalised Fermi-liquid e–e rate.
+- Data table: [62] (simulated benchmark) and Herbst et al. 2026 (fieldoscopy of ITO nanocrystals under two-cycle pulses; not yet read) added. Risks: new row for the unsettled e–ph coupling; few-cycle row mitigated by Tier 2a. Competitors: Scalora group's 2025 hydrodynamic model of [20].
+- Not changed but worth knowing: the 2026 parameter set gives an ITO film with less than half the loss of [15]'s; WP1's validation against [15] keeps the [14, 15] set, which [15] itself used.
+
+### 4.5 Open items added (on top of §2.5)
+
+1. Ask the authors (with [14–16]): T̃_e(t) of Figs. 4–5, ε∞ and the screening constant, band top and grid, the ½ of (S2) vs (S7), the intensity convention, and which parameter set applies to which sample.
+2. Tier 2a when WP3 has a field solver: reproduce [62] Fig. 4a,b in the quasi-static sphere limit.
+3. Read Herbst et al., Adv. Sci. 13, e16818 (2026) and Scalora et al., Phys. Rev. A 112, 013502 (2025) before WP3's validation ladder is fixed; both are cited by [62] and bear on [20] and on few-cycle data.
+4. When fitting recovery data (WP3 step 4, WP4), report results for both damping splits until the data decide.
+
 ---
 
 ## Decision table
@@ -313,4 +350,7 @@ Peak displacement of the Fermi sphere by the local field, dk = eE_loc/ħω, agai
 | D11 | 2026-11-17 | Plan revised to revision 2; revision 1 archived | D9 and the findings of the literature pass |
 | D12 | 2026-11-17 | The exact integral is ported to JAX (64-bit) for GPU use and gradients; numba stays the CPU reference | WP3 and WP4 need GPU batching over cells and gradients |
 | D10 | 2026-11-17 | Dataset generator rejects cases whose nominal deposit exceeds half the band's capacity | a third of the plan's sampling range saturates a single 4 eV band |
+| D14 | 2026-11-18 | Un, Sarkar & Sivan, Nanophotonics 2026 added to the reference list as [62]; plan revision 2.1 | supplied by the project lead; the only collision-resolved single-cycle calculation for a TCO |
+| D15 | 2026-11-18 | Deformation potential D (e–ph coupling) and the impurity damping model (constant or Brooks–Herring) are inferred per sample in WP4, prior D ≥ 8.6–17.2 eV; Brooks–Herring damping and the [62] preset added to WP1 (off by default) | the authors' two parameter sets differ by 4 in G; recovery 0.5 vs 1.9 ps for the same pulse (`scripts/check_un2026.py`) |
+| D16 | 2026-11-18 | Tier 2 split: 2a = field-resolved J·E drive of the WP3 cells, validated against [62] Fig. 4; 2b = density matrix only for coherent features. Flagship scope stays ≥20 fs until 2a passes | [62]: thermal model driven by instantaneous Ṗ·E reproduces the density matrix; its finite-size absorption does not transfer to films |
 | D13 | 2026-11-17 | Grid rule for WP3 onward: energy step 31 meV (32 points per eV); band width 4, 6 or 8 eV chosen so that the top-cell occupation stays below 4×10⁻⁵; linear optics calibrated on the grid in use. Replaces the intensity threshold of D8 | convergence sweep, §2.3: step error ≤ 1 %, band cut-off error up to 12 % |

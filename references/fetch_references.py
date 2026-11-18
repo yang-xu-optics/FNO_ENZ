@@ -60,12 +60,26 @@ def stem(ref: dict) -> str:
     return f"{ref['n']:02d}_{ref['key']}"
 
 
+def fetch_si(ref: dict) -> None:
+    """Supplementary PDFs (source kinds ending in '-si') go to NN_key_si.pdf."""
+    out = PDFS / f"{stem(ref)}_si.pdf"
+    if out.exists() and out.stat().st_size > 10_000:
+        return
+    for src in ref.get("sources", []):
+        if src["kind"].endswith("-si"):
+            data = _get(src["url"])
+            if data and data[:5] == b"%PDF-":
+                out.write_bytes(data)
+                return
+
+
 def fetch_pdf(ref: dict) -> str:
+    fetch_si(ref)
     out = PDFS / f"{stem(ref)}.pdf"
     if out.exists() and out.stat().st_size > 10_000:
         return "present"
     for src in ref.get("sources", []):
-        if src["kind"] == "abstract-page":
+        if src["kind"] == "abstract-page" or src["kind"].endswith("-si"):
             continue
         data = _get(src["url"])
         if data and data[:5] == b"%PDF-":
