@@ -1,0 +1,139 @@
+{
+ "material": {
+  "n_e": 1.5,
+  "k_F": 3.541365508000454,
+  "E_F": 0.8804878974335376,
+  "m0_rel": 0.3964,
+  "C": 0.4191,
+  "eps_1300": [
+   0.18912113046448775,
+   0.395859762108446
+  ],
+  "eps_800": [
+   2.207179467708872,
+   0.09267754329972608
+  ]
+ },
+ "rows": [
+  {
+   "label": "[15] 220 fs, 22 GW/cm2 incident",
+   "source": "Un et al. 2023 [15]",
+   "wavelength_nm": 1300.0,
+   "fwhm_fs": 220.0,
+   "period_fs": 4.336333237575976,
+   "cycles": 50.73410827692308,
+   "photon_eV": 0.9537246032585479,
+   "E_loc_V_per_nm": 0.9721829330829328,
+   "local_field": "thin-film stack of validate_un2023.py, cold film",
+   "dk_per_nm": 1.0193539411286225,
+   "dk_over_kF": 0.28784205946145786,
+   "E_lead_eV": 1.2956509593193164,
+   "mass_factor_ratio": 1.2002213359167575
+  },
+  {
+   "label": "[15] 220 fs, 75 GW/cm2 incident",
+   "source": "Un et al. 2023 [15]",
+   "wavelength_nm": 1300.0,
+   "fwhm_fs": 220.0,
+   "period_fs": 4.336333237575976,
+   "cycles": 50.73410827692308,
+   "photon_eV": 0.9537246032585479,
+   "E_loc_V_per_nm": 1.795011701067586,
+   "local_field": "thin-film stack of validate_un2023.py, cold film",
+   "dk_per_nm": 1.8821069467377167,
+   "dk_over_kF": 0.531463623985089,
+   "E_lead_eV": 1.6651168865727584,
+   "mass_factor_ratio": 1.37840424360222
+  },
+  {
+   "label": "[15] 220 fs, 200 GW/cm2 incident (their adiabatic limit)",
+   "source": "Un et al. 2023 [15]",
+   "wavelength_nm": 1300.0,
+   "fwhm_fs": 220.0,
+   "period_fs": 4.336333237575976,
+   "cycles": 50.73410827692308,
+   "photon_eV": 0.9537246032585479,
+   "E_loc_V_per_nm": 2.9312418332938908,
+   "local_field": "thin-film stack of validate_un2023.py, cold film",
+   "dk_per_nm": 3.073467773903335,
+   "dk_over_kF": 0.8678764637425674,
+   "E_lead_eV": 2.1919552749961433,
+   "mass_factor_ratio": 1.6324834130332013
+  },
+  {
+   "label": "G1b sweep, 20 fs, 100 GW/cm2 in the film",
+   "source": "convergence_sweep.py",
+   "wavelength_nm": 1300.0,
+   "fwhm_fs": 20.0,
+   "period_fs": 4.336333237575976,
+   "cycles": 4.6121916615384615,
+   "photon_eV": 0.9537246032585479,
+   "E_loc_V_per_nm": 0.8680210984394332,
+   "local_field": "FieldDrive convention",
+   "dk_per_nm": 0.9101381001116093,
+   "dk_over_kF": 0.25700202310534637,
+   "E_lead_eV": 1.2498787595330196,
+   "mass_factor_ratio": 1.1781467058968487
+  },
+  {
+   "label": "G1b sweep, 20 fs, 500 GW/cm2 in the film",
+   "source": "convergence_sweep.py",
+   "wavelength_nm": 1300.0,
+   "fwhm_fs": 20.0,
+   "period_fs": 4.336333237575976,
+   "cycles": 4.6121916615384615,
+   "photon_eV": 0.9537246032585479,
+   "E_loc_V_per_nm": 1.9409541820146092,
+   "local_field": "FieldDrive convention",
+   "dk_per_nm": 2.0351306607620674,
+   "dk_over_kF": 0.574673994018526,
+   "E_lead_eV": 1.7318689624211294,
+   "mass_factor_ratio": 1.4105968710986774
+  },
+  {
+   "label": "[20] 6 fs, 800 nm, ~2 TW/cm2",
+   "source": "Lustig et al. 2023 [20]",
+   "wavelength_nm": 800.0,
+   "fwhm_fs": 6.0,
+   "period_fs": 2.6685127615852164,
+   "cycles": 2.248443435,
+   "photon_eV": 1.5498024802951402,
+   "E_loc_V_per_nm": 3.1227885450948354,
+   "local_field": "vacuum field x |t| at normal incidence",
+   "dk_per_nm": 2.014959057556896,
+   "dk_over_kF": 0.5689779981774865,
+   "E_lead_eV": 1.723051754329178,
+   "mass_factor_ratio": 1.4063445824311653
+  },
+  {
+   "label": "[23] 6.4 fs, 800 nm, 5 TW/cm2",
+   "source": "Ozlu et al. 2026 [23]",
+   "wavelength_nm": 800.0,
+   "fwhm_fs": 6.4,
+   "period_fs": 2.6685127615852164,
+   "cycles": 2.398339664,
+   "photon_eV": 1.5498024802951402,
+   "E_loc_V_per_nm": 4.937562226791557,
+   "local_field": "vacuum field x |t| at normal incidence",
+   "dk_per_nm": 3.185930006933052,
+   "dk_over_kF": 0.8996332063819953,
+   "E_lead_eV": 2.2424088260981594,
+   "mass_factor_ratio": 1.6568157256370843
+  },
+  {
+   "label": "[23] 6.4 fs, 800 nm, 11 TW/cm2",
+   "source": "Ozlu et al. 2026 [23]",
+   "wavelength_nm": 800.0,
+   "fwhm_fs": 6.4,
+   "period_fs": 2.6685127615852164,
+   "cycles": 2.398339664,
+   "photon_eV": 1.5498024802951402,
+   "E_loc_V_per_nm": 7.3235883032544455,
+   "local_field": "vacuum field x |t| at normal incidence",
+   "dk_per_nm": 4.725497859481914,
+   "dk_over_kF": 1.3343716848222344,
+   "E_lead_eV": 2.9417422354825256,
+   "mass_factor_ratio": 1.9940843372571655
+  }
+ ]
+}

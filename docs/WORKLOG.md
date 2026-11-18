@@ -257,6 +257,46 @@ Conclusions: (i) the grid size sets everything, so the convergence sweep of open
 
 ---
 
+## Session 3 — 2026-11-18 — scope questions: the adiabatic approximation and few-cycle pumping
+
+**Scope requested.** Two questions from the project lead, no change to the plan: (1) does the project drop the adiabatic approximation of [15]; (2) can it predict ENZ dynamics driven by few-cycle pulses, and what exists on few-cycle-driven non-equilibrium electron dynamics in general.
+
+### 3.1 Answers given
+
+- (1) Yes for the optics, in WP3: no memory-free ε(t), no steady-state transfer-matrix field, no film average. WP1 keeps all three on purpose to match [15]. WP3 keeps cycle-averaged excitation and instantaneous rates. The adiabatic model stays as the H3 baseline.
+- (2) Not as planned. The plan already limits flagship claims to pumps of 20 fs and longer (Background, risk table) and puts few-cycle pumps in the Tier-2 stretch goal. Removing the adiabatic optics is necessary but not sufficient: few-cycle pumping also breaks cycle-averaged absorption, the isotropic distribution and, marginally, Markovian collisions (§3.2).
+
+### 3.2 Field regime of the pumping conditions (`scripts/field_regime.py` → `results/wp1/field_regime.json`)
+
+Peak displacement of the Fermi sphere by the local field, dk = eE_loc/ħω, against k_F = 3.54 nm⁻¹, and pulse length in optical cycles. Local fields for [15] from the thin-film stack of the validation (cold film, so upper values); for [20], [23] estimated as vacuum field × normal-incidence Fresnel transmission.
+
+| Condition | cycles (FWHM) | E_loc (V/nm) | dk/k_F | mass factor at leading edge / at E_F |
+| --- | --- | --- | --- | --- |
+| [15], 220 fs, 22 GW/cm² incident | 51 | 0.97 | 0.29 | 1.20 |
+| [15], 220 fs, 75 GW/cm² incident | 51 | 1.80 | 0.53 | 1.38 |
+| [15], 220 fs, 200 GW/cm² (their stated adiabatic limit, 2.7 V/nm in [15]) | 51 | 2.93 | 0.87 | 1.63 |
+| G1b sweep, 20 fs, 500 GW/cm² in-film | 4.6 | 1.94 | 0.57 | 1.41 |
+| [20], 6 fs, 800 nm, ~2 TW/cm² | 2.2 | 3.12 | 0.57 | 1.41 |
+| [23], 6.4 fs, 800 nm, 11 TW/cm² | 2.4 | 7.32 | 1.33 | 1.99 |
+
+- The local field computed for the [15] stack at 200 GW/cm² (2.9 V/nm) matches the 2.7 V/nm that [15] quotes, a check on the reconstructed geometry.
+- **Finding (my reading, not tested):** the field-driven displacement is already about half of k_F at the top of the range validated against [15] with 220 fs pulses. In the Kane band this modulates the electrons' mass within each cycle (the "fast" nonlinearity of [5–7, 11, 12]), which an isotropic, cycle-averaged f(E) cannot carry. For long pulses the accumulated heating term is expected to dominate ([5]: χ_slow/χ_fast up to ~40), but the WP1 model cannot check this. It is a reason to keep the l = 1 (current-carrying) part of the distribution in the WP3 derivation task rather than only the current equation.
+- For 800 nm few-cycle pumping ħω = 1.55 eV exceeds E_F = 0.88 eV, and at 1300 nm the two are comparable, so a semiclassical field-driven Boltzmann equation (force term) cannot represent the quantised absorption; the density-matrix level of [16] is the minimum for those data. Time scales near the Markov limit: collision duration ħ/E_F ≈ 0.75 fs, unscreened plasma period ≈ 2.3 fs.
+
+### 3.3 Literature
+
+- Read: the companion Letter of [16] (Un, Sarkar, Sivan, arXiv:2608.11756, Aug 2026; main text, not the SI), digested at the end of [16] in `references/LITERATURE_SUMMARY.md`; Part I §4 (time scales), §6 (H3) and §11 updated. Key points: a thermal model driven by the oscillating net absorption Ṗ·E reproduces their full density-matrix permittivity for a 5 fs pulse; e–e thermalisation ≈12 fs at 1 TW/cm², rate ∝ |E₀|²; their prediction disagrees with the 40 fs transmission recovery of [20], and they name film gradients and transport as a possible cause (H3-type). Also checked: the published version of [16] (Phys. Rev. B 113, 165411) has the same content as the arXiv version that was digested.
+- Found, not read, not in the library (candidates if the few-cycle regime is taken up): Scalora et al., Phys. Rev. A 112, 013502 (2025), time-domain model reproducing [20]; Herbst et al., Adv. Sci. 13, e16818 (2026), fieldoscopy of ITO nanocrystals with 10.7 fs two-cycle pulses; Yang et al., Nat. Phys. 15, 1022 (2019), high harmonics from an ENZ CdO film. General few-cycle solid-state dynamics: Borsch et al., Nat. Rev. Mater. 8, 668 (2023) (review); Sommer et al., Nature 534, 86 (2016); Volkov et al., Nat. Phys. 15, 1145 (2019); Hafez et al., Nature 561, 507 (2018); Maxwell-TDDFT (Yamada and Yabana, Phys. Rev. B 99, 245103 (2019)); Maxwell + semiconductor Bloch equations (Kilen et al., Phys. Rev. Lett. 125, 083901 (2020); Floss et al., Phys. Rev. A 97, 011401 (2018)); quantum kinetics (Fürst et al., Phys. Rev. Lett. 78, 3733 (1997); Huber et al., Nature 414, 286 (2001)).
+- Caveat for the plan's Tier 2 (my reading): the density matrix of [16] absorbs through finite-size (Landau-type) damping in a 4 nm box and explicitly neglects phonon- and electron-assisted absorption, which is what absorbs in a 40–300 nm film. Implementing [16] in a film cell needs a coherent treatment of collision-assisted absorption first; it is a formulation problem, not only a cost problem.
+
+### 3.4 Open items added
+
+- **For the project lead:** whether the few-cycle regime ([20, 23, 25], Herbst et al.) stays a stretch goal or becomes a work package. Plan unchanged until decided.
+- WP3 derivation task: carry the l = 1 part of the distribution and quantify the intra-cycle (Kane-mass) nonlinearity at the [15] conditions (dk/k_F ≈ 0.5).
+- Cheap intermediate few-cycle model suggested by the companion Letter: WP1 populations (or M0) driven by the instantaneous J·E from the Maxwell solver instead of the cycle-averaged absorption term; validate against the Letter's Fig. 4 if its parameters can be matched.
+
+---
+
 ## Decision table
 
 | Id | Date | Decision | Why |
