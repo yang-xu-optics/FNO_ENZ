@@ -409,6 +409,20 @@ Parameter set of [14, 15]; only ε∞ adjusted.
 3. Tier 2a in WP3: implement the temperature-following response; benchmark it against `enzkin.densmat` in the particle limit.
 4. Unchanged and still first: the GPU benchmark (G1b) and the start of WP3 (§2.5).
 
+## Session 7 — 2026-11-24 — where machine learning enters, given Gate 1 and GT2 (recommendation, plan unchanged)
+
+**Scope requested.** The project lead stated that machine learning is to be integrated into the study of ENZ dynamics (decision D20) and asked how to proceed.
+
+**Recommendation given (mine; the route is not yet decided):**
+
+- Put the learning on the inverse problem, not on the forward solvers. Gate 1 and GT2 showed that neither the collision integral nor the few-cycle constitutive law needs a surrogate. The inverse problem does: 10³–10⁴ forward runs at 2–12 core-hours each for the film model (G1b), high-dimensional observables, five candidate models, and parameters known to be degenerate (e–ph coupling against impurity damping, a factor of four between the authors' own sets, §4.2).
+- Track A, can start now on the existing single-cell kinetic model with adiabatic thin-film optics: (1) a simulated dataset over material, mechanism and pulse parameters; (2) a neural emulator of parameters and pulse → transient, with a Gaussian-process baseline, accepted if its error is below 1 % of the transient amplitude; (3) amortised posterior estimation with a conditional generative model (normalising flow or diffusion) and calibration checks; (4) an identifiability map: which measurement separates the degenerate parameters; (5) published data. The film solver of WP3 later replaces the forward model (multi-fidelity training), and the difference between parameters inferred with the adiabatic and the Maxwell-kinetic forward models becomes a quantitative form of H3.
+- Track B, later and riskier: a hybrid model in which the unknown interband source term (the Auger-like versus two-photon dispute) is a constrained neural term trained through the differentiable solver on high-fluence data, then distilled to a formula. Only after Track A shows the data can identify it.
+- Not recommended: surrogates of the solvers, black-box pulse-to-signal regression, physics-informed networks for the kinetic equation.
+- Quick literature check (three searches, nothing added to the library): no simulation-based inference or emulator work on hot-electron or ENZ pump-probe data turned up; nearest neighbours are machine-learned inversion of thermoreflectance data, an artefact-removal network for pump-probe traces, and the universal-differential-equation framework (Rackauckas et al., arXiv:2001.04385).
+
+**Open item.** The project lead chooses whether Track A starts now, alongside or ahead of WP3, and whether Track B is in scope. A dataset of 5–10 thousand single-cell runs needs roughly 50–100 core-hours (cluster); a pilot of a few hundred fits on this machine.
+
 ---
 
 ## Decision table
@@ -427,6 +441,7 @@ Parameter set of [14, 15]; only ε∞ adjusted.
 | D11 | 2026-11-17 | Plan revised to revision 2; revision 1 archived | D9 and the findings of the literature pass |
 | D12 | 2026-11-17 | The exact integral is ported to JAX (64-bit) for GPU use and gradients; numba stays the CPU reference | WP3 and WP4 need GPU batching over cells and gradients |
 | D10 | 2026-11-17 | Dataset generator rejects cases whose nominal deposit exceeds half the band's capacity | a third of the plan's sampling range saturates a single 4 eV band |
+| D20 | 2026-11-24 | **Decided by the project lead:** machine learning is to be integrated into the study. Route proposed in session 7 (inference and emulation first; learned unknown physics second); the choice of route is open | conversation of 2026-11-24, after Gate 1 and GT2 ruled out solver surrogates |
 | D17 | 2026-11-24 | **Decided by the project lead:** the generative pulse-retrieval prior (option 3 of session 5) is set aside; the learned few-cycle constitutive law (option 1) is to be tested before any work on it | conversation of 2026-11-24 |
 | D18 | 2026-11-24 | The learned operator stays deferred for few-cycle pumps; "density matrix too expensive in a film" removed from the conditions for its return; plan revision 2.2 | test GT2: 11 s per cell; one-temperature closure within 1.3 % (median) and 5.8 % (worst); model uncertainty 5–13 % |
 | D19 | 2026-11-24 | Tier 2b implemented with a reconstructed dipole element in place of Eq. (16) of [16]; regularisation constant c = 1; ε∞ of the particle fitted to Re ε(175 THz) = −1.6 | Eq. (16) fails the sum rule as printed; the reconstruction reproduces [16, 62] to a few percent (§6.2) |
