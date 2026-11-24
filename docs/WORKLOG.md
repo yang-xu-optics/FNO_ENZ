@@ -332,6 +332,20 @@ Peak displacement of the Fermi sphere by the local field, dk = eE_loc/ħω, agai
 3. Read Herbst et al., Adv. Sci. 13, e16818 (2026) and Scalora et al., Phys. Rev. A 112, 013502 (2025) before WP3's validation ladder is fixed; both are cited by [62] and bear on [20] and on few-cycle data.
 4. When fitting recovery data (WP3 step 4, WP4), report results for both damping splits until the data decide.
 
+## Session 5 — 2026-11-24 — where machine learning could enter the few-cycle work (discussion only)
+
+**Scope requested.** The project lead asked how deep learning or generative models could be brought into the study of ITO electron dynamics under few-cycle pulses. Advice only; the plan is unchanged.
+
+**Recommendation given (my assessment, not a decision):**
+
+- ML earns a place where the physics model is too expensive for the loop it has to run in, where the observable is high-dimensional and the inverse problem ill-posed, or where the constitutive law itself is unknown. Few-cycle pumping meets all three; the ≥20 fs regime met none (Gate 1).
+- Ranked options: (1) a learned, causal few-cycle constitutive law (field history → polarisation/current and absorbed energy) trained on density-matrix runs, with causality, passivity, the Lindhard/Drude linear limit and the Tier 2a thermal limit built in, embedded in the WP3 field solver: the condition under which the deferred operator returns (plan, deferred section); (2) amortised simulation-based inference (normalising-flow or diffusion posteriors, neural ratio estimation for M0–M4) on field-resolved data; (3) a diffusion prior for pump, probe and complex gate in double-blind FROG (WP5), building on [58, 59]; (4) equation discovery (sparse or symbolic regression, universal differential equations) for the current equation where the Fermi-sphere displacement reaches 0.5–1.3 k_F.
+- Not recommended: a surrogate of the collision integral (Gate 1), black-box pulse-to-ΔR/R regression on the few available datasets, PINNs for the stiff integro-differential kinetic equation.
+- Deciding experiment before any of (1): run the density matrix of [62] in its own uniform-field setting over field strength, duration and CEP, and check whether the Tier 2a thermal model misses anything a field-resolved measurement could see. If it does not, (1) shrinks to the coherent features.
+- Literature checked in a quick search (not added to the library): Borthakur, Hirschman & Carbajo, arXiv:2511.08764 (diffusion pulse retrieval from partial FROG traces); Herrera Rodríguez & Kananenka, arXiv:2409.11320 (transformer for non-Markovian dissipative dynamics); simulation-based inference with neural posterior estimation in X-ray and galaxy spectroscopy (arXiv:2506.05911, 2211.09126); no simulation-based inference on ultrafast pump-probe data and no learned constitutive law for a hot-electron ENZ medium turned up.
+
+**Open item.** The project lead decides whether to add an ML work package (gated on Tier 2a and the deciding experiment above) in a revision 2.2.
+
 ---
 
 ## Decision table
