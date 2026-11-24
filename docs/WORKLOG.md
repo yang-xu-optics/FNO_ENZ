@@ -346,6 +346,69 @@ Peak displacement of the Fermi sphere by the local field, dk = eE_loc/ħω, agai
 
 **Open item.** The project lead decides whether to add an ML work package (gated on Tier 2a and the deciding experiment above) in a revision 2.2.
 
+## Session 6 — 2026-11-24 — test GT2: is a learned few-cycle constitutive law worth building?
+
+**Scope requested.** The project lead set option 3 of session 5 (generative prior for pulse retrieval) aside, judged option 1 (a learned few-cycle constitutive law) worth the effort, and asked for the deciding test proposed in session 5: run the density matrix of [16, 62] in its own uniform-field setting over field strength, duration and carrier-envelope phase, and check whether a cheap closure misses anything a field-resolved measurement could see.
+
+### 6.1 Density-matrix model built (`src/enzkin/densmat.py`, `docs/theory/tier2_density_matrix.md`)
+
+- Equations (13)–(15) of [16] rewritten exactly as one damped oscillator per pair of energies, Q̈ + 2η̄Q̇ + Δ²Q = S(f_lo − f_hi)E_loc, with the work E_loc·Q̇ moving electrons between the two levels. Number and energy are conserved to round-off (10⁻¹⁴, 10⁻¹⁵). Collisions on the populations are the WP1 terms, refreshed every 0.1 fs; RK4 with 0.02 fs steps in numba.
+- **Dead end, then finding: Eq. (16) of [16] (the dipole element) is wrong as printed.** Evaluated literally it is negative over most of the (E, E′) plane and gives −1.95×10⁵ times the oscillator strength required by the sum rule at E_F. The figure of the same quantity ([16] Fig. 1b) is sound. Rederived from the box states: W = (64π/Lkk′)∫dk_z k_z²k_z′/[(k_z−k_z′)⁴(k_z+k_z′)⁴] with k_z′² = k′² − k² + k_z²; this matches Fig. 1b away from the diagonal (log₁₀|D|² = −58.64 at 0.5 E_F against ≈ −58.6). The (k_z − k_z′)⁻⁴ singularity stands for the discrete level spacing and is replaced by [(k_z − k_z′)² + (c/L)²]⁻² with c = 1, which keeps the oscillator strength of the odd level differences and makes the diagonal singularity logarithmic, as [16] describes. Sum rule of the cold 4 nm particle: 0.84 of the bulk ω_p² (0.90 at E_F); 0.91 at 8 nm and 0.95 at 16 nm.
+- Also: Eq. (18) of [16] lacks a factor 1/ħ as printed. ε∞ is not printed; fitted to Re ε(175 THz) = −1.6 → 3.32.
+
+### 6.2 Validation against [16, 62] (`scripts/validate_densmat.py` → `results/tier2/densmat_validation.json`)
+
+Parameter set of [14, 15]; only ε∞ adjusted.
+
+| Quantity | published | enzkin.densmat |
+| --- | --- | --- |
+| ε(175 THz), cold | −1.6 + 1.4i | −1.60 (fitted) + 1.27i |
+| zero of Re ε | 215 THz | 214 THz |
+| energy to the electrons, 1.2 V/nm | 0.63 eV/nm³ | 0.637 |
+| absorbed power, 1.2 V/nm | −0.14 … +0.33 eV/nm³/fs | −0.147 … +0.343 |
+| local-field spectral peak, 0 → 2.4 V/nm | 179 → 168 THz | 177 → 166 THz |
+| local-field spectral width, 0 → 2.4 V/nm | 66 → 121 THz | 62 → 120 THz |
+| ε(160 THz) after the pump, 1.2 V/nm | ≈ −1.0 + 2.25i | −0.92 + 2.16i |
+| 1/η_ee(E_F), 5 fs after the peak, 1.8 V/nm | ≈ 12 fs | 14 fs |
+
+- The puzzle of §4.2 (their e–e time 1.5–2× faster than B1 "at 4500 K") is resolved: at 1.8 V/nm the effective temperature is 6050 K in our reproduction, where B1 gives 14 fs. The "∼4500 K" quoted in [62] does not fit its own absorbed energy.
+
+### 6.3 Closure scan (`scripts/fewcycle_closure_test.py` → `results/tier2/closure_test.json`; report `docs/gates/GT2_fewcycle_closure_report.md` by `scripts/make_closure_report.py`)
+
+- 26 pulses: 175 THz, 5/10/20 fs, 0.3–2.4 V/nm, CEP 0 and π/2, plus two at 230 THz; 8 eV band, 256 points; peak T_e 1100–9840 K; nonlinear part of the current 4–177 % of its peak.
+- Truth L0 = density matrix. Closures, all heated by the instantaneous work E_loc·Ṗ: L1 = Fermi–Dirac populations at T_e(t) with all pair oscillators (the "thermal model" of [62]); L2 = 17 fixed poles with strengths fitted to χ(ω; T_e) and widths rising with the collision rate; L3 = one Drude pole (plan Tier 2a).
+- Largest deviation of the current J = Ṗ from L0, in percent of its peak:
+
+| Closure | median | worst | cost per 60 fs run |
+| --- | --- | --- | --- |
+| L0 density matrix | — | — | 11 s |
+| L1 one temperature, all pairs | 1.3 | 5.8 (5 fs, 2.4 V/nm) | 2.4 s |
+| L2 17 fitted poles, widths follow T_e | 3.3 | 4.4 | 6 ms |
+| L2 the same with fixed widths | 2.7 | 13.2 | 6 ms |
+| L2 9 poles | 8.3 | 10.2 | 6 ms |
+| L3 Drude pole | 15.8 | 20.7 | 6 ms |
+
+- **Model uncertainty** (same script): lowering the regularisation constant by 10 % moves the density-matrix current by 4.5–7.3 %; letting only half of the e–e rate dephase the polarisation (the Umklapp share is unknown, [16]) moves it by 2.9–12.7 %. Both exceed the L1 residual in the same conditions (0.7–4.4 %).
+- Carrier-envelope phase: no systematic effect on the closure errors. Absorbed energy within 2 % (L1, L2) and 4 % (L3).
+- Robustness: with the parameter set of [62] Table S1 (`--un2026` → `closure_test_un2026.json`) the worst errors are 5.6 % (L1), 4.4 % (L2) and 20.5 % (L3), and the model uncertainty 3.7–17.1 %: the same picture.
+- Tests: `tests/test_densmat.py` (9 tests: closed form of the dipole strength, sum rule, cold permittivity, time domain against frequency domain, conservation, the benchmark of [16] Fig. 6, closures). Suite: 76 pass in about 70 s.
+- **Dead end:** a first reduction that grouped the pair oscillators into 4 or 16 frequency bands and kept their physical widths failed (5–50 % error): a handful of narrow lines cannot stand for a continuum that absorbs resonantly. Replaced by fixed overlapping poles with non-negative fitted strengths.
+- **Finding: non-adiabatic effect isolated.** Poles with temperature-independent widths fit χ(ω; T_e) to 1 % at every frozen temperature and still err by up to 13 % in time, because T_e changes within the memory time of the polarisation; letting the widths follow the collision rate brings this to 4.4 %.
+
+### 6.4 Verdict and decisions
+
+- **A learned few-cycle constitutive law is not worth building on this model** (decision D18): the model is cheap (18 min for 100 cells), its response reduces to one temperature plus a known linear memory within 1–6 %, and what would be left to learn is smaller than the model's own uncertainty. The assumption of plan revision 2 that the density matrix is too expensive in a film was wrong.
+- The verdict is about this microscopic model. It lacks the coupling between coherences and any film absorption channel; a model that had them might not reduce to a temperature.
+- Plan revision 2.2: Tier 2b built; Tier 2a to use temperature-following multi-pole response where the linear response is not Drude; nanocrystal route added as a candidate; deferred-operator conditions updated; GT2 in the gate table.
+- Deviation from the request: none in scope. Beyond the proposal of session 5, the test included a fitted few-pole law and a model-uncertainty estimate, because the verdict needed both.
+
+### 6.5 Open items added
+
+1. Read Herbst et al., Adv. Sci. 13, e16818 (2026): if its data are usable, `enzkin.densmat` can be compared with a field-resolved few-cycle measurement on ITO nanocrystals now (their ENZ is near 2 µm, so the particle parameters differ).
+2. Ask the authors of [16] for the correct Eq. (16) and its regularisation, and for ε∞ (added to the list in LITERATURE_SUMMARY Part I §11).
+3. Tier 2a in WP3: implement the temperature-following response; benchmark it against `enzkin.densmat` in the particle limit.
+4. Unchanged and still first: the GPU benchmark (G1b) and the start of WP3 (§2.5).
+
 ---
 
 ## Decision table
@@ -364,6 +427,9 @@ Peak displacement of the Fermi sphere by the local field, dk = eE_loc/ħω, agai
 | D11 | 2026-11-17 | Plan revised to revision 2; revision 1 archived | D9 and the findings of the literature pass |
 | D12 | 2026-11-17 | The exact integral is ported to JAX (64-bit) for GPU use and gradients; numba stays the CPU reference | WP3 and WP4 need GPU batching over cells and gradients |
 | D10 | 2026-11-17 | Dataset generator rejects cases whose nominal deposit exceeds half the band's capacity | a third of the plan's sampling range saturates a single 4 eV band |
+| D17 | 2026-11-24 | **Decided by the project lead:** the generative pulse-retrieval prior (option 3 of session 5) is set aside; the learned few-cycle constitutive law (option 1) is to be tested before any work on it | conversation of 2026-11-24 |
+| D18 | 2026-11-24 | The learned operator stays deferred for few-cycle pumps; "density matrix too expensive in a film" removed from the conditions for its return; plan revision 2.2 | test GT2: 11 s per cell; one-temperature closure within 1.3 % (median) and 5.8 % (worst); model uncertainty 5–13 % |
+| D19 | 2026-11-24 | Tier 2b implemented with a reconstructed dipole element in place of Eq. (16) of [16]; regularisation constant c = 1; ε∞ of the particle fitted to Re ε(175 THz) = −1.6 | Eq. (16) fails the sum rule as printed; the reconstruction reproduces [16, 62] to a few percent (§6.2) |
 | D14 | 2026-11-18 | Un, Sarkar & Sivan, Nanophotonics 2026 added to the reference list as [62]; plan revision 2.1 | supplied by the project lead; the only collision-resolved single-cycle calculation for a TCO |
 | D15 | 2026-11-18 | Deformation potential D (e–ph coupling) and the impurity damping model (constant or Brooks–Herring) are inferred per sample in WP4, prior D ≥ 8.6–17.2 eV; Brooks–Herring damping and the [62] preset added to WP1 (off by default) | the authors' two parameter sets differ by 4 in G; recovery 0.5 vs 1.9 ps for the same pulse (`scripts/check_un2026.py`) |
 | D16 | 2026-11-18 | Tier 2 split: 2a = field-resolved J·E drive of the WP3 cells, validated against [62] Fig. 4; 2b = density matrix only for coherent features. Flagship scope stays ≥20 fs until 2a passes | [62]: thermal model driven by instantaneous Ṗ·E reproduces the density matrix; its finite-size absorption does not transfer to films |

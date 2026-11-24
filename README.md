@@ -2,7 +2,7 @@
 
 What sets the speed and sign of the optical response of epsilon-near-zero indium tin oxide under intense ultrashort pulses? This repository holds the project: the reference library and its ingested summary, the ground-truth Boltzmann solver (WP1), and, as the work proceeds, the Maxwell–kinetic film solver (WP3), mechanism inference (WP4) and the experimental comparison (WP5). The neural-operator surrogate that gave the repository its name is deferred: the exact collision integral proved fast enough (plan revision 2).
 
-**Status (2026-11-18):** WP1 first pass complete: solver built and tested, validated against published transients, pilot dataset generated. **Gate 1 measured and not passed as written**: the exact collision integral turned out cheap enough to use directly at the resolution needed, and the FFT baseline too inaccurate to use; see [`docs/gates/G1_report.md`](docs/gates/G1_report.md). The machine-learning surrogate is dropped for now (plan revision 2). **Gate 1b** (is the exact solver affordable everywhere?): grid convergence and CPU cost confirmed, GPU benchmark outstanding; see [`docs/gates/G1b_report.md`](docs/gates/G1b_report.md). Plan revision 2.1 (2026-11-18) adds the single-cycle calculation of Un, Sarkar & Sivan [62]: few-cycle pumps become Tier 2a/2b, and the electron–phonon coupling becomes an inferred parameter. [`docs/WORKLOG.md`](docs/WORKLOG.md) records what was done and what is open.
+**Status (2026-11-24):** WP1 first pass complete: solver built and tested, validated against published transients, pilot dataset generated. **Gate 1 measured and not passed as written**: the exact collision integral turned out cheap enough to use directly at the resolution needed, and the FFT baseline too inaccurate to use; see [`docs/gates/G1_report.md`](docs/gates/G1_report.md). The machine-learning surrogate is dropped for now (plan revision 2). **Gate 1b** (is the exact solver affordable everywhere?): grid convergence and CPU cost confirmed, GPU benchmark outstanding; see [`docs/gates/G1b_report.md`](docs/gates/G1b_report.md). Plan revision 2.1 (2026-11-18) adds the single-cycle calculation of Un, Sarkar & Sivan [62]: few-cycle pumps become Tier 2a/2b, and the electron–phonon coupling becomes an inferred parameter. **Test GT2 (2026-11-24)**: the few-cycle density-matrix model of [16, 62] is implemented and validated (`enzkin.densmat`); a learned constitutive law is not worth building on it, see [`docs/gates/GT2_fewcycle_closure_report.md`](docs/gates/GT2_fewcycle_closure_report.md). [`docs/WORKLOG.md`](docs/WORKLOG.md) records what was done and what is open.
 
 ## Where things are
 
@@ -18,7 +18,7 @@ What sets the speed and sign of the optical response of epsilon-near-zero indium
 | `src/enzkin/` | The solver package (WP1). |
 | `tests/` | Structural and physics tests (`pytest`). |
 | `scripts/` | Reproducible runs: validation, Gate 1 benchmark, dataset generation, figures. |
-| `results/wp1/` | Small outputs of those scripts (JSON, figures). Large data go to `data/` (git-ignored). |
+| `results/wp1/`, `results/tier2/` | Small outputs of those scripts (JSON, figures). Large data go to `data/` (git-ignored). |
 
 Later work packages add `src/enzkin/maxwell/` (WP3), `inference/` (WP4) and `experiment/` (WP5), each with its own gate report under `docs/gates/`.
 

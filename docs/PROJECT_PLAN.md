@@ -1,8 +1,19 @@
 # Maxwell-Kinetic Model of ENZ Electron Dynamics: Project Plan
 
-Revision 2.1 · Nov 18, 2026 · @Yang
+Revision 2.2 · Nov 24, 2026 · @Yang
 
 Revision 1 (Nov 16, 2026, "Learned Kinetic Closure for ENZ Electron Dynamics") is kept unchanged at `docs/archive/PROJECT_PLAN_v1_2026-11-16.md`. Reference numbers are the same in both; revision 2.1 adds \[62\].
+
+## What changed in revision 2.2
+
+Prompted by decision test GT2 (`docs/gates/GT2_fewcycle_closure_report.md`): is a learned few-cycle constitutive law worth building? The project lead asked for the test on 2026-11-24 and set the generative pulse-retrieval idea aside.
+
+| Change | Reason | Evidence |
+| --- | --- | --- |
+| The learned operator stays deferred for few-cycle pumps as well. The condition "the density-matrix solver is too expensive in a film" is removed from the deferred section. | The density matrix of \[16, 62\] costs 11 s per cell for a 60 fs window. Replacing its populations by one electron temperature changes the field-resolved current by 1.3 % (median) and 5.8 % (worst) of its peak, less than the model's own uncertainty of 5-13 %. A fitted 17-pole law reaches 4.4 % at 6 ms per cell. | GT2 report |
+| Tier 2b (density matrix of a particle) is built and validated: `enzkin.densmat`. | Needed as the truth for the test; reproduces the published results of \[16, 62\] to a few percent with one fitted number. The dipole element printed in \[16\] Eq. (16) is wrong and was reconstructed. | `docs/theory/tier2_density_matrix.md`, `scripts/validate_densmat.py` |
+| Tier 2a uses a multi-pole response whose widths follow the electron temperature wherever the linear response is not a Drude pole; its validation target is the density matrix itself. | A single Drude pole misses the particle's current by 8-21 %; poles with temperature-independent widths miss it by up to 13 % although they fit the permittivity at every frozen temperature. | GT2 report |
+| A nanocrystal route is added as a candidate: the particle model applies directly to field-resolved measurements on ITO nanocrystals. | It needs no film solver and runs in seconds. | to be assessed after reading Herbst et al. 2026 |
 
 ## What changed in revision 2.1
 
@@ -154,10 +165,12 @@ Comparison models built from the same pieces: the FFT random-k integral of \[40\
 - [ ] Benchmark dataset: about 10^3 trajectories with the exact integral over 20-250 fs and 1.1-1.6 um, inside the single-band limit, with material parameters varied by 25 %. It serves regression tests, the methods paper, and any later surrogate.
 - [ ] Compare with the reduced athermal model of \[39\] as a second baseline (optional).
 
-**Tier 2 (stretch): few-cycle pumps.** The sign-reversal data \[20, 23\] and the Auger-versus-two-photon test both sit in this regime.
+**Tier 2: few-cycle pumps.** The sign-reversal data \[20, 23\] and the Auger-versus-two-photon test both sit in this regime.
 
-- *Tier 2a.* In the WP3 film solver, drive each cell's absorption by the instantaneous J.E from the field solver instead of the cycle-averaged power (kinetic cells, or thermal cells for M0). Validation: reproduce \[62\] Fig. 4a,b (Re ε from -2.6 to -1.0 and Im ε from 1.85 to 2.25 at 160 THz for E0 = 1.2 V/nm) in the quasi-static nanosphere limit, with a size-broadened damping matched to \[62\] Fig. 1b. This needs the unprinted ε∞ and the time course of the temperature from the authors, or a fit.
-- *Tier 2b.* The energy-space density matrix of \[16, 62\], only if coherent signatures (the 2ω ripple, stimulated emission at high field) are targeted. For films it needs a coherent form of collision-assisted absorption first, because \[16, 62\] absorb through the particle's finite size.
+- *Tier 2b, built (2026-11-24).* The energy-space density matrix of \[16, 62\] for a small particle in a uniform field: `enzkin.densmat`. With the dipole element reconstructed (the printed Eq. (16) of \[16\] fails the oscillator-strength sum rule) and ε∞ fitted, it reproduces the cold permittivity, the absorbed energy and power, the local-field spectral shift and the permittivity change published in \[16, 62\] to a few percent. Cost: 11 s per run. It is a particle model: it absorbs through the particle's finite size, so it must not be used for a film cell as it stands.
+- *Tier 2a.* In the WP3 film solver, drive each cell's absorption by the instantaneous J.E from the field solver instead of the cycle-averaged power (kinetic cells, or thermal cells for M0). Test GT2 showed that an electron temperature heated by the instantaneous work, feeding a linear response whose damping follows that temperature, tracks the density matrix to 1-6 %. It also showed that the damping must be updated with the temperature in time, not through a frozen-temperature fit. For a bulk-like film the linear response is a Drude pole; for anything with a non-Drude dispersion use fitted poles (`ReducedResponse.fitted`).
+- *Nanocrystal route (candidate).* Field-resolved measurements on ITO nanocrystals under two-cycle pulses (Herbst et al., Adv. Sci. 13, e16818 (2026), cited by \[62\]; not yet read) could be compared with `enzkin.densmat` directly, without a film solver.
+- *Still missing for films.* A coherent treatment of collision-assisted absorption, and the field-driven coupling between coherences, which carries the intra-cycle band nonlinearity when the field displaces the Fermi sphere by 0.5-1.3 k_F.
 
 ## WP3: Maxwell-kinetic closure (months 1-7)
 
@@ -234,8 +247,8 @@ WP4 runs the published mechanisms through one forward model and lets the data ra
 | Gurung et al. \[21\] | Relaxation time against intensity and angle | Tests recovery dynamics | in the paper and supplement |
 | Harwood et al. \[22\] | Complex reflection and transmission coefficients in time, 1300 nm | Amplitude and phase at high fluence; tests M2 | on request |
 | Lustig et al. \[20\], Ozlu et al. \[23\] | Shifts, sign reversal, 800 nm few-cycle pumps | Tier 2a once validated; the only data that can separate M2 from M3 | on request \[23\] |
-| Un et al. \[62\] | Simulated ε(t) under a 5 fs pump, electron-electron and electron-phonon rates (4 nm sphere) | Validation of Tier 2a and of the electron-electron rate; not a measurement | on request |
-| Herbst et al., Adv. Sci. 13, e16818 (2026), cited by \[62\] (not yet read) | Transmitted field of ITO nanocrystals under two-cycle pumps, by fieldoscopy | Candidate few-cycle dataset with nearly uniform fields | to be checked |
+| Un et al. \[62\] | Simulated ε(t) under a 5 fs pump, electron-electron and electron-phonon rates (4 nm sphere) | Reproduced by `enzkin.densmat` (Tier 2b); benchmark for Tier 2a; not a measurement | on request |
+| Herbst et al., Adv. Sci. 13, e16818 (2026), cited by \[62\] (not yet read) | Transmitted field of ITO nanocrystals under two-cycle pumps, by fieldoscopy | Candidate few-cycle dataset; comparable with `enzkin.densmat` directly (nanocrystal route) | to be checked |
 | Choi et al. \[24\] | Simulated transients, public code | Cross-check of M0 | Figshare |
 | Own double-blind FROG data | Measured pump and probe fields plus complex gate | Removes assumed-pulse systematics | own |
 
@@ -282,7 +295,7 @@ A collinear or near-collinear geometry is preferred: a crossing angle smears the
 The structure-preserving neural operator is not built now. It comes back if one of these is measured:
 
 - WP4 inference is too slow with the exact solver even on a GPU. An emulator from model parameters to observables may then serve better than a collision-operator surrogate.
-- The Tier 2b density-matrix solver, whose state is two-dimensional in energy, is needed in a film and is too expensive there.
+- A microscopic few-cycle model appears whose response does not reduce to an electron temperature plus a linear memory, for example one with coupling between coherences or with coherent collision-assisted absorption in a film. Test GT2 (2026-11-24) showed that the density matrix of \[16, 62\] does reduce that way and is cheap, so it gives a learned constitutive law nothing to learn.
 - Films with lateral structure need thousands of cells.
 
 What revision 1's literature review established, for that day: \[47\] already enforces one conservation law exactly and \[46\] has an exact equilibrium fixed point, so the novelty would be two weighted invariants, Pauli blocking, a Fermi-Dirac fixed point with exact conservation, and an entropy constraint. \[49\] learns a flow map, not a collision operator. Training through the solver is necessary \[51\]. The surrogate must deliver the collision rate as well as the collision term. The exact index identity that gives conservation needs a uniform energy grid. Details are in `references/LITERATURE_SUMMARY.md`, Part I §8.
@@ -301,6 +314,7 @@ What revision 1's literature review established, for that day: \[47\] already en
 | --- | --- | --- | --- |
 | G1 | 2 | **Closed, not passed as written.** The exact integral is 6-46 times costlier than the FFT integral at 128-256 points (266 times at 512), and the FFT integral misses the transient by 7-221 %. | Taken: use the exact integral in WP3; drop the surrogate for now |
 | G1b | 1 | 128 or 256 points reproduce the finest grid within 1 % of the transient amplitude over the whole condition matrix, including weak excitation and the 6 eV band; a film run on the exact integral fits in hours on a cluster node or minutes on a GPU. **Status 2026-11-17: grid and CPU parts met (128 points per 4 eV; 1.7-12 core-hours per film run for 4-8 eV bands); GPU part outstanding.** | Use the finer grid and recost WP3 and WP4; reopen the surrogate question if a film run exceeds a day |
+| GT2 | 1 | Decision test, not a pass/fail gate: does the few-cycle density matrix contain anything a cheap closure misses, and is it too costly to run directly? **Closed 2026-11-24: no on both counts**; the learned operator stays deferred | n/a |
 | G3 | 6 | Validation steps 1-3 pass with parameters fixed at step 2 | Revisit the absorption model and the current equation |
 | G4 | 8 | Synthetic study recovers the generating model in at least 9 of 10 trials | Redesign the WP5 measurements and narrow the claims to H1 and H3 |
 
@@ -317,7 +331,7 @@ Gate G2 of revision 1 (acceptance of the neural operator) is suspended with WP2.
 | The exact solver is not as cheap as the first measurement suggests (finer grid needed, wider band, more cells) | Medium | Gate G1b measures it before WP3 depends on it; GPU port; the deferred operator |
 | Ground-truth physics or parameters are wrong | High | Corrections to \[14\] are documented and tested; \[15\] is reproduced only in part; write to the authors; material parameters inferred per sample |
 | The current equation cannot be closed at the level of an isotropic distribution | Medium | Carry the l = 1 part of the distribution per cell; report both forms and their observable difference |
-| Few-cycle data lie outside Boltzmann validity | Certain for \[20, 23\] | Tier 2a (field-resolved absorption), validated against \[62\]; flagship claims limited to pumps of 20 fs and longer until it passes. Tier 2b only for coherent features. |
+| Few-cycle data lie outside Boltzmann validity | Certain for \[20, 23\] | Tier 2a (field-resolved absorption) in the film solver, benchmarked against the particle density matrix (Tier 2b, built); flagship claims limited to pumps of 20 fs and longer until Tier 2a exists. No microscopic few-cycle model for films exists yet. |
 | The electron-phonon coupling and the impurity damping are not settled | Certain: the same group uses D = 17.2 eV \[14\] and 8.6 eV \[62\] | Infer them per sample from linear permittivity and recovery times; ask the authors; report how conclusions depend on the split |
 | High-intensity data lie outside the single-band model | Certain above about 5 x 10^8 J/m3 absorbed | State the limit; widen the band; add higher bands only if the data demand it |
 | Mechanisms cannot be separated with available data | High for Auger against two-photon at 1.1-1.6 um | Restrict that comparison to 800 nm data; synthetic identifiability study first; WP5 designed to break the degeneracy |
